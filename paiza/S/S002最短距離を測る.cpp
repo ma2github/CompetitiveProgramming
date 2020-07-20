@@ -200,11 +200,92 @@ ll comb(const ll N,const ll K){
   return v[N][K];
 }
 
+/*void dfs(int i,int j){
+  if();//goalなら到達可能を出力
+  else if();//障害物なら戻る
+  else if();//訪問済みなら戻る
+  //升目に訪問済みの印をつける
+  //dfsの再帰的呼び出し
+  dfs(i,j+1);//right
+  dfs(i+1,j);//down
+  dfs(i,j-1);//left
+  dfs(i-1,j);//up
+}*/
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
 */
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(M,N);//N:height M:width
+    char map[N][M];
+    rep(i,N)rep(j,M){
+      //CHR(c);
+      char c;
+      cin >> c;
+      map[i][j]=c;
+    }
+    //rep(j,M)out(map[4][j]);
+    int start=0;
+    int goal=0;
+    bool loopescape=false;
+    vector<vector<int>> G(M*N);
+    rep(a,M*N) {
+      int x=int(a/M);
+      int y=a%M;
+      //out(map[int(a/M)][a%M]);
+      if(map[x][y]=='s')start=a;
+      else if(map[x][y]=='g')goal=a;
+      if(map[x][y]!='1'){
+      if(x<N-1){
+        if(map[x+1][y]=='0'||map[x+1][y]=='g'||map[x+1][y]=='s'){
+        G[a].push_back(a+M);
+        G[a+M].push_back(a);
+        //if(map[int(a/M)+1][a%M]=='g')goal=a+M;
+      }
+    }
+    //out(a%M);
+    if(y<M-1){
+      if(map[x][y+1]=='0'||map[x][y+1]=='g'||map[x][y+1]=='s'){
+      G[a].push_back(a+1);
+      G[a+1].push_back(a);
+      //if(map[int(a/M)][a%M+1]=='g')goal=a+1;
+    }
+    }
+  }
+    }
+    //out();
+    //out(start);
+    //out(goal);
+    //rep(i,N*M)out(G[i]);
+    //out(G);
+    // BFS のためのデータ構造
+    vector<int> dist(N*M, -1); // 全頂点を「未訪問」に初期化
+    queue<int> que;
+
+    // 初期条件 (頂点 1 を初期ノードとする)
+    dist[start] = 0;
+    que.push(start); // 1 を橙色頂点にする
+   // out(start);
+
+    // BFS 開始 (キューが空になるまで探索を行う)
+    while (!que.empty()) {
+        int v = que.front(); // キューから先頭頂点を取り出す
+        //out(v);
+        que.pop();
+
+        // v から辿れる頂点をすべて調べる
+        for (int nv : G[v]) {
+            if (dist[nv] != -1) continue; // すでに発見済みの頂点は探索しない
+
+            // 新たな白色頂点 nv について距離情報を更新してキューに追加する
+            dist[nv] = dist[v]+1;
+            que.push(nv);
+            if(nv==goal){loopescape=true; break;}
+        }
+        if(loopescape)break;
+    }
+if(loopescape)out(dist[goal]);
+else out("Fail");
+
 }
-a

@@ -61,8 +61,7 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define LD(...) ld __VA_ARGS__;in(__VA_ARGS__)
 /*vector操作*/
 #define Sort(a) sort(all(a))//昇順ソート
-#define RSort(vec) sort(vec.begin(), vec.end(), greater<int>())//降順ソート
-#define Rev(a) reverse(all(a))//逆順
+#define Rev(a) reverse(all(a))//降順ソート
 #define Uniq(a) sort(all(a));a.erase(unique(all(a)),end(a))
 #define vec(type,name,...) vector<type> name(__VA_ARGS__)//type型vectorの定義
 #define VEC(type,name,size) vector<type> name(size);in(name)//type型vector(size指定)標準入力受付
@@ -203,8 +202,26 @@ ll comb(const ll N,const ll K){
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
 */
-//deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(h,w,n);
+  //  char f[h][w];
+    vec(string,f,h);
+    string str="";
+    rep(x,w)str=str+'.';
+    rep(y,h)f[y]=str;
+    std::vector<ll> hlimit(w,0);
+    //ll hok,wok,xok=0;
+    rep(i,n){
+      LL(hi,wi,xi);
+      ll hmax=0;
+      rep(x,wi){
+        hmax=max(hlimit[xi+x],hmax);
+      }
+      rep(y,hi)rep(x,wi){
+        f[h-1-(hmax+y)][xi+x]='#';
+        hlimit[xi+x]++;
+      }
+    }
+    rep(i,h)out(f[i]);
 }
-a
