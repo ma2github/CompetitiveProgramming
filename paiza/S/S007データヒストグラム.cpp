@@ -61,8 +61,7 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define LD(...) ld __VA_ARGS__;in(__VA_ARGS__)
 /*vector操作*/
 #define Sort(a) sort(all(a))//昇順ソート
-#define RSort(vec) sort(vec.begin(), vec.end(), greater<int>())//降順ソート
-#define Rev(a) reverse(all(a))//逆順
+#define Rev(a) reverse(all(a))//降順ソート
 #define Uniq(a) sort(all(a));a.erase(unique(all(a)),end(a))
 #define vec(type,name,...) vector<type> name(__VA_ARGS__)//type型vectorの定義
 #define VEC(type,name,size) vector<type> name(size);in(name)//type型vector(size指定)標準入力受付
@@ -203,8 +202,48 @@ ll comb(const ll N,const ll K){
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
 */
-//deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    STR(S);
+    std::vector<ll> v(26,0);
+    std::vector<ll> c(32,1);
+    std::vector<bool> f(32,false);
+    ll numKakko=0;
+    ll cnt=1;
+    ll mo=0;
+    each(i,S){
+      ll m=ll(i);
+      if(47<m&&m<58){//num
+        if(!f[0]){c[numKakko]=m-48;f[0]=true;}
+        else{c[numKakko]=10*c[numKakko]+m-48;}
+      }
+      if(m==40){// (
+        numKakko++;
+        f[numKakko]=true;
+        f[0]=false;
+      }
+      if(m==41){// )
+        f[numKakko]=false;
+        c[numKakko-1]=1;
+        numKakko--;
+        f[0]=false;
+      }
+      if(96<m&&m<123){//alphabet
+        cnt=1;
+        if(!f[0]){c[numKakko]=1;}
+        rep(i,numKakko+1)cnt*=c[i];
+        v[m-97]+=cnt;
+        f[0]=false;
+      }
+    }
+      /*
+      if((47<m&&m<58)&&f&&f[1]){c[0]=m-48;f[0]=false;}
+      else if(47<m&&m<58&&f[1]){c[0]=c[0]*10+m-48;}
+      else if(m==40){f[1]=false;}
+      else if((47<m&&m<58)&&!f[1]){c[1]=m-48;f[1]=true;}
+      else if(47<m&&m<58&&f[1]){c[1]=c[1]*10+m-48;}
+      else{v[m-97]+=c;c=1;f[0]=true;}
+      */
+
+    rep(i,26)printf("%c %lld\n",i+97,v[i]);
 }
-a

@@ -22,7 +22,6 @@ const ll dx[] = {0, 1, 0, -1, 1, -1, 1, -1};
 const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define overload4(_1,_2,_3,_4,name,...) name
 #define overload3(_1,_2,_3,name,...) name
-/*繰り返し*/
 #define rep1(n) for(ll i=0;i<n;++i)//n回repeat
 #define rep2(i,n) for(ll i=0;i<n;++i)//n回repeat（変数指定）
 #define rep3(i,a,b) for(ll i=a;i<b;++i)//a-bまでrepeat
@@ -51,7 +50,6 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define unless(a) if(!(a))
 #define mp make_pair
 #define mt make_tuple
-/*標準入力*/
 #define INT(...) int __VA_ARGS__;in(__VA_ARGS__)//int型標準入力受付，以下LDまで同様
 #define LL(...) ll __VA_ARGS__;in(__VA_ARGS__)
 #define ULL(...) ull __VA_ARGS__;in(__VA_ARGS__)
@@ -59,10 +57,8 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define CHR(...) char __VA_ARGS__;in(__VA_ARGS__)
 #define DBL(...) double __VA_ARGS__;in(__VA_ARGS__)
 #define LD(...) ld __VA_ARGS__;in(__VA_ARGS__)
-/*vector操作*/
 #define Sort(a) sort(all(a))//昇順ソート
-#define RSort(vec) sort(vec.begin(), vec.end(), greater<int>())//降順ソート
-#define Rev(a) reverse(all(a))//逆順
+#define Rev(a) reverse(all(a))//降順ソート
 #define Uniq(a) sort(all(a));a.erase(unique(all(a)),end(a))
 #define vec(type,name,...) vector<type> name(__VA_ARGS__)//type型vectorの定義
 #define VEC(type,name,size) vector<type> name(size);in(name)//type型vector(size指定)標準入力受付
@@ -143,7 +139,6 @@ inline ll __lg(ull __n){ return sizeof(ull) * __CHAR_BIT__  - 1 - __builtin_clzl
 #else
 #define debug(...) void(0)
 #endif
-/*判定出力*/
 int first(bool i = true){ return out(i?"first":"second"); }//iがfirstか判断，以下同様
 int yes(bool i = true){ return out(i?"yes":"no"); }
 int Yes(bool i = true){ return out(i?"Yes":"No"); }
@@ -155,7 +150,6 @@ int possible(bool i = true){ return out(i?"possible":"impossible"); }
 int Possible(bool i = true){ return out(i?"Possible":"Impossible"); }
 int POSSIBLE(bool i = true){ return out(i?"POSSIBLE":"IMPOSSIBLE"); }
 void Case(ll i){ printf("Case #%lld: ", i); }
-/*vector探索*/
 #define bSearch(v,k) binary_search(all(v),k)//ソートされた配列vの中の要素にkがあるか(boolean)
 #define lowB(v,k) lower_bound(all(v),k)//ソートされた配列vの中の要素のうちk以上かつ最小のイテレータ
 #define DLbetB(v,k) lowB(v,k)-v.begin()//先頭からの距離
@@ -166,45 +160,24 @@ void Case(ll i){ printf("Case #%lld: ", i); }
 #define Cnt(v,k) count(all(v),k)//配列vの中で要素kが何個あるかを返す(size_t)
 #define CntIf(v,l) count_if(all(v),l)//配列vの中で条件式(lambda式)を満たす個数を返す(ex.int num = count_if(v.begin(), v.end(), [](int i){return i % 3 == 0;});)
 #define Sort2D(myVec,i) sort(myVec.begin(),myVec.end(),[](const vector<int> &alpha,const vector<int> &beta){return alpha[i] < beta[i];});//i列めでソート
-/*最大公約数*/
-template <class T>
-T vgcd(T m, T n) {
-  return gcd(m, n);
-}
-
-template <class T, class... Args>
-T vgcd(T a, Args... args) {
-  return vgcd(a, vgcd(args...));
-}
-/*階乗*/
-int facctorialMethod(int k){
-    int sum = 1;
-    for (int i = 1; i <= k; ++i)
-    {
-        sum *= i;
-    }
-    return sum;
-}
-/*組み合わせnCk*/
-ll comb(const ll N,const ll K){
-  vector<vector<long long int> > v(N+1,vector<long long int>(N+1,0));
-  for(int i = 0;i <v.size(); i++){
-    v[i][0]=1;
-    v[i][i]=1;
-  }
-  for(int k = 1;k <v.size();k++){
-    for(int j = 1;j<k;j++){
-      v[k][j]=(v[k-1][j-1]+v[k-1][j]);
-    }
-  }
-  return v[N][K];
-}
 
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
 */
-//deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(N);
+    string ans[N];
+    rep(i,N){
+      STR(a);
+      size_t size=a.length();
+      if(size<2)a.push_back('s');
+      else if((a[size-1]=='s')||(a[size-1]=='h'&&a[size-2]=='s')||(a[size-1]=='h'&&a[size-2]=='c')||(a[size-1]=='o')||(a[size-1]=='x')){a.push_back('e');a.push_back('s');}
+      else if(a[size-1]=='f'){a.pop_back();a.push_back('v');a.push_back('e');a.push_back('s');}
+      else if(a[size-1]=='e'&&a[size-2]=='f'){a.pop_back();a.pop_back();a.push_back('v');a.push_back('e');a.push_back('s');}
+      else if(a[size-1]=='y'&&a[size-2]!='a'&&a[size-2]!='i'&&a[size-2]!='u'&&a[size-2]!='e'&&a[size-2]!='o'){a.pop_back();a.push_back('i');a.push_back('e');a.push_back('s');}
+      else a.push_back('s');
+      ans[i]=a;
+    }
+    rep(i,N)out(ans[i]);
 }
-a
