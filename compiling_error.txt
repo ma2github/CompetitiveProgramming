@@ -1,0 +1,4 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/C.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/C.cpp:218:5: error: declaration of 'auto cnt' has no initializer
+  218 |     auto cnt;
+      |     ^~~~
