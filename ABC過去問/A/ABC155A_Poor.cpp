@@ -206,4 +206,6 @@ ll comb(const ll N,const ll K){
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(a,b,c);
+    Yes((a==b&&b!=c)||(a==c&&b!=c)||(c==b&&a!=c));
 }
