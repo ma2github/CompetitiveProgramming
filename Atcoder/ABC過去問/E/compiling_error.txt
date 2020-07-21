@@ -1,0 +1,3 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/E/ABC171E.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/E/ABC171E.cpp:214:26: error: invalid operands of types '__gnu_cxx::__alloc_traits<std::allocator<long long int>, long long int>::value_type' {aka 'long long int'} and '<unresolved overloaded function type>' to binary 'operator<<'
+  214 |     rep(i,n)cout<<xr^a[i]<<endl;

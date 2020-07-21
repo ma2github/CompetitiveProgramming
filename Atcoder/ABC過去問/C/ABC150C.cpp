@@ -45,8 +45,8 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define rall2(i,k) (i).rbegin(),(i).rbegin()+k
 #define rall3(i,a,b) (i).rbegin()+a,(i).rbegin()+b
 #define rall(...) overload3(__VA_ARGS__,rall3,rall2,rall1)(__VA_ARGS__)//逆イテレータの取得(rbegin：末尾,rend：頭）
-#define sum(...) accumulate(all(__VA_ARGS__),0LL)//vectorの合計(int形で受け付けてしまうので，小数で扱いたい場合はdsumを使う)
-#define dsum(...) accumulate(all(__VA_ARGS__),0.0L)//小数で扱う(long long doubleなど)
+#define sum(...) accumulate(all(__VA_ARGS__),0LL)//vectorの合計
+#define dsum(...) accumulate(all(__VA_ARGS__),0.0L)
 #define elif else if
 #define unless(a) if(!(a))
 #define mp make_pair
@@ -206,4 +206,19 @@ ll comb(const ll N,const ll K){
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(n);
+    std::vector<ll> nums;
+    rep(i,1,n+1)nums.push_back(i);
+    std::vector<vector<ll>> pattern;
+    do{
+      std::vector<ll> v;
+      each(value,nums)v.push_back(value);
+      pattern.push_back(v);
+    }while(next_permutation(all(nums)));
+    VEC(ll,p,n);
+    VEC(ll,q,n);
+    auto np=DLbetB(pattern,p);
+    auto nq=DLbetB(pattern,q);
+    ll ans=abs(np-nq);
+    out(ans);
 }

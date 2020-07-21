@@ -45,8 +45,8 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define rall2(i,k) (i).rbegin(),(i).rbegin()+k
 #define rall3(i,a,b) (i).rbegin()+a,(i).rbegin()+b
 #define rall(...) overload3(__VA_ARGS__,rall3,rall2,rall1)(__VA_ARGS__)//逆イテレータの取得(rbegin：末尾,rend：頭）
-#define sum(...) accumulate(all(__VA_ARGS__),0LL)//vectorの合計(int形で受け付けてしまうので，小数で扱いたい場合はdsumを使う)
-#define dsum(...) accumulate(all(__VA_ARGS__),0.0L)//小数で扱う(long long doubleなど)
+#define sum(...) accumulate(all(__VA_ARGS__),0LL)//vectorの合計
+#define dsum(...) accumulate(all(__VA_ARGS__),0.0L)
 #define elif else if
 #define unless(a) if(!(a))
 #define mp make_pair
@@ -206,4 +206,18 @@ ll comb(const ll N,const ll K){
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(n,m);
+    std::vector<ll> ac(n+1,0);
+    std::vector<ll> wa(n+1,0);
+    std::vector<ll> v(n+1,0);
+    rep(i,m){
+      LL(p);
+      STR(s);
+      if(ac[p]==1)continue;
+      else if(s=="AC"){ac[p]=1;wa[p]=v[p];}
+      else v[p]++;
+    }
+    ll sumac=sum(ac);
+    ll sumwa=sum(wa);
+    out(make_pair(sumac,sumwa));
 }

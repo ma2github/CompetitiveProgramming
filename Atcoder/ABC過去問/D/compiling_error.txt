@@ -1,0 +1,4 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC154D.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC154D.cpp:217:14: error: 'sum' was not declared in this scope
+  217 |       if(i<k)sum+=e;
+      |              ^~~
