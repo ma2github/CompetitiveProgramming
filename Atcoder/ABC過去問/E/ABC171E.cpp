@@ -206,4 +206,10 @@ ll comb(const ll N,const ll K){
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(n);
+    ll xr=0;
+    VEC(ll,a,n);
+    each(i,a)xr^=i;
+    rep(i,n)cout<<ll(xr^a[i])<<' ';
+    out();
 }

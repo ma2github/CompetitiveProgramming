@@ -1,0 +1,4 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/C.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/C.cpp:212:13: error: 'class std::vector<long long int>' has no member named 'pop'
+  212 |     rep(k)h.pop();
+      |             ^~~
