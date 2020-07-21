@@ -1,4 +1,4 @@
-#<もしかして：#include <bits/stdc++.h>を使っている場合>
+# <もしかして：#include <bits/stdc++.h>を使っている場合>
 1. Terminalで以下を叩く
 `$ find /usr/ | grep cstdalign`
 
@@ -8,7 +8,7 @@
 http://turanegaku.hateblo.jp/entry/2015/12/01/003850
 
 
-#<Unable to start the Clangd language server.(2020/7/21版)>
+# <Unable to start the Clangd language server.(2020/7/21版)>
 1. llvmがインストールされていない場合，
 `$brew install llvm`
 でインストール→これで勝手にClangdも入る
