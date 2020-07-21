@@ -10,7 +10,7 @@ http://turanegaku.hateblo.jp/entry/2015/12/01/003850
 
 # <Unable to start the Clangd language server.(2020/7/21版)>
 1. llvmがインストールされていない場合，  
-$brew install llvm  
+        $brew install llvm  
 でインストール→これで勝手にClangdも入る
 1. vi .bashrcで以下を記述する  
         function llvm (){  
