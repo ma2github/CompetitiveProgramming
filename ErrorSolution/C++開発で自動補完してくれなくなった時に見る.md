@@ -9,7 +9,7 @@ $ find /usr/ | grep cstdalign
 http://turanegaku.hateblo.jp/entry/2015/12/01/003850
 
 
-# <Unable to start the Clangd language server.(2020/7/21版)>
+# (あまり参考にしない方がいいかも)<Unable to start the Clangd language server.(2020/7/22版)>
 1. llvmがインストールされていない場合，  
 ```
 $brew install llvm  
@@ -41,13 +41,15 @@ clangd version 10.0.0
 $ atom --safe  
 ```
 と叩いてatomをSafeMode（パッケージを一切使わないモードらしい）で起動する（もしかするとこれだけで良いかも？）
+（2020/7/22追記）
+atomをSafeModeで起動すると肝心のデバッグができなくなる（パッケージを使わないので当たり前）このエラーは恐らくClangにないヘッダファイルなどを用いているのが原因だと考えられるので，次に示す方法を試した方がいい．
 
 （参考）  
 https://github.com/atom/atom/issues/17278  
 https://students-tech.blog/post/install-clang.html#最新版のインストール方法  
 https://clangd.llvm.org/installation.html
 
-# <clang serverがなんちゃら（メモるの忘れた）(2020/7/22版)>  
+# <Unable to start Clangd language server(2020/7/22版)>  
 どうやらclangにはstdc++.hがないらしい・・・  
 だからclang系統のパッケージを全部disableにする（autocomplete-clangとかide-clangdとかide-cppとか）  
 代わりにgcc系統のパッケージを用いる(linter,linter-gcc，あとは上記2つを入れていろいろ言われたのを使う)  

@@ -1,4 +1,10 @@
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC154D.cpp: In function 'int main()':
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC154D.cpp:217:14: error: 'sum' was not declared in this scope
-  217 |       if(i<k)sum+=e;
-      |              ^~~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC149D.cpp: In function 'void janken(char)':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC149D.cpp:209:18: error: 'p' was not declared in this scope
+  209 |   if(c=='r')ans+=p;
+      |                  ^
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC149D.cpp:210:23: error: 'r' was not declared in this scope
+  210 |   else if(c=='s')ans+=r;
+      |                       ^
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC149D.cpp:211:13: error: 's' was not declared in this scope
+  211 |   else ans+=s;
+      |             ^
