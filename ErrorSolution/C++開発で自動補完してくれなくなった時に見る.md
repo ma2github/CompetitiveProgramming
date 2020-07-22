@@ -52,4 +52,5 @@ https://clangd.llvm.org/installation.html
 だからclang系統のパッケージを全部disableにする（autocomplete-clangとかide-clangdとかide-cppとか）  
 代わりにgcc系統のパッケージを用いる(linter,linter-gcc，あとは上記2つを入れていろいろ言われたのを使う)  
 linter-gccのGCC Excutable Pathにg++のPathを渡す（/usr/local/bin/g++　`$which g++`でこれが出ない場合
-https://qiita.com/ygumaanl/items/ca902e1746a0ffdc4327　あたりを参考にPathを通す（2020/7/22現在ではg++-10が入るので，シンボリックパスを通す際にg++-8→g++-10にする））
+https://qiita.com/ygumaanl/items/ca902e1746a0ffdc4327  
+あたりを参考にPathを通す（2020/7/22現在ではg++-10が入るので，シンボリックパスを通す際にg++-8→g++-10にする））
