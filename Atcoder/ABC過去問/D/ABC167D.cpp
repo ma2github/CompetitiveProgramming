@@ -61,7 +61,7 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define LD(...) ld __VA_ARGS__;in(__VA_ARGS__)
 /*vector操作*/
 #define Sort(a) sort(all(a))//昇順ソート
-#define RSort(vec) sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
+#define RSort(vec) sort(vec.begin(), vec.end(), greater<int>())//降順ソート
 #define Rev(a) reverse(all(a))//逆順
 #define Uniq(a) sort(all(a));a.erase(unique(all(a)),end(a))
 #define vec(type,name,...) vector<type> name(__VA_ARGS__)//type型vectorの定義
@@ -258,26 +258,6 @@ for (ll k = LOG_Q - 1; k >= 0; --k){
 }
 return p;//ここでのpが最終的な答えになる
 }
-/*素数判定*/
-bool IsPrime(ll num)
-{
-    if (num < 2) return false;
-    else if (num == 2) return true;
-    else if (num % 2 == 0) return false; // 偶数はあらかじめ除く
-
-    double sqrtNum = sqrt(num);
-    for (int i = 3; i <= sqrtNum; i += 2)
-    {
-        if (num % i == 0)
-        {
-            // 素数ではない
-            return false;
-        }
-    }
-
-    // 素数である
-    return true;
-}
 
 
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
@@ -286,4 +266,9 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(n,k);
+    VEC(ll,a,n);
+    rep(i,n)a[i]--;
+    ll ans=doubling(n,k,a);
+    out(ans+1);
 }

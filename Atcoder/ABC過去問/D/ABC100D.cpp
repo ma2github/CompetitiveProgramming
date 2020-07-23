@@ -199,86 +199,6 @@ ll comb(const ll N,const ll K){
   }
   return v[N][K];
 }
-/*ダブリング*/
-/*
-参考：http://satanic0258.hatenablog.com/entry/2017/02/23/222647
-
-使える場所：1回遷移した先が明確にわかる時
-
-目的：
-・ある数XのQ乗を求める
-・根付き木において、ある頂点vのQ個上の親を知る
-・ある地点からQ回進んだ先を求める
-*/
-//int N; // 全体の要素数
-//int Q;//試行回数
-ll doubling(const ll N,const ll Q,vector<ll> a){//cin>>N>>Q;//標準入力から要素数と試行回数を受け取る場合
-ll LOG_Q = floor(log2(Q))+1;
-
-// next[k][i]で、i番目の要素の「2^k個次の要素」を指す
-// (なお、i番目の要素に対して「2^k個次の要素」が存在しないとき、
-//  next[k][i]が指し示す要素番号を-1とします)
-std::vector<std::vector<ll>> next(LOG_Q + 1, std::vector<ll>(N));
-//ll a[N];//各要素の次の行き先
-
-// next[0]を計算
-for (int i = 0; i < N; ++i){
-    next[0][i] = a[i];
-}
-
-// nextを計算
-for (ll k = 0; k < LOG_Q; ++k){
-    for (int i = 0; i < N; ++i){
-        if (next[k][i] == -1) {
-            // 2^k個次に要素が無い時、当然2^(k+1)個次にも要素はありません
-            next[k + 1][i] = -1;
-        }
-        else {
-            // 「2^k個次の要素」の2^k個次の要素は、2^(k+1)個次の要素です
-            next[k + 1][i] = next[k][next[k][i]];
-        }
-    }
-}
-
-// ----ここまで準備----
-
-// p番目の要素の「Q個次の要素」を求めることを考えます
-ll p=0;
-for (ll k = LOG_Q - 1; k >= 0; --k){
-    if (p == -1) {
-        // pがすでに存在しない要素を指していたら、
-        // それ以降で存在する要素を指すことはないためループを抜けます
-        break;
-    }
-    if ((Q >> k) & 1) {//ex(Q=5)5=101(2)であり，2^2+2^0回進むことを表す
-        // Qを二進展開した際、k番目のビットが立っていたら、
-        // pの位置を2^kだけ次にずらします
-        p = next[k][p];
-    }
-}
-return p;//ここでのpが最終的な答えになる
-}
-/*素数判定*/
-bool IsPrime(ll num)
-{
-    if (num < 2) return false;
-    else if (num == 2) return true;
-    else if (num % 2 == 0) return false; // 偶数はあらかじめ除く
-
-    double sqrtNum = sqrt(num);
-    for (int i = 3; i <= sqrtNum; i += 2)
-    {
-        if (num % i == 0)
-        {
-            // 素数ではない
-            return false;
-        }
-    }
-
-    // 素数である
-    return true;
-}
-
 
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
@@ -286,4 +206,16 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(n,m);//n種類のケーキ，そのうちからm個選ぶ
+    VV(ll,a,n,3);//n種類のケーキの綺麗さ，美味しさ，人気度
+    ll ans=0;//答えの初期値（絶対値の合計なので答えは0以上）
+    rep(i,8){//どのパラメータの符号を反転させるかで2^3=8通り総当たり
+      ll sm=0;//そのパターンにおける合計値
+      std::vector<ll> b(n,0);//そのパターンにおける各ケーキの全てのパラメータの合計
+      rep(j,3)rep(k,n)if((i>>j)&1)b[k]+=a[k][j];else b[k]-=a[k][j];//各パラメータに対して，もしそのパラメータに対して1が立っていればそのパラメータは符号をそのままに加算する，そうでなければ符号を反転して加算する
+      RSort(b);//上記のループで得られた各ケーキのパラメータの合計を降順でソート
+      rep(l,m)sm+=b[l];//大きい順にm個足し合わせる
+      chmax(ans,sm);//現在の暫定の答えと比較してこのパターンの合計の方が大きければ答えをsmに更新する
+    }
+    out(ans);//答えの出力
 }
