@@ -1,4 +1,13 @@
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC100D.cpp: In function 'int main()':
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC100D.cpp:222:16: error: invalid types 'll {aka long long int}[ll {aka long long int}]' for array subscript
-  222 |       rep(p,n)b[p]=0;
-      |                ^
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC100D.cpp: In function 'll Median5(std::vector<long long int>, ll, ll)':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC100D.cpp:40:31: error: 'end' cannot be used as a function
+   40 | #define all1(i) begin(i),end(i)
+      |                               ^
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC100D.cpp:24:38: note: in expansion of macro 'all1'
+   24 | #define overload3(_1,_2,_3,name,...) name
+      |                                      ^~~~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC100D.cpp:43:18: note: in expansion of macro 'overload3'
+   43 | #define all(...) overload3(__VA_ARGS__,all3,all2,all1)(__VA_ARGS__)//vectorの始めと終わりの読み取り
+      |                  ^~~~~~~~~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC100D.cpp:238:8: note: in expansion of macro 'all'
+  238 |   sort(all(data));
+      |        ^~~
