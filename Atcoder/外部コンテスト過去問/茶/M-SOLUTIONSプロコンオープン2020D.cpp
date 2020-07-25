@@ -286,4 +286,21 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(n);
+    ll nm=0;
+    ll aold=200;
+    bool f=false;
+    ll money=1000;
+    ll moneymax=1000;
+    ll mx=100;
+    ll mn;
+    rep(i,n){
+      LL(ai);
+      if(ai>aold&&!f){f=true;mn=aold;nm=ll(money/mn);money=money%mn;}
+      else if(ai<aold&&f){f=false;mx=aold;money+=nm*mx;}
+      aold=ai;
+      if(moneymax<money)moneymax=money;
+    }
+    if(f&&moneymax<money+nm*aold)moneymax=money+nm*aold;
+    out(moneymax);
 }

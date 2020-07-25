@@ -1,16 +1,6 @@
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC150C.cpp: In function 'int main()':
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC150C.cpp:220:20: error: 'patten' was not declared in this scope; did you mean 'pattern'?
-  220 |     auto np=DLbetB(patten,p);
-      |                    ^~~~~~
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC150C.cpp:40:23: note: in definition of macro 'all1'
-   40 | #define all1(i) begin(i),end(i)
-      |                       ^
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC150C.cpp:160:31: note: in expansion of macro 'all'
-  160 | #define lowB(v,k) lower_bound(all(v),k)//ソートされた配列vの中の要素のうちk以上かつ最小のイテレータ
-      |                               ^~~
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC150C.cpp:161:21: note: in expansion of macro 'lowB'
-  161 | #define DLbetB(v,k) lowB(v,k)-v.begin()//先頭からの距離
-      |                     ^~~~
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC150C.cpp:220:13: note: in expansion of macro 'DLbetB'
-  220 |     auto np=DLbetB(patten,p);
-      |             ^~~~~~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC148C.cpp:282:4: error: redefinition of 'll lcm(ll, ll)'
+  282 | ll lcm(ll a,ll b){
+      |    ^~~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC148C.cpp:77:4: note: 'll lcm(ll, ll)' previously defined here
+   77 | ll lcm(ll a, ll b){ if(!a || !b) return 0; return a * b / gcd(a, b); }
+      |    ^~~

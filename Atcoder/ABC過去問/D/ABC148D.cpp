@@ -286,4 +286,14 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(n);
+    VEC(ll,a,n);
+    ll ans=0;
+    ll vold=0;
+    each(i,a){
+      if(vold==0)if(i!=1)ans++;else vold=1;
+      else if(i!=vold+1)ans++;else vold=i;
+    }
+    if(vold==0)out(-1);
+    else out(ans);
 }

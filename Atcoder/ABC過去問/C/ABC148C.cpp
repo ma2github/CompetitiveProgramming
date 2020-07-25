@@ -279,11 +279,12 @@ bool IsPrime(ll num)
     return true;
 }
 
-
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
 */
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(a,b);
+    out(lcm(a,b));
 }
