@@ -1,0 +1,4 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/外部コンテスト過去問/黄/M-SOLUTIONSプロコンオープン2020F.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/外部コンテスト過去問/黄/M-SOLUTIONSプロコンオープン2020F.cpp:381:17: error: expected primary-expression before ']' token
+  381 |       out(vy_x1[]);
+      |                 ^
