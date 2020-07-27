@@ -286,4 +286,96 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    std::vector<vector<pair<ll,char>>> vx(200002);//→←でぶつかる
+    std::vector<ll> yk;//どのy=k上で結ばれているか
+    std::vector<vector<pair<ll,char>>> vy(200002);//↓↑でぶつかる
+    std::vector<ll> xk;//どのx=k上で結ばれているか
+    std::vector<vector<pair<ll,char>>> vyx(400002);//↑←でぶつかる
+    std::vector<ll> yxk;//どのy=x+k上で結ばれているか
+    std::vector<vector<pair<ll,char>>> vy_x(400002);//↓←でぶつかる
+    std::vector<ll> y_xk;//どのy=-x+k上で結ばれているか
+    std::vector<vector<pair<ll,char>>> vyx1(400002);//→↓でぶつかる
+    std::vector<ll> yxk1;//どのy=x+k上で結ばれているか
+    std::vector<vector<pair<ll,char>>> vy_x1(400002);//→↑でぶつかる
+    std::vector<ll> y_xk1;//どのy=-x+k上で結ばれているか
+
+
+    LL(n);
+    rep(n){
+      LL(x,y);
+      CHR(u);
+      if(u=='U'){
+        vy[x].push_back(mp(y,u));
+        xk.push_back(x);
+        vyx[y-x+200000].push_back(mp(x,u));
+        yxk.push_back(y-x+200000);
+        vy_x1[y+x].push_back(mp(x,u));
+        y_xk1.push_back(y+x);
+      }
+      if(u=='R'){
+        vx[y].push_back(mp(x,u));
+        yk.push_back(y);
+        vyx1[y-x+200000].push_back(mp(x,u));
+        yxk1.push_back(y-x+200000);
+        vy_x1[y+x].push_back(mp(x,u));
+        y_xk1.push_back(y+x);
+      }
+      if(u=='D'){
+        vy[x].push_back(mp(y,u));
+        xk.push_back(x);
+        vyx1[y-x+200000].push_back(mp(x,u));
+        yxk1.push_back(y-x+200000);
+        vy_x[y+x].push_back(mp(x,u));
+        y_xk.push_back(y+x);
+      }
+      if(u=='L'){
+        vx[y].push_back(mp(x,u));
+        yk.push_back(y);
+        vyx[y-x+200000].push_back(mp(x,u));
+        yxk.push_back(y-x+200000);
+        vy_x[y+x].push_back(mp(x,u));
+        y_xk.push_back(y+x);
+      }
+    }
+    Uniq(xk);
+    Uniq(yk);
+    Uniq(yxk);
+    Uniq(yxk1);
+    Uniq(y_xk);
+    Uniq(y_xk1);
+
+    ll ans=LINF;
+
+    each(x,xk){
+      size_t s=vy[x].size();
+      if(s<2)continue;
+      else {Sort(vy[x]);rep(i,s-1)if(vy[x][i+1].second=='D'&&vy[x][i].second=='U'){ll dist=(vy[x][i+1].first-vy[x][i].first)*5;chmin(ans,dist);}}
+    }
+    each(y,yk){
+      size_t s=vx[y].size();
+      if(s<2)continue;
+      else {Sort(vx[y]);rep(i,s-1)if(vx[y][i+1].second=='L'&&vx[y][i].second=='R'){ll dist=(vx[y][i+1].first-vx[y][i].first)*5;chmin(ans,dist);}}
+    }
+    each(k,yxk){
+      size_t s=vyx[k].size();
+      if(s<2)continue;
+      else {Sort(vyx[k]);rep(i,s-1)if(vyx[k][i+1].second=='L'&&vyx[k][i].second=='U'){ll dist=(vyx[k][i+1].first-vyx[k][i].first)*10;chmin(ans,dist);}}
+    }
+    each(k,yxk1){
+      size_t s=vyx1[k].size();
+      if(s<2)continue;
+      else {Sort(vyx1[k]);rep(i,s-1)if(vyx1[k][i+1].second=='D'&&vyx1[k][i].second=='R'){ll dist=(vyx1[k][i+1].first-vyx1[k][i].first)*10;chmin(ans,dist);}}
+    }
+    each(k,y_xk){
+      size_t s=vy_x[k].size();
+      if(s<2)continue;
+      else {Sort(vy_x[k]);rep(i,s-1)if(vy_x[k][i+1].second=='L'&&vy_x[k][i].second=='D'){ll dist=(vy_x[k][i+1].first-vy_x[k][i].first)*10;chmin(ans,dist);}}
+    }
+    each(k,y_xk1){
+      size_t s=vy_x1[k].size();
+      if(s<2)continue;
+      else {Sort(vy_x1[k]);rep(i,s-1)if(vy_x1[k][i+1].second=='U'&&vy_x1[k][i].second=='R'){ll dist=(vy_x1[k][i+1].first-vy_x1[k][i].first)*10;chmin(ans,dist);}}
+    }
+    if(ans==LINF)out("SAFE");
+    else out(ans);
 }
