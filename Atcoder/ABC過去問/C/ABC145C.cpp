@@ -177,12 +177,11 @@ T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
 /*階乗*/
-ll facctorialMethod(ll k){
+int facctorialMethod(int k){
     int sum = 1;
-    for (ll i = 1; i <= k; ++i)
+    for (int i = 1; i <= k; ++i)
     {
         sum *= i;
-        //sum%=MOD;//あまりを出力せよ問題の時はこれもやる
     }
     return sum;
 }
@@ -199,19 +198,6 @@ ll comb(const ll N,const ll K){
     }
   }
   return v[N][K];
-}
-/*逆元　あまりの割り算をするときにこいつをかける*/
-// mod. m での a の逆元 a^{-1} を計算する
-ll modinv(ll a,ll m){
-    long long b = m, u = 1, v = 0;
-    while (b) {
-        long long t = a / b;
-        a -= t * b; swap(a, b);
-        u -= t * v; swap(u, v);
-    }
-    u %= m;
-    if (u < 0) u += m;
-    return u;
 }
 /*ダブリング*/
 /*
@@ -300,4 +286,22 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    ld ans=0;
+    ll cnt=0;
+    LL(n);
+    VV(ll,a,n,2);
+    vector<int> v(n);
+    iota(v.begin(), v.end(), 1);       // v に 1, 2, ... N を設定
+    do {
+      ld dist=0;
+      rep(i,n-1){
+        ld xd=ld(a[v[i+1]-1][0]-a[v[i]-1][0]);
+        ld yd=ld(a[v[i+1]-1][1]-a[v[i]-1][1]);
+        dist=sqrt(ld(xd*xd+yd*yd));
+        ans+=dist;
+      }
+      cnt++;
+    } while( next_permutation(v.begin(), v.end()) );
+    ans/=ld(cnt);
+    out(ans);
 }

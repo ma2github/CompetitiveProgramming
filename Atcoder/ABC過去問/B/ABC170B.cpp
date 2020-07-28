@@ -300,4 +300,10 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(x,y);
+    bool f=false;
+    rep(x+1){
+      if(2*i+4*(x-i)==y){f=true;break;}
+    }
+    Yes(f);
 }

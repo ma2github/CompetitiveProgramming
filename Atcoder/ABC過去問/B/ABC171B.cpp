@@ -300,4 +300,10 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(n,k);
+    VEC(ll,p,n);
+    Sort(p);
+    ll ans=0;
+    rep(k)ans+=p[i];
+    out(ans);
 }

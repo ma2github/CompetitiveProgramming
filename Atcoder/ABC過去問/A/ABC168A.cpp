@@ -300,4 +300,9 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(n);
+    n%=10;
+    if(n==3)out("bon");
+    else if(n==0||n==1||n==6||n==8)out("pon");
+    else out("hon");
 }
