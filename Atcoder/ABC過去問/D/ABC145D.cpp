@@ -178,11 +178,11 @@ T vgcd(T a, Args... args) {
 }
 /*階乗*/
 ll facctorialMethod(ll k){
-    int sum = 1;
+    ll sum = 1;
     for (ll i = 1; i <= k; ++i)
     {
         sum *= i;
-        //sum%=MOD;//あまりを出力せよ問題の時はこれもやる
+        sum = sum%MOD;
     }
     return sum;
 }
@@ -300,4 +300,21 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(x,y);
+    ll k1=2*y-x;
+    ll k2=2*x-y;
+    ll ans=0;
+    if(k1%3==0&&k2%3==0&&k1>=0&&k2>=0){
+      k1/=3;
+      k2/=3;
+      ll k3=k1+k2;
+      k3=facctorialMethod(k3);
+      k1=facctorialMethod(k1);
+      k2=facctorialMethod(k2);
+      ll k4=(k1*k2)%MOD;
+      k4=modinv(k4,MOD);
+      ans=(k3*k4)%MOD;
+      out(ans);
+    }
+    else out(0);
 }

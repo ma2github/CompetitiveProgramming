@@ -1,0 +1,8 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/A/ABC169A.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/A/ABC169A.cpp:307:17: error: expected ')' before ';' token
+  307 |     else out('a';)
+      |             ~   ^
+      |                 )
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/A/ABC169A.cpp:307:18: error: expected primary-expression before ')' token
+  307 |     else out('a';)
+      |                  ^

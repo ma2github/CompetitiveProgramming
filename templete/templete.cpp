@@ -177,11 +177,12 @@ T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
 /*階乗*/
-int facctorialMethod(int k){
+ll facctorialMethod(ll k){
     int sum = 1;
-    for (int i = 1; i <= k; ++i)
+    for (ll i = 1; i <= k; ++i)
     {
         sum *= i;
+        //sum%=MOD;//あまりを出力せよ問題の時はこれもやる
     }
     return sum;
 }
@@ -198,6 +199,19 @@ ll comb(const ll N,const ll K){
     }
   }
   return v[N][K];
+}
+/*逆元　あまりの割り算をするときにこいつをかける*/
+// mod. m での a の逆元 a^{-1} を計算する
+ll modinv(ll a,ll m){
+    long long b = m, u = 1, v = 0;
+    while (b) {
+        long long t = a / b;
+        a -= t * b; swap(a, b);
+        u -= t * v; swap(u, v);
+    }
+    u %= m;
+    if (u < 0) u += m;
+    return u;
 }
 /*ダブリング*/
 /*

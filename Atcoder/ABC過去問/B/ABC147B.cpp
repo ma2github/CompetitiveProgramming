@@ -165,7 +165,7 @@ void Case(ll i){ printf("Case #%lld: ", i); }
 #define DUbetE(v,k) v.end()-uppB(v,k)//末尾からの距離
 #define Cnt(v,k) count(all(v),k)//配列vの中で要素kが何個あるかを返す(size_t)
 #define CntIf(v,l) count_if(all(v),l)//配列vの中で条件式(lambda式)を満たす個数を返す(ex.int num = count_if(v.begin(), v.end(), [](int i){return i % 3 == 0;});)
-#define Sort2D(myVec,i) sort(myVec.begin(),myVec.end(),[](const vector<ll> &alpha,const vector<ll> &beta){return alpha[i] < beta[i];});//i列めでソート
+#define Sort2D(myVec,i) sort(myVec.begin(),myVec.end(),[](const vector<int> &alpha,const vector<int> &beta){return alpha[i] < beta[i];});//i列めでソート
 /*最大公約数*/
 template <class T>
 T vgcd(T m, T n) {
@@ -177,12 +177,11 @@ T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
 /*階乗*/
-ll facctorialMethod(ll k){
+int facctorialMethod(int k){
     int sum = 1;
-    for (ll i = 1; i <= k; ++i)
+    for (int i = 1; i <= k; ++i)
     {
         sum *= i;
-        //sum%=MOD;//あまりを出力せよ問題の時はこれもやる
     }
     return sum;
 }
@@ -199,19 +198,6 @@ ll comb(const ll N,const ll K){
     }
   }
   return v[N][K];
-}
-/*逆元　あまりの割り算をするときにこいつをかける*/
-// mod. m での a の逆元 a^{-1} を計算する
-ll modinv(ll a,ll m){
-    long long b = m, u = 1, v = 0;
-    while (b) {
-        long long t = a / b;
-        a -= t * b; swap(a, b);
-        u -= t * v; swap(u, v);
-    }
-    u %= m;
-    if (u < 0) u += m;
-    return u;
 }
 /*ダブリング*/
 /*
@@ -300,4 +286,10 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    ll ans=0;
+    STR(s);
+    size_t size=s.size();
+    if(size%2==0)rep(size/2){if(s[i]!=s[size-1-i])ans++;}
+    else rep((size-1)/2){if(s[i]!=s[size-1-i])ans++;}
+    out(ans);
 }

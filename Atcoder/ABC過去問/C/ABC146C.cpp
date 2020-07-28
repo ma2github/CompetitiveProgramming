@@ -177,12 +177,11 @@ T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
 /*階乗*/
-ll facctorialMethod(ll k){
+int facctorialMethod(int k){
     int sum = 1;
-    for (ll i = 1; i <= k; ++i)
+    for (int i = 1; i <= k; ++i)
     {
         sum *= i;
-        //sum%=MOD;//あまりを出力せよ問題の時はこれもやる
     }
     return sum;
 }
@@ -199,19 +198,6 @@ ll comb(const ll N,const ll K){
     }
   }
   return v[N][K];
-}
-/*逆元　あまりの割り算をするときにこいつをかける*/
-// mod. m での a の逆元 a^{-1} を計算する
-ll modinv(ll a,ll m){
-    long long b = m, u = 1, v = 0;
-    while (b) {
-        long long t = a / b;
-        a -= t * b; swap(a, b);
-        u -= t * v; swap(u, v);
-    }
-    u %= m;
-    if (u < 0) u += m;
-    return u;
 }
 /*ダブリング*/
 /*
@@ -300,4 +286,30 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
-}
+    ll ans=0;
+    LL(a,b,x);
+    if(ll((x-b)/a)+1<10000007){
+      rep(ll((x-b)/a)+1){
+      if(a+b>x)break;
+      ll i1=i;
+      ll d=1;
+      rep(j,9){if(i1<10)break;i1/=10;d++;}
+      if(a*i+b*d>x){break;}
+      ans=i;
+    }
+  }
+    else {
+      ll n=0;
+      if(ll((x-9*b)/a)+1>1000000000)n=1000000001;
+      else n=ll((x-9*b)/a)+1;
+      rrep(n){
+      if(a+b>x)break;
+      ll i1=i;
+      ll d=1;
+      rep(j,9){if(i1<10)break;i1/=10;d++;}
+      if(a*i+b*d<=x){ans=i;break;}
+    }
+  }
+    if(ans>1000000000)out(1000000000);
+    else out(ans);
+}/*なるほど二分探索か・・・（一応これでAC出たけど絶対厳密には違う気がする）*/

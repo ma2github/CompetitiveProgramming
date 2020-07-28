@@ -165,7 +165,7 @@ void Case(ll i){ printf("Case #%lld: ", i); }
 #define DUbetE(v,k) v.end()-uppB(v,k)//末尾からの距離
 #define Cnt(v,k) count(all(v),k)//配列vの中で要素kが何個あるかを返す(size_t)
 #define CntIf(v,l) count_if(all(v),l)//配列vの中で条件式(lambda式)を満たす個数を返す(ex.int num = count_if(v.begin(), v.end(), [](int i){return i % 3 == 0;});)
-#define Sort2D(myVec,i) sort(myVec.begin(),myVec.end(),[](const vector<int> &alpha,const vector<int> &beta){return alpha[i] < beta[i];});//i列めでソート
+#define Sort2D(myVec,i) sort(myVec.begin(),myVec.end(),[](const vector<ll> &alpha,const vector<ll> &beta){return alpha[i] < beta[i];});//i列めでソート
 /*最大公約数*/
 template <class T>
 T vgcd(T m, T n) {

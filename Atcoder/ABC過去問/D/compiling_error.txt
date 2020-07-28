@@ -1,4 +1,5 @@
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC148D.cpp: In function 'int main()':
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC148D.cpp:296:14: error: expected unqualified-id before '==' token
-  296 |       if(void==i)ans--;
-      |              ^~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC145D.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC145D.cpp:314:7: error: 'k4' was not declared in this scope; did you mean 'k3'?
+  314 |       k4=(k1*k2)%MOD;
+      |       ^~
+      |       k3
