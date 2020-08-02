@@ -300,4 +300,7 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(s,w);
+    if(s>w)out("safe");
+    else out("unsafe");
 }

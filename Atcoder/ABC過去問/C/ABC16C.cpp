@@ -298,6 +298,45 @@ bool IsPrime(ll num)
 
 */
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
+//using std::map;
+//map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    LL(n,m);
+    vector<vector<int>> g(n+1);
+    for (int i = 0; i < m; ++i) {
+        int a, b;
+        cin >> a >> b;
+        g[a].push_back(b);
+        g[b].push_back(a);
+    }
+    //out(G);
+    // BFS のためのデータ構造
+    queue<int> que;
+
+    // 初期条件 (頂点 1 を初期ノードとする)
+    rep(i,1,n+1){
+      ll cnt=0;
+      vector<int> dist(n+1, -1); // 全頂点を「未訪問」に初期化
+      dist[i] = 0;
+      que.push(i); // 1 を橙色頂点にする
+
+    // BFS 開始 (キューが空になるまで探索を行う)
+    while (!que.empty()) {
+        int v = que.front(); // キューから先頭頂点を取り出す
+        que.pop();
+
+        // v から辿れる頂点をすべて調べる
+        for (int nv : g[v]) {
+            if (dist[nv] != -1) continue; // すでに発見済みの頂点は探索しない
+
+            // 新たな白色頂点 nv について距離情報を更新してキューに追加する
+            dist[nv] = dist[v]+1;
+            if(dist[nv]==2)cnt++;
+            que.push(nv);
+        }
+      }
+      out(cnt);
+    }
+
 }

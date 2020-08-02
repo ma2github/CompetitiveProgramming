@@ -298,6 +298,36 @@ bool IsPrime(ll num)
 
 */
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
+//using std::map;
+//map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    ll ans=0;
+    std::vector<ll> a;
+    std::vector<ll> cnt(1000010,0);
+    LL(n);
+    rep(n){
+      LL(ai);
+      a.push_back(ai);
+      cnt[ai]++;
+    }
+    each(i,a){
+      ll add=1;
+      cnt[i]--;
+      ld sqrtNum=sqrt(i);
+      rep(j,1,sqrtNum+1){
+        if(i%j)continue;
+        else if(cnt[j]){
+          add=0;
+          break;
+        }
+        else if(cnt[i/j]){
+        add=0;
+        break;
+      }
+    }
+      ans+=add;
+      cnt[i]++;
+  }
+    out(ans);
 }

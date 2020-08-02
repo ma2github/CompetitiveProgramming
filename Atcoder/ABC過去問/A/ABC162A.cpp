@@ -300,4 +300,6 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    STR(n);
+    Yes(n[0]=='7'||n[1]=='7'||n[2]=='7');
 }

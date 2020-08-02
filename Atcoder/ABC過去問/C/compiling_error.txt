@@ -1,6 +1,5 @@
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC148C.cpp:282:4: error: redefinition of 'll lcm(ll, ll)'
-  282 | ll lcm(ll a,ll b){
-      |    ^~~
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC148C.cpp:77:4: note: 'll lcm(ll, ll)' previously defined here
-   77 | ll lcm(ll a, ll b){ if(!a || !b) return 0; return a * b / gcd(a, b); }
-      |    ^~~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC157C.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC157C.cpp:301:12: error: 'ctoi' was not declared in this scope; did you mean 'atoi'?
+  301 |         if(ctoi(str[s[j]])!=c[j])break;
+      |            ^~~~
+      |            atoi

@@ -297,7 +297,27 @@ bool IsPrime(ll num)
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
 */
-//deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
+deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
+//using std::map;
+//map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    LL(k);
+    if(k<13)out(k);
+    else{
+      ll cnt=9;
+      ll phase=0;
+      ll f=0;
+      rep(i,1,LINF){
+        if(i<10)deq.push_back(i);
+        else {
+          if(phase==0){phase=1;f=deq.front();if(f%10>0){deq.push_back(f*10+f%10-1);cnt++;}}
+          else if(phase==1){phase=2;deq.push_back(f*10+f%10);cnt++;}
+          else if(phase==2){phase=0;deq.pop_front();if(f%10<9){deq.push_back(f*10+f%10+1);cnt++;}}
+          if(cnt==k)break;
+        }
+      }
+      ll ans=deq.back();
+      out(ans);
+    }
 }

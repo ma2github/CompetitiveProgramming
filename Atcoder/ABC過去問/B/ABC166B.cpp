@@ -300,4 +300,16 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(n,k);
+    std::vector<ll> v(n,0);
+    ll ans=n;
+    rep(k){
+      LL(d);
+      rep(j,d){
+        LL(a);
+        if(v[a-1]==0)ans--;
+        v[a-1]++;
+      }
+    }
+    out(ans);
 }

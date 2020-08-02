@@ -300,4 +300,12 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
+    LL(x);
+    ll ans=0;
+    rep(LINF){
+      if(x<5)break;
+      if(x>=500){ans+=1000;x-=500;}
+      else {ans+=5;x-=5;}
+    }
+    out(ans);
 }

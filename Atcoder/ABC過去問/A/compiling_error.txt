@@ -1,8 +1,4 @@
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/A/ABC169A.cpp: In function 'int main()':
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/A/ABC169A.cpp:307:17: error: expected ')' before ';' token
-  307 |     else out('a';)
-      |             ~   ^
-      |                 )
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/A/ABC169A.cpp:307:18: error: expected primary-expression before ')' token
-  307 |     else out('a';)
-      |                  ^
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/A/ABC157A.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/A/ABC157A.cpp:304:9: error: 'ceiling' was not declared in this scope
+  304 |     out(ceiling(n/2));
+      |         ^~~~~~~
