@@ -293,11 +293,44 @@ bool IsPrime(ll num)
     return true;
 }
 
+vector<pair<long long, long long> > prime_factorize(long long N) {
+    vector<pair<long long, long long> > res;
+    for (long long a = 2; a * a <= N; ++a) {
+        if (N % a != 0) continue;
+        long long ex = 0; // 指数
 
+        // 割れる限り割り続ける
+        while (N % a == 0) {
+            ++ex;
+            N /= a;
+        }
+
+        // その結果を push
+        res.push_back({a, ex});
+    }
+
+    // 最後に残った数について
+    if (N != 1) res.push_back({N, 1});
+    return res;
+}
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
 */
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
-}
+    /*着想：その数＊約数の個数なので約数の個数を求めたくなるが
+    制約が10^7までなのでO(n^1/2)である約数の個数を求めるアルゴリズムを
+    各nで調べ上げるのは無理がある→制約が10^7なのでO(n)で解くことのできる
+    解法を思いつきたい→約数に対する概念として倍数→各倍数でN以下まで
+    足し上げるのは等差数列の和でO(1)→合計でもO(n)→間に合う！
+    って感じなんだろうけどこれを数分で捻りだせる気がしねえ*/
+    ll ans=0;
+
+    LL(n);
+    rep(i,1,n+1){
+      ll num=n/i;
+      ans+=num*(i+i*num)/2;
+    }
+    out(ans);
+}/*その素因数分解，本当に必要？（涙）*/

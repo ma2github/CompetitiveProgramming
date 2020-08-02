@@ -298,6 +298,32 @@ bool IsPrime(ll num)
 
 */
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
+//using std::map;
+//map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    ll ans=LINF;
+     LL(k,n);
+     VEC(ll,a,n);
+     if(n>2){
+       rep(n){
+       if(i==0){
+         chmin(ans,k+a[0]-a[1]);
+         chmin(ans,a[n-1]-a[0]);
+       }
+       else if(i==n-1){
+         chmin(ans,a[n-1]-a[0]);
+         chmin(ans,a[n-2]+k-a[n-1]);
+       }
+       else {
+         chmin(ans,k+a[i]-a[i+1]);
+         chmin(ans,k+a[i-1]-a[i]);
+       }
+     }
+   }
+   else{
+     chmin(ans,a[1]-a[0]);
+     chmin(ans,k+a[0]-a[1]);
+   }
+     out(ans);
 }

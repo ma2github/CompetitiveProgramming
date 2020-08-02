@@ -298,6 +298,32 @@ bool IsPrime(ll num)
 
 */
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
+std::vector<ll> A,B,C,D,v;
+ll ans=0;
+void dfs(std::vector<ll> v,ll last,ll len,ll n,ll m,ll q){
+  if(len==n){
+    ll ret=0;
+    rep(q){if(v[B[i]]-v[A[i]]==C[i])ret+=D[i];}
+    chmax(ans,ret);
+  }
+  else{//まだ配列の生成途中なので，その節から辿れる節全部の分岐パターンを調べる
+    rep(x,last,m+1){
+      std::vector<ll> vnew=v;
+      vnew.push_back(x);
+      dfs(vnew,x,len+1,n,m,q);
+    }
+  }
+}
 signed main(){
     /*以下コード*/
+    LL(n,m,q);
+    rep(q){
+      LL(a,b,c,d);
+      A.push_back(a-1);
+      B.push_back(b-1);
+      C.push_back(c);
+      D.push_back(d);
+    }
+    dfs(v,1,0,n,m,q);
+    out(ans);
 }

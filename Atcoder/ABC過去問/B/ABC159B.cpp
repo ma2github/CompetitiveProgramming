@@ -300,4 +300,12 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
-}
+    STR(s);
+    size_t size=s.size();
+    string s1=s;
+    Rev(s);
+    string s2=s.substr(0,(size-1)/2);
+    string s3=s2;
+    Rev(s2);
+    Yes(s==s1&&s2==s3);
+}//文字列操作に弱すぎ

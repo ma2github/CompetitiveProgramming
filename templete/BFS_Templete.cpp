@@ -1,13 +1,13 @@
-vector<vector<int>> G(N+1);
-for (int i = 0; i < M; ++i) {
+vector<vector<int>> g(n+1);
+for (int i = 0; i < m; ++i) {
     int a, b;
     cin >> a >> b;
-    G[a].push_back(b);
-    G[b].push_back(a);
+    g[a].push_back(b);
+    g[b].push_back(a);
 }
 //out(G);
 // BFS のためのデータ構造
-vector<int> dist(N+1, -1); // 全頂点を「未訪問」に初期化
+vector<int> dist(n+1, -1); // 全頂点を「未訪問」に初期化
 queue<int> que;
 
 // 初期条件 (頂点 1 を初期ノードとする)
@@ -20,7 +20,7 @@ while (!que.empty()) {
     que.pop();
 
     // v から辿れる頂点をすべて調べる
-    for (int nv : G[v]) {
+    for (int nv : g[v]) {
         if (dist[nv] != -1) continue; // すでに発見済みの頂点は探索しない
 
         // 新たな白色頂点 nv について距離情報を更新してキューに追加する

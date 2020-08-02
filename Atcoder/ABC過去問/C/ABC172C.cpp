@@ -300,4 +300,22 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 signed main(){
     /*以下コード*/
-}
+    LL(n,m,k);
+    VEC(ll,a,n);
+    VEC(ll,b,m);
+    ll sb=sum(b);
+    ll best0=0;
+    rrep(m){
+      if(sb<=k){best0=i+1;break;}
+      sb-=b[i];
+    }
+    ll ans=best0;
+    ll sa=0;
+    rep(i,n){
+      if(sa+a[i]>k)break;
+      sa+=a[i];
+      if(sa+sb>k){rrep(j,best0){if(sa+sb<=k){best0=j+1;break;}sb-=b[j];if(sb==0)best0=0;}}
+      chmax(ans,i+1+best0);
+    }
+    out(ans);
+}/*なるほど，一番上だけ比べるだけじゃそれが最適だとは限らないのか(ex.55+5と30+40)*/
