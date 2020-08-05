@@ -12,12 +12,6 @@ using tuplis = array<ll, 3>;
 template<class T> using pq = priority_queue<T, vector<T>, greater<T>>;
 const ll LINF=0x1fffffffffffffff;
 const ll MINF=0x7fffffffffff;
-const ll LPLMT=10000000;//O(n)のloop上限
-const ll NLGLMT=200000;//O(NlogN)のloop上限（これで指定されたfor文の中にO(logN)の処理を書く）
-const ll N2LMT=3000;//O(n^2)のloop上限
-const ll N3LMT=100;//O(n^3)のloop上限
-const ll N4LMT=50;//O(n^4)のloop上限
-const ll TNLMT=20;//O(2^n)のloop上限（実際この計算量になるのは全探索くらいなので，この値自体を使うことはなさそう）（オーダの参考程度に）
 const int INF=0x3fffffff;
 const int MOD=1000000007;
 const int MODD=998244353;
@@ -298,17 +292,39 @@ bool IsPrime(ll num)
     // 素数である
     return true;
 }
-
+const ll LPLMT=10000000;
 
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
 */
-//ceil()//切り上げ
-//floor()//切り捨て
-//round()//四捨五入
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    /*長さの候補の最小値l（初期値1）と最大値r（初期値Amax）からスタート
+    その長さの平均値midで分割してみて，切った回数がkを越えれば候補はその長さよりも長いものに限定されるので
+    lをmid+1に，逆にそれ以内に収まれば候補はその長さ以下になるはずなのでrをmidにする
+    次第に収束するはずなので，l==rとなった地点が答え
+    （計算量は長さnの配列に対して1~Amaxの間の2分探索を行うのでO(n*log(Amax))
+    */
+    std::vector<ll> a;
+    ll l=1,r=1;
+    LL(n,k);
+    rep(n){
+      LL(ai);
+      a.push_back(ai);
+      chmax(r,ai);
+    }
+    rep(LPLMT){
+      if(l==r)break;
+      else{
+        ll mid=(l+r)/2;
+        ll cnt=0;
+        each(i,a)cnt+=ceil(ld(i)/ld(mid))-1;
+        if(cnt<=k)r=mid;
+        else l=mid+1;
+      }
+    }
+    out(r);
 }
