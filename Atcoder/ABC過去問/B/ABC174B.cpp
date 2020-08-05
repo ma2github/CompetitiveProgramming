@@ -12,12 +12,6 @@ using tuplis = array<ll, 3>;
 template<class T> using pq = priority_queue<T, vector<T>, greater<T>>;
 const ll LINF=0x1fffffffffffffff;
 const ll MINF=0x7fffffffffff;
-const ll LPLMT=10000000;//O(n)のloop上限
-const ll NLGLMT=200000;//O(NlogN)のloop上限（これで指定されたfor文の中にO(logN)の処理を書く）
-const ll N2LMT=3000;//O(n^2)のloop上限
-const ll N3LMT=100;//O(n^3)のloop上限
-const ll N4LMT=50;//O(n^4)のloop上限
-const ll TNLMT=20;//O(2^n)のloop上限（実際この計算量になるのは全探索くらいなので，この値自体を使うことはなさそう）（オーダの参考程度に）
 const int INF=0x3fffffff;
 const int MOD=1000000007;
 const int MODD=998244353;
@@ -303,12 +297,14 @@ bool IsPrime(ll num)
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
 */
-//ceil()//切り上げ
-//floor()//切り捨て
-//round()//四捨五入
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
-//using std::map;
-//map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    LL(n,d);
+    ll ans=0;
+    rep(n){
+      LL(xi,yi);
+      if(xi*xi+yi*yi<=d*d)ans++;
+    }
+    out(ans);
 }

@@ -1,0 +1,30 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/F/ABC174F.cpp: In constructor 'WaveletMatrix::WaveletMatrix(const std::vector<long long int>&)':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/F/ABC174F.cpp:573:17: error: no match for 'operator=' (operand types are 'std::vector<long long int>' and 'std::vector<long long unsigned int>')
+  573 |             v = temp;
+      |                 ^~~~
+In file included from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/vector:72,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/queue:61,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/x86_64-apple-darwin19/bits/stdc++.h:86,
+                 from /Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/F/ABC174F.cpp:1:
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/bits/vector.tcc:198:5: note: candidate: 'std::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::operator=(const std::vector<_Tp, _Alloc>&) [with _Tp = long long int; _Alloc = std::allocator<long long int>]'
+  198 |     vector<_Tp, _Alloc>::
+      |     ^~~~~~~~~~~~~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/bits/vector.tcc:199:42: note:   no known conversion for argument 1 from 'std::vector<long long unsigned int>' to 'const std::vector<long long int>&'
+  199 |     operator=(const vector<_Tp, _Alloc>& __x)
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+In file included from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/vector:67,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/queue:61,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/x86_64-apple-darwin19/bits/stdc++.h:86,
+                 from /Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/F/ABC174F.cpp:1:
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/bits/stl_vector.h:709:7: note: candidate: 'std::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::operator=(std::vector<_Tp, _Alloc>&&) [with _Tp = long long int; _Alloc = std::allocator<long long int>]'
+  709 |       operator=(vector&& __x) noexcept(_Alloc_traits::_S_nothrow_move())
+      |       ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/bits/stl_vector.h:709:26: note:   no known conversion for argument 1 from 'std::vector<long long unsigned int>' to 'std::vector<long long int>&&'
+  709 |       operator=(vector&& __x) noexcept(_Alloc_traits::_S_nothrow_move())
+      |                 ~~~~~~~~~^~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/bits/stl_vector.h:730:7: note: candidate: 'std::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::operator=(std::initializer_list<_Tp>) [with _Tp = long long int; _Alloc = std::allocator<long long int>]'
+  730 |       operator=(initializer_list<value_type> __l)
+      |       ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/bits/stl_vector.h:730:46: note:   no known conversion for argument 1 from 'std::vector<long long unsigned int>' to 'std::initializer_list<long long int>'
+  730 |       operator=(initializer_list<value_type> __l)
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
