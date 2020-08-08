@@ -1,0 +1,6 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ATC/ATC1A.cpp: In function 'bool dfs(std::vector<std::__cxx11::basic_string<char> >, std::vector<std::vector<bool> >, ll, ll)':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ATC/ATC1A.cpp:320:19: error: could not convert '(x + ((long long int)dx[i]))' from 'll' {aka 'long long int'} to 'std::vector<std::vector<bool> >'
+  320 |   rep(4)if(dfs(c,x+dx[i],y+dy[i]))return true;
+      |                  ~^~~~~~
+      |                   |
+      |                   ll {aka long long int}

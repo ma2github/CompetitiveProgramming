@@ -309,6 +309,25 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+bool f=false;
+//std::vector<std::vector<bool>> rec(501,std::vector<bool>(501,true));
+ll hlim,wlim;
+bool dfs(std::vector<string> &c,ll x,ll y){
+  if(x==wlim||y==hlim||x==-1||y==-1)return false;
+  if(c[y][x]=='#')return false;
+  if(c[y][x]=='g')return true;
+  c[y][x]='#';
+  rep(4)if(dfs(c,x+dx[i],y+dy[i]))return true;
+  return false;
+}
 signed main(){
     /*以下コード*/
+    /*深さ優先探索の時はmapを参照渡し（変数名の先頭に&をつける）でやらないと毎回配列をコピーするので
+    めっちゃ遅くなる　参考：https://qiita.com/agate-pris/items/05948b7d33f3e88b8967*/
+    LL(h,w);
+    hlim=h;
+    wlim=w;
+    VEC(string,c,h);
+    rep(i,h)rep(j,w)if(c[i][j]=='s'){f=dfs(c,j,i);break;}
+    Yes(f);
 }
