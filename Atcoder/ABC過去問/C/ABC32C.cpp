@@ -311,4 +311,39 @@ bool IsPrime(ll num)
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    /*尺取法　左端を固定して右端を伸ばすだけ伸ばす O(n)*/
+    ll ans=0;
+    ll mul=1;
+    LL(n,k);
+    std::vector<ll> s;
+    rep(n){
+      LL(si);
+      if(si==0){mul=0;break;}
+      s.push_back(si);
+    }
+    if(mul){
+      ll left=0;
+      ll right=0;
+      ll kari=0;
+      rep(i,n){
+        rep(j,n){
+          if(mul*s[right]>k)break;
+          mul*=s[right];
+          right++;
+          kari++;
+          if(right>=n)break;
+        }
+        chmax(ans,kari);
+        if(right>=n)break;
+        rep(n){
+          if(s[right]>k){mul=1;right++;kari=0;break;}
+          mul/=s[left];
+          left++;
+          kari--;
+          if(mul*s[right]<=k)break;
+        }
+      }
+    out(ans);
+  }
+  else out(n);
 }

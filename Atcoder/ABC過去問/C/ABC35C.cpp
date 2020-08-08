@@ -311,4 +311,20 @@ bool IsPrime(ll num)
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    /*いもす法　クエリの区間の総和を集計して最後にそれを反映させる
+    左端+1,(右端+1)-1してその累乗和をとる*/
+    LL(n,q);
+    std::vector<ll> v(n+1,0);
+    rep(q){
+      LL(li,ri);
+      li--;
+      v[li]++;
+      v[ri]--;
+    }
+    rep(n){
+      v[i+1]+=v[i];
+      v[i]%=2;
+      cout<<v[i];
+    }
+    out();
 }
