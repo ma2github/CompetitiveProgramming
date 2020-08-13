@@ -309,6 +309,56 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+void erase(vector<vector<ll>>&m,ll x,ll y){
+  m[y][x]=0;
+}
+vector<vector<ll>> drop(vector<vector<ll>>&m){
+  vector<vector<ll>> v(32);
+  vector<vector<ll>> map(32,vector<ll>(32,0));
+  rrep(i,1,31)rep(j,1,31)if(m[i][j])v[j].push_back(m[i][j]);
+  rep(j,1,31){ll cnt=30;each(a,v[j]){map[cnt][j]=a;cnt--;}}
+  return map;
+}
+ll solve(vector<vector<ll>> &m,ll x,ll y,ll k){
+  ll cnt=1;
+  ll ans=0;
+  vector<vector<ll>> m0;
+  m0=m;
+  erase(m0,x,y);
+  vector<vector<ll>> v=drop(m0);
+  rep(w,LPLMT){
+    ll an=ans;
+    rep(i,1,31)rep(j,1,31){
+    bool f=false;
+    ll len=1;
+    rep(a,1,31-i){if(v[j][i]!=v[j][i+a])break;len++;if(a==k-1)f=true;}
+    if(f)rep(a,len){ans+=cnt*v[j][i+a];erase(v,i+a,j);}
+    }
+    if(an==ans)break;
+    cnt*=2;
+    v=drop(v);
+  }
+  return ans;
+}
 signed main(){
     /*以下コード*/
+    ll ans=0;
+    ll sm=0;
+    LL(h,w,k);
+    std::vector<std::vector<ll>> m(32,vector<ll>(32,0));
+    std::set<pll> v;
+    rep(y,31-h,31)rep(x,1,w+1){
+      CHR(cyx);
+      m[y][x]=cyx-'0';
+      sm+=cyx;
+    }
+  if(k<4&&k>1){
+    rep(i,31-h,31)rep(j,1,w+1){
+      ll kari=solve(m,j,i,k);
+      chmax(ans,kari);
+    }
+    out(ans);
+  }
+  else if(k<2)out(sm);
+  else out(0);
 }

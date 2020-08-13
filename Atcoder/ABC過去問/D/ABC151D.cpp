@@ -309,6 +309,66 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+ll ul=-1;
+ll ur=-1;
+ll dl=-1;
+ll dr=-1;
+std::vector<ll> v;
 signed main(){
     /*以下コード*/
+    ll ans=0;
+    LL(h,w);
+    std::vector<std::vector<char>> s(h+2,std::vector<char> (w+2,'#'));
+    rep(i,1,h+1)rep(j,1,w+1){
+      CHR(sij);
+      if(sij=='#')continue;
+      s[i][j]='.';
+      v.push_back(i*w+j-w);
+    }
+    ll n=h*w;
+    vector<vector<int>> g(n+1);
+    ll start=0;
+    rep(i,1,h+1)rep(j,1,w+1){
+      if(s[i][j]=='#')continue;
+      rep(k,4){
+        ll inx=i+dx[k];
+        ll jnx=j+dy[k];
+        ll a=i*w+j-w;
+        ll b=inx*w+jnx-w;
+        if(s[inx][jnx]=='.'){
+        g[a].push_back(b);
+        g[b].push_back(a);
+      }
+      }
+    }
+    //rep(n+1)out(g[i]);
+    //out(G);
+    // BFS のためのデータ構造
+    each(start,v){
+      vector<int> dist(n+1, -1); // 全頂点を「未訪問」に初期化
+      queue<int> que;
+
+    // 初期条件 (頂点 1 を初期ノードとする)
+    dist[start] = 0;
+    que.push(start); // 1 を橙色頂点にする
+
+    // BFS 開始 (キューが空になるまで探索を行う)
+    while (!que.empty()) {
+        int v = que.front(); // キューから先頭頂点を取り出す
+        que.pop();
+        ll cnt=0;
+        // v から辿れる頂点をすべて調べる
+        for (int nv : g[v]) {
+            if (dist[nv] != -1) continue; // すでに発見済みの頂点は探索しない
+
+            // 新たな白色頂点 nv について距離情報を更新してキューに追加する
+            dist[nv] = dist[v]+1;
+            cnt++;
+            que.push(nv);
+        }
+        chmax(ans,dist[v]);
+    }
+  }
+    out(ans);
+
 }

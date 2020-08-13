@@ -188,7 +188,8 @@ ll facctorialMethod(ll k){
     for (ll i = 1; i <= k; ++i)
     {
         sum *= i;
-        //sum%=MOD;//あまりを出力せよ問題の時はこれもやる
+        sum%=MOD;//あまりを出力せよ問題の時はこれもやる
+        if(sum<0)sum+=MOD;
     }
     return sum;
 }
@@ -201,12 +202,12 @@ ll comb(const ll N,const ll K){
   }
   for(int k = 1;k <v.size();k++){
     for(int j = 1;j<k;j++){
-      v[k][j]=(v[k-1][j-1]+v[k-1][j]);
+      v[k][j]=((v[k-1][j-1]+v[k-1][j]))%MOD;
     }
   }
   return v[N][K];
 }
-/*逆元　あまりの割り算をするときにこいつをかける(a/b→a*modinv(b))*/
+/*逆元　あまりの割り算をするときにこいつをかける*/
 // mod. m での a の逆元 a^{-1} を計算する
 ll modinv(ll a,ll m){
     long long b = m, u = 1, v = 0;
@@ -311,4 +312,8 @@ bool IsPrime(ll num)
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    LL(w,h);
+    ll ans=(facctorialMethod(w+h-2)*modinv(facctorialMethod(h-1),MOD))%MOD;
+    ans=ans*modinv(facctorialMethod(w-1),MOD)%MOD;
+    out(ans);
 }

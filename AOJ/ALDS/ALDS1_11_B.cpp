@@ -184,7 +184,7 @@ T vgcd(T a, Args... args) {
 }
 /*階乗*/
 ll facctorialMethod(ll k){
-    ll sum = 1;
+    int sum = 1;
     for (ll i = 1; i <= k; ++i)
     {
         sum *= i;
@@ -206,7 +206,7 @@ ll comb(const ll N,const ll K){
   }
   return v[N][K];
 }
-/*逆元　あまりの割り算をするときにこいつをかける(a/b→a*modinv(b))*/
+/*逆元　あまりの割り算をするときにこいつをかける*/
 // mod. m での a の逆元 a^{-1} を計算する
 ll modinv(ll a,ll m){
     long long b = m, u = 1, v = 0;
@@ -309,6 +309,34 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+ll t=1;
+//ll x=0;
+//ll y=0;
+void dfs(ll n,ll x,ll y,vector<vector<ll>> &mp,vector<ll> &d,std::vector<ll> &f){
+  if(d[y]||f[y]||!mp[x][y])return;
+  mp[x][y]=0;
+  mp[y][x]=0;
+  if(!d[y]){
+    d[y]=t;
+    t++;
+  }
+  rep(n){if(y!=i){dfs(n,y,i,mp,d,f);}if(i==n-1){f[y]=t;t++;}}
+}
 signed main(){
     /*以下コード*/
+    LL(n);
+    std::vector<ll> d(n,0);
+    std::vector<ll> f(n,0);
+    std::vector<std::vector<ll>> mp(n+1,std::vector<ll> (n+1,0));
+    rep(i,n){
+      LL(u,k);
+      u--;
+      rep(k){
+        LL(vi);
+        vi--;
+        mp[u][vi]=1;
+      }
+    }
+    rep(n){mp[i][i]++;dfs(n,i,i,mp,d,f);}
+    rep(n)cout<<i+1<<' '<<d[i]<<' '<<f[i]<<endl;
 }

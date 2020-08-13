@@ -311,4 +311,15 @@ bool IsPrime(ll num)
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    LL(n,w);
+    std::vector<std::vector<ll>> dp(w+1,std::vector<ll> (n+1,0));
+    rep(i,1,n+1){
+      LL(vi,wi);
+      rep(j,1,w+1){
+        if(j<wi)dp[j][i]=dp[j][i-1];
+        else dp[j][i]=max(dp[j][i-1],dp[j-wi][i-1]+vi);
+      }
+    }
+    out(dp[w][n]);
+
 }

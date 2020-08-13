@@ -1,0 +1,4 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/ALDS/ALDS1_11_B.cpp: In function 'void dfs(ll, ll, ll, std::vector<std::vector<long long int> >&, std::vector<long long int>&, std::vector<long long int>&)':
+/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/ALDS/ALDS1_11_B.cpp:317:24: error: no match for call to '(std::vector<std::vector<long long int> >) (ll, ll)'
+  317 |   out(make_pair(x+1,y+1));
+      |                        ^

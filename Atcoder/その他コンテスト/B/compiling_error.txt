@@ -1,0 +1,4 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/その他コンテスト/B/square869120Contest#3B.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/その他コンテスト/B/square869120Contest#3B.cpp:358:15: error: lvalue required as left operand of assignment
+  358 |       if(i==30&&j=3)out(kari);
+      |          ~~~~~^~~

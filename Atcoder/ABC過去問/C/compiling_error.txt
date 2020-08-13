@@ -1,5 +1,13 @@
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC157C.cpp: In function 'int main()':
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC157C.cpp:301:12: error: 'ctoi' was not declared in this scope; did you mean 'atoi'?
-  301 |         if(ctoi(str[s[j]])!=c[j])break;
-      |            ^~~~
-      |            atoi
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC34C.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC34C.cpp:315:64: error: too few arguments to function 'll modinv(ll, ll)'
+  315 |     ll ans=facctorialMethod(w+h-2)*modinv(facctorialMethod(h-1))*modinv(facctorialMethod(w-1));
+      |                                                                ^
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC34C.cpp:211:4: note: declared here
+  211 | ll modinv(ll a,ll m){
+      |    ^~~~~~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC34C.cpp:315:94: error: too few arguments to function 'll modinv(ll, ll)'
+  315 |     ll ans=facctorialMethod(w+h-2)*modinv(facctorialMethod(h-1))*modinv(facctorialMethod(w-1));
+      |                                                                                              ^
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC34C.cpp:211:4: note: declared here
+  211 | ll modinv(ll a,ll m){
+      |    ^~~~~~

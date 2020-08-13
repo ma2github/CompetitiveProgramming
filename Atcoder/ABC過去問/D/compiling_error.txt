@@ -1,5 +1,5 @@
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC161D.cpp: In function 'int main()':
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/ABC161D.cpp:317:19: error: 'pahse' was not declared in this scope; did you mean 'phase'?
-  317 |           else if(pahse==2){phase=0;if(f%10<9){deq.push_back(f*10+f%10+1);cnt++;}}
-      |                   ^~~~~
-      |                   phase
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/D.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/D/D.cpp:323:11: error: 'xy' was not declared in this scope; did you mean 'yy'?
+  323 |     ll a=(xy-x*y)/(xx-x*x);
+      |           ^~
+      |           yy
