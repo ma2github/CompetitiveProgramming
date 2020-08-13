@@ -311,4 +311,8 @@ bool IsPrime(ll num)
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    LL(n);
+    STR(s,t);
+    rep(n)cout<<s[i]<<t[i];
+    cout<<endl;
 }

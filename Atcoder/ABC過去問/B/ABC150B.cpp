@@ -311,4 +311,9 @@ bool IsPrime(ll num)
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    ll cnt=0;
+    LL(n);
+    STR(s);
+    rep(n-2)if(s.substr(i,3)=="ABC")cnt++;
+    out(cnt);
 }

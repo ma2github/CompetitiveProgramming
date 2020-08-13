@@ -1,0 +1,13 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC47A.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC47A.cpp:311:18: error: invalid operands of types 'ld' {aka 'long double'} and 'int' to binary 'operator%'
+  311 |       while(!(lla%2)&&pt<18){pt++;lla/=2;}
+      |               ~~~^~
+      |               |   |
+      |               |   int
+      |               ld {aka long double}
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC47A.cpp:312:18: error: invalid operands of types 'ld' {aka 'long double'} and 'int' to binary 'operator%'
+  312 |       while(!(lla%5)&&pf<18){pf++;lla/=5;}
+      |               ~~~^~
+      |               |   |
+      |               |   int
+      |               ld {aka long double}

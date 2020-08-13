@@ -1,0 +1,10 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/ITP1/ITP1_7_B.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/ITP1/ITP1_7_B.cpp:318:37: error: 'y' was not declared in this scope
+  318 |       rep(a,1,n+1)rep(b,1,x)rep(c,1,y)if(a+b+c==x)ans++;
+      |                                     ^
+/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/ITP1/ITP1_7_B.cpp:34:34: note: in definition of macro 'rep3'
+   34 | #define rep3(i,a,b) for(ll i=a;i<b;++i)//a-bまでrepeat
+      |                                  ^
+/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/ITP1/ITP1_7_B.cpp:318:29: note: in expansion of macro 'rep'
+  318 |       rep(a,1,n+1)rep(b,1,x)rep(c,1,y)if(a+b+c==x)ans++;
+      |                             ^~~
