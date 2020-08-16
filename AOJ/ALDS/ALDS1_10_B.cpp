@@ -184,7 +184,7 @@ T vgcd(T a, Args... args) {
 }
 /*階乗*/
 ll facctorialMethod(ll k){
-    ll sum = 1;
+    int sum = 1;
     for (ll i = 1; i <= k; ++i)
     {
         sum *= i;
@@ -206,7 +206,7 @@ ll comb(const ll N,const ll K){
   }
   return v[N][K];
 }
-/*逆元　あまりの割り算をするときにこいつをかける(a/b→a*modinv(b))*/
+/*逆元　あまりの割り算をするときにこいつをかける*/
 // mod. m での a の逆元 a^{-1} を計算する
 ll modinv(ll a,ll m){
     long long b = m, u = 1, v = 0;
@@ -309,6 +309,24 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+std::vector<std::vector<ll>> m(100,std::vector<ll>(2,0));
+std::vector<std::vector<ll>> dp(100,std::vector<ll>(101,0));
+ll rec(ll l,ll r){
+  if(r-l<2)return 0;
+  if(dp[l][r])return dp[l][r];
+  ll res=LINF;
+  rep(k,l+1,r)chmin(res,rec(l,k)+rec(k,r)+m[l][0]*m[k-1][1]*m[r-1][1]);
+  return dp[l][r]=res;
+}
+
 signed main(){
     /*以下コード*/
+    LL(n);
+    rep(n){
+      LL(m1,m2);
+      m[i][0]=m1;
+      m[i][1]=m2;
+    }
+    ll ans=rec(0,n);
+    out(ans);
 }

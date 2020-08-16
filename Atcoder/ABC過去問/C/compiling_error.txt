@@ -1,13 +1,87 @@
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC34C.cpp: In function 'int main()':
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC34C.cpp:315:64: error: too few arguments to function 'll modinv(ll, ll)'
-  315 |     ll ans=facctorialMethod(w+h-2)*modinv(facctorialMethod(h-1))*modinv(facctorialMethod(w-1));
-      |                                                                ^
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC34C.cpp:211:4: note: declared here
-  211 | ll modinv(ll a,ll m){
-      |    ^~~~~~
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC34C.cpp:315:94: error: too few arguments to function 'll modinv(ll, ll)'
-  315 |     ll ans=facctorialMethod(w+h-2)*modinv(facctorialMethod(h-1))*modinv(facctorialMethod(w-1));
-      |                                                                                              ^
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC34C.cpp:211:4: note: declared here
-  211 | ll modinv(ll a,ll m){
-      |    ^~~~~~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC175C.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC175C.cpp:317:33: error: ambiguous overload for 'operator<<' (operand types are 'std::ostream' {aka 'std::basic_ostream<char>'} and '__int128')
+  317 |     if((__int128_t)x-dis>=0)cout<<x-dis<<endl;
+      |                             ~~~~^~~~~~~
+      |                             |      |
+      |                             |      __int128
+      |                             std::ostream {aka std::basic_ostream<char>}
+In file included from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/istream:39,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/sstream:38,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/complex:45,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ccomplex:39,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/x86_64-apple-darwin19/bits/stdc++.h:54,
+                 from /Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC175C.cpp:1:
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:166:7: note: candidate: 'std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]'
+  166 |       operator<<(long __n)
+      |       ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:170:7: note: candidate: 'std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]'
+  170 |       operator<<(unsigned long __n)
+      |       ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:174:7: note: candidate: 'std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(bool) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]'
+  174 |       operator<<(bool __n)
+      |       ^~~~~~~~
+In file included from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:784,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/istream:39,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/sstream:38,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/complex:45,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ccomplex:39,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/x86_64-apple-darwin19/bits/stdc++.h:54,
+                 from /Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC175C.cpp:1:
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/bits/ostream.tcc:91:5: note: candidate: 'std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(short int) [with _CharT = char; _Traits = std::char_traits<char>]'
+   91 |     basic_ostream<_CharT, _Traits>::
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/istream:39,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/sstream:38,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/complex:45,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ccomplex:39,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/x86_64-apple-darwin19/bits/stdc++.h:54,
+                 from /Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC175C.cpp:1:
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:181:7: note: candidate: 'std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(short unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]'
+  181 |       operator<<(unsigned short __n)
+      |       ^~~~~~~~
+In file included from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:784,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/istream:39,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/sstream:38,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/complex:45,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ccomplex:39,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/x86_64-apple-darwin19/bits/stdc++.h:54,
+                 from /Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC175C.cpp:1:
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/bits/ostream.tcc:105:5: note: candidate: 'std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(int) [with _CharT = char; _Traits = std::char_traits<char>]'
+  105 |     basic_ostream<_CharT, _Traits>::
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/istream:39,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/sstream:38,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/complex:45,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ccomplex:39,
+                 from /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/x86_64-apple-darwin19/bits/stdc++.h:54,
+                 from /Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/ABC過去問/C/ABC175C.cpp:1:
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:192:7: note: candidate: 'std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]'
+  192 |       operator<<(unsigned int __n)
+      |       ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:201:7: note: candidate: 'std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long long int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]'
+  201 |       operator<<(long long __n)
+      |       ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:205:7: note: candidate: 'std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long long unsigned int) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]'
+  205 |       operator<<(unsigned long long __n)
+      |       ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:220:7: note: candidate: 'std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(double) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]'
+  220 |       operator<<(double __f)
+      |       ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:224:7: note: candidate: 'std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(float) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]'
+  224 |       operator<<(float __f)
+      |       ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:232:7: note: candidate: 'std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long double) [with _CharT = char; _Traits = std::char_traits<char>; std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]'
+  232 |       operator<<(long double __f)
+      |       ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:511:5: note: candidate: 'std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, char) [with _CharT = char; _Traits = std::char_traits<char>]'
+  511 |     operator<<(basic_ostream<_CharT, _Traits>& __out, char __c)
+      |     ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:517:5: note: candidate: 'std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, char) [with _Traits = std::char_traits<char>]'
+  517 |     operator<<(basic_ostream<char, _Traits>& __out, char __c)
+      |     ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:523:5: note: candidate: 'std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, signed char) [with _Traits = std::char_traits<char>]'
+  523 |     operator<<(basic_ostream<char, _Traits>& __out, signed char __c)
+      |     ^~~~~~~~
+/usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/ostream:528:5: note: candidate: 'std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, unsigned char) [with _Traits = std::char_traits<char>]'
+  528 |     operator<<(basic_ostream<char, _Traits>& __out, unsigned char __c)
+      |     ^~~~~~~~
