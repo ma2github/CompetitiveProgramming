@@ -307,18 +307,23 @@ bool IsPrime(ll num)
 //floor()//切り捨て
 //round()//四捨五入
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
-//using std::map;
-//map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+using std::map;
+map<ll,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+std::vector<ll> l;
 signed main(){
     /*以下コード*/
-    LL(x,k,d);
-    x=abs(x);
-    if(x/d>=k)out(x-k*d);
-    else {
-      ll cnt=x/d;
-      ll ans=x%d;
-      k-=cnt;
-      if(k%2)out(d-ans);
-      else out(ans);
+    ll num=0;
+    ll ans=0;
+    LL(n);
+    rep(n){
+      LL(li);
+      l.push_back(li);
+      memo[li]++;
+      if(memo[li]==1)num++;
     }
+    Uniq(l);
+    rep(lf,0,num-2)rep(rt,lf+2,num)rep(mid,lf+1,rt){
+      if(l[rt]-l[lf]<l[mid])ans+=memo[l[lf]]*memo[l[mid]]*memo[l[rt]];
+    }
+    out(ans);
 }
