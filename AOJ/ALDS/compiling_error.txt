@@ -1,4 +1,4 @@
-/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/ALDS/ALDS1_11_B.cpp: In function 'void dfs(ll, ll, ll, std::vector<std::vector<long long int> >&, std::vector<long long int>&, std::vector<long long int>&)':
-/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/ALDS/ALDS1_11_B.cpp:317:24: error: no match for call to '(std::vector<std::vector<long long int> >) (ll, ll)'
-  317 |   out(make_pair(x+1,y+1));
-      |                        ^
+/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/ALDS/ALDS1_10_B.cpp: In function 'll rec(ll, ll)':
+/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/ALDS/ALDS1_10_B.cpp:318:45: error: 'i' was not declared in this scope
+  318 |   rep(k,l+1,r)chmin(res,rec(l,k)+rec(k,r)+m[i][0]*m[k-1][1]*m[r-1][1]);
+      |                                             ^

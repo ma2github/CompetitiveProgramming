@@ -309,6 +309,28 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+std::vector<ll> w;
+vector<vector<ll>> dp(310,std::vector<ll>(310,-1));
+ll rec(ll l,ll r){
+  if(~dp[l][r])return dp[l][r];
+  if(r-l<2)return dp[l][r]=0;
+  ll res=0;
+  if(rec(l+1,r-1)==r-l-2&&abs(w[l]-w[r-1])<2)res=r-l;
+  rep(mid,l+1,r)chmax(res,rec(l,mid)+rec(mid,r));
+  return dp[l][r]=res;
+}
 signed main(){
     /*以下コード*/
+    rep(LPLMT){
+      LL(n);
+      if(!n)break;
+      rep(n){
+        LL(wi);
+        w.push_back(wi);
+      }
+      ll ans=rec(0,n);
+      out(ans);
+      w.clear();
+      rep(i,310)rep(j,310)dp[i][j]=-1;
+  }
 }

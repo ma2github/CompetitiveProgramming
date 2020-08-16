@@ -309,6 +309,36 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+vector<ll> a;
+vector<vector<ll>> dp(2100,vector<ll>(2100,-1));
+ll n1=0;
+ll rec(ll l,ll r,ll s){
+  while(l<0)l+=n1;
+  while(l>=n1)l-=n1;
+  while(r<0)r+=n1;
+  while(r>=n1)r-=n1;
+  if(r==l){
+    if(s)return dp[l][r]=0;
+    else return dp[l][r]=a[l];
+  }
+  if(~dp[l][r])return dp[l][r];
+  ll res=0;
+  if(s){
+    if(a[l]<a[r])return dp[l][r]=rec(l,r-1,0);
+    else return dp[l][r]=rec(l+1,r,0);
+  }
+  else res=max(rec(l,r-1,1)+a[r],rec(l+1,r,1)+a[l]);
+  return dp[l][r]=res;
+}
 signed main(){
     /*以下コード*/
+    LL(n);
+    n1=n;
+    rep(n){
+      LL(ai);
+      a.push_back(ai);
+    }
+    ll ans=0;
+    rep(n)chmax(ans,rec((i+1)%n,(n-1+i)%n,1)+a[i]);
+    out(ans);
 }

@@ -1,0 +1,4 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/Volume16/1611_2.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/Volume16/1611_2.cpp:333:33: error: 'j' was not declared in this scope
+  333 |       rep(x,310)rep(y,310)dp[i][j]=-1;
+      |                                 ^

@@ -1,0 +1,4 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/その他コンテスト(Unrated)/B/JOI2015B.cpp: In function 'll rec(ll, ll)':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/その他コンテスト(Unrated)/B/JOI2015B.cpp:325:10: error: 'n' was not declared in this scope
+  325 |   else w=n-r+l;
+      |          ^
