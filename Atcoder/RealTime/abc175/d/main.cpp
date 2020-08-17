@@ -309,6 +309,50 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+vector<vector<ll>> loop(ll n,vector<ll> &p){
+  vector<vector<ll>> v;
+  std::vector<bool> f(n,true);
+  rep(n){
+    ll index=i;
+    std::vector<ll> a;
+    rep(n){
+      if(!f[index])continue;
+      f[index]=false;
+      a.push_back(index);
+      index=p[index];
+    }
+    if(a.size()>0)v.push_back(a);
+  }
+  return v;
+}
+ll solve(ll n,ll k,vector<ll> &p,vector<ll> &c){
+  ll ans=-LINF;
+  std::vector<std::vector<ll>> l=loop(n,p);
+  each(v,l){
+    __int128_t sm=0;
+    each(i,v)sm+=c[i];
+    size_t sz=v.size();
+    ll cnt=k%sz;
+    ll ansi=0;
+    if(sz<=k&&sm>0){ansi=sm*(k/sz-1);cnt+=sz;}
+    if(cnt<sz)cnt=min(k,(ll)sz);
+    each(i,v){
+      ll index=i;
+      ll kari=ansi;
+      rep(j,cnt){if(!j&&ansi)chmax(ans,max(ansi,ansi+c[i]));index=p[index];kari+=c[index];chmax(ans,kari);}
+    }
+  }
+  return ans;
+}
 signed main(){
     /*以下コード*/
+    std::vector<ll> p;
+    LL(n,k);
+    rep(n){
+      LL(pi);
+      pi--;
+      p.push_back(pi);
+    }
+    VEC(ll,c,n);
+    out(solve(n,k,p,c));
 }
