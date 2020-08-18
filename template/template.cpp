@@ -182,6 +182,28 @@ template <class T, class... Args>
 T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
+/*あまり（強制的に正の余りを出力）*/
+void mod(ll &n,ll p){
+  n%=p;
+  if(n<0)n+=p;
+}
+ll rtmod(ll n,ll p){
+  mod(n,p);
+  return n;
+}
+/*逆元　あまりの割り算をするときにこいつをかける(a/b→a*modinv(b))*/
+// mod. m での a の逆元 a^{-1} を計算する
+ll modinv(ll a,ll m){
+    long long b = m, u = 1, v = 0;
+    while (b) {
+        long long t = a / b;
+        a -= t * b; swap(a, b);
+        u -= t * v; swap(u, v);
+    }
+    u %= m;
+    if (u < 0) u += m;
+    return u;
+}
 /*階乗*/
 ll facctorialMethod(ll k){
     ll sum = 1;
@@ -189,6 +211,15 @@ ll facctorialMethod(ll k){
     {
         sum *= i;
         //sum%=MOD;//あまりを出力せよ問題の時はこれもやる
+    }
+    return sum;
+}
+ll fac2(ll k,ll a,ll p){
+    ll sum = 1;
+    for (ll i = k; i > k-a; --i)
+    {
+        sum *= i;
+        sum%=p;//あまりを出力せよ問題の時はこれもやる
     }
     return sum;
 }
@@ -206,18 +237,11 @@ ll comb(const ll N,const ll K){
   }
   return v[N][K];
 }
-/*逆元　あまりの割り算をするときにこいつをかける(a/b→a*modinv(b))*/
-// mod. m での a の逆元 a^{-1} を計算する
-ll modinv(ll a,ll m){
-    long long b = m, u = 1, v = 0;
-    while (b) {
-        long long t = a / b;
-        a -= t * b; swap(a, b);
-        u -= t * v; swap(u, v);
-    }
-    u %= m;
-    if (u < 0) u += m;
-    return u;
+ll modcomb(ll n,ll k,ll p){
+  ll c=fac2(n,k,p);
+  c*=modinv(fac2(k,k,p),p);
+  mod(c,p);
+  return c;
 }
 /*ダブリング*/
 /*
@@ -232,7 +256,7 @@ ll modinv(ll a,ll m){
 */
 //int N; // 全体の要素数
 //int Q;//試行回数
-ll doubling(const ll N,const ll Q,vector<ll> a){//cin>>N>>Q;//標準入力から要素数と試行回数を受け取る場合
+ll doubling(const ll N,const ll Q,vector<ll> &a){//cin>>N>>Q;//標準入力から要素数と試行回数を受け取る場合
 ll LOG_Q = floor(log2(Q))+1;
 
 // next[k][i]で、i番目の要素の「2^k個次の要素」を指す
