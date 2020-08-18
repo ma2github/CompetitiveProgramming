@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import random
-n = random.randint(2, 5000)
+n = random.randint(2, 2e5)
 k = random.randint(1, 1e9)
 print(n,k)
 L=list(range(1,n+1))

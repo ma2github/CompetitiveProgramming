@@ -1,88 +1,111 @@
-#include <bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp>
-#include <ext/pb_ds/tree_policy.hpp>
+#pragma GCC optimize ("O2")
+#pragma GCC target ("avx2")
+//#include<bits/stdc++.h>
+#include<algorithm>
+#include<deque>
+#include<cstdio>
 
 using namespace std;
-using namespace __gnu_pbds;
-
-#define fi first
-#define se second
-#define mp make_pair
-#define pb push_back
-#define fbo find_by_order
-#define ook order_of_key
-
 typedef long long ll;
-typedef pair<ll,ll> ii;
-typedef vector<ll> vi;
-typedef long double ld;
-typedef tree<ll, null_type, less<ll>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+#define rep(i, n) for(int i = 0; i < (n); i++)
+#define rep1(i, n) for(int i = 1; i <= (n); i++)
+#define co(x) cout << (x) << "\n"
+#define cosp(x) cout << (x) << " "
+#define ce(x) cerr << (x) << "\n"
+#define cesp(x) cerr << (x) << " "
+#define pb push_back
+#define mp make_pair
+#define chmin(x, y) x = min(x, y)
+#define chmax(x, y) x = max(x, y)
+#define Would
+#define you
+#define please
 
-int b[222222];
-int vis[6222];
-int a[6666];
-
-vector<ll> S;
-
-void dfs(int u, ll s)
-{
-	if(vis[u]) return ;
-	vis[u]=1;
-	s+=b[u];
-	S.pb(s);
-	dfs(a[u],s);
+const int cm = 8000100;
+char cn[cm], * ci = cn, ct;
+inline int getint() {
+	int A = 0;
+	while ((ct = *ci++) >= '0') A = A * 10 + ct - '0';
+	return A;
+}
+inline int getint2() {
+	int pn = 1;
+	if ((ct = *ci++) == '-') { pn = -1; ct = *ci++; }
+	int A = ct - '0';
+	while ((ct = *ci++) >= '0') A = A * 10 + ct - '0';
+	return pn * A;
 }
 
-int main()
-{
-	ios_base::sync_with_stdio(0); cin.tie(0);
-	int n,k; cin>>n>>k;
-	for(int i=0;i<n;i++)
-	{
-		cin>>a[i]; a[i]--;
-	}
-	for(int i=0;i<n;i++)
-	{
-		cin>>b[i];
-	}
-	ll ans = -ll(1e18);
-	for(int i=0;i<n;i++)
-	{
-		memset(vis,0,sizeof(vis));
-		dfs(i,0);
-		if(S.back()>0&&k>=int(S.size()))
-		{
-			ll q = k/int(S.size());
-			if(q>=1)
-			{
-				ll mx = -ll(1e18);
-				if(q-1>0) mx=0;
-				for(int i=0;i<int(S.size());i++)
-				{
-					mx=max(mx,S[i]);
-				}
-				ans=max(ans,(q-1)*S.back()+mx);
-			}
+ll dat[400020];
+bool yatta[200010];
+int P[200010], C[200010];
 
-			{
-				int r = k%int(S.size());
-				ll mx = 0;
-				for(int i=0;i<r;i++)
-				{
-					mx=max(mx,S[i]);
+int main() {
+	//cin.tie(0);
+	//ios::sync_with_stdio(false);
+
+
+	fread(cn, 1, cm, stdin);
+
+	int N = getint(), K = getint();
+	rep(i, N) P[i] = getint() - 1;
+	rep(i, N) C[i] = getint2();
+
+	ll kotae = -2e18;
+	rep(i, N) if (!yatta[i]) {
+		int L = 0;
+		auto kari = dat;
+		kari[0] = 0;
+		int j = i;
+		while (!yatta[j]) {
+			yatta[j] = 1;
+			kari[L + 1] = kari[L] + C[j];
+			L++;
+			j = P[j];
+		}
+		ll hue = kari[L];
+		for (int j = L + 1; j <= L + L; j++) {
+			kari[j] = kari[j - L] + hue;
+		}
+		ll amari = K % L;
+		ll wari = K / L;
+		if (hue > 0) {
+			if (amari > 0) {
+				deque<int> dq;
+				rep1(i, L + amari - 1) {
+					while (dq.size() && kari[dq.back()] <= kari[i]) dq.pop_back();
+					dq.push_back(i);
+					if (i < amari) continue;
+					while (dq.size() && dq.front() <= i - amari) dq.pop_front();
+					chmax(kotae, hue * wari + kari[dq.front()] - kari[i - amari]);
 				}
-				ans=max(ans,mx+q*S.back());
+			}
+			if (wari > 0) {
+				deque<int> dq;
+				rep1(i, L + L - amari - 1) {
+					while (dq.size() && kari[dq.back()] <= kari[i + amari]) dq.pop_back();
+					dq.push_back(i + amari);
+					if (i < L - amari) continue;
+					while (dq.size() && dq.front() <= i + amari - L) dq.pop_front();
+					chmax(kotae, hue * (wari - 1) + kari[dq.front()] - kari[i + amari - L]);
+				}
 			}
 		}
-		else
-		{
-			for(int j=1;j<=k;j++)
-			{
-				if(j-1<S.size()) ans=max(ans,S[j-1]);
-				else break;
+		else {
+			deque<int> dq;
+			int are = min(K, L);
+			rep1(i, L + are - 1) {
+				while (dq.size() && kari[dq.back()] <= kari[i]) dq.pop_back();
+				dq.push_back(i);
+				if (i < are) continue;
+				while (dq.size() && dq.front() <= i - are) dq.pop_front();
+				chmax(kotae, kari[dq.front()] - kari[i - are]);
 			}
 		}
-		S.clear();
 	}
-	cout<<ans<<'\n';
+
+	printf("%lld\n", kotae);
+
+
+	Would you please return 0;
 }
