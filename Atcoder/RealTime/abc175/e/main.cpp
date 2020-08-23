@@ -309,6 +309,37 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+//std::vector<std::vector<ll>> m(3100,std::vector<ll> (3100,0));
+//vector<vector<vector<ll>>> dp(3100,vector<vector<ll>> (3100,std::vector<ll> (4,0)));
+/*
+ll rec(ll x,ll y,ll c){
+  if(~dp[x][y][c])return dp[x][y][c];
+  if(!x||!y)return dp[x][y][c]=0;
+  if(c<1){c=0;return dp[x][y][0]=0;}
+  ll res=0;
+  rep((m[x][y]>0)+1)chmax(res,rec(x-1,y,c-i)+m[x][y]*i);
+  rep((m[x][y]>0)+1)chmax(res,rec(x,y-1,i)+m[x][y]*i);
+  return dp[x][y][c]=res;
+}*/
+ll m[3100][3100];
+ll dp[3100][3100][5];
 signed main(){
     /*以下コード*/
+    memset(m,0,sizeof(m));
+    memset(dp,0,sizeof(dp));
+    ll ans=0;
+    LL(r,c,k);
+    rep(k){
+      LL(ri,ci,vi);
+      m[ri][ci]=vi;
+    }
+    rep(i,1,r+1)rep(j,1,c+1)rep(t,0,4){
+      chmax(dp[i][j][0],dp[i-1][j][t]);
+      chmax(dp[i][j][1],dp[i-1][j][t]+m[i][j]);
+      if(t)chmax(dp[i][j][t],dp[i][j-1][t-1]+m[i][j]);
+      chmax(dp[i][j][t],dp[i][j-1][t]);
+    }
+    rep(4)chmax(ans,dp[r][c][i]);
+    out(ans);
+    //rep(i,1,r+1)rep(j,1,c+1)rep(c,4)out(dp[i][j][c]);
 }
