@@ -85,12 +85,12 @@ ll intpow(ll a, ll b){ ll ans = 1; while(b){ if(b & 1) ans *= a; a *= a; b /= 2;
 ll modpow(ll a, ll b, ll p){ ll ans = 1; while(b){ if(b & 1) (ans *= a) %= p; (a *= a) %= p; b /= 2; } return ans; }
 template<class T, class U> bool chmin(T& a, const U& b){ if(a > b){ a = b; return 1; } return 0; }
 template<class T, class U> bool chmax(T& a, const U& b){ if(a < b){ a = b; return 1; } return 0; }
-vector<ll> iota(ll n){ vector<ll> a(n); iota(a.begin(), a.end(), 0); return a; }
-vector<pll> factor(ull x){ vector<pll> ans; for(ull i = 2; i * i <= x; i++) if(x % i == 0){ ans.push_back({i, 1}); while((x /= i) % i == 0) ans.back().second++; } if(x != 1) ans.push_back({x, 1}); return ans; }
-map<ll,ll> factor_map(ull x){ map<ll,ll> ans; for(ull i = 2; i * i <= x; i++) if(x % i == 0){ ans[i] = 1; while((x /= i) % i == 0) ans[i]++; } if(x != 1) ans[x] = 1; return ans; }
-vector<ll> divisor(ull x){ vector<ll> ans; for(ull i = 1; i * i <= x; i++) if(x % i == 0) ans.push_back(i); rrep(ans.size() - (ans.back() * ans.back() == x)) ans.push_back(x / ans[i]); return ans; }
-template<class T> unordered_map<T, ll> press(vector<T>& a){ auto b = a; sort(all(b)); b.erase(unique(all(b)), b.end()); unordered_map<T, ll> ans; rep(b.size()) ans[b[i]] = i; each(i, a) i = ans[i]; return ans; }
-template<class T> map<T, ll> press_map(vector<T>& a){ auto b = a; sort(all(b)); b.erase(unique(all(b)), b.end()); map<T, ll> ans; rep(b.size()) ans[b[i]] = i; each(i, a) i = ans[i]; return ans; }
+vector<ll> iota(ll n){ vector<ll> a(n); iota(a.begin(), a.end(), 0); return a; }//0~n-1まで順に入れられたvectorを生成
+vector<pll> factor(ull x){ vector<pll> ans; for(ull i = 2; i * i <= x; i++) if(x % i == 0){ ans.push_back({i, 1}); while((x /= i) % i == 0) ans.back().second++; } if(x != 1) ans.push_back({x, 1}); return ans; }//xの素因数分解{素因数，何個あるか}のvectorを返す
+map<ll,ll> factor_map(ull x){ map<ll,ll> ans; for(ull i = 2; i * i <= x; i++) if(x % i == 0){ ans[i] = 1; while((x /= i) % i == 0) ans[i]++; } if(x != 1) ans[x] = 1; return ans; }//素因数分解mapVer.キー：素因数，要素＝その個数
+vector<ll> divisor(ull x){ vector<ll> ans; for(ull i = 1; i * i <= x; i++) if(x % i == 0) ans.push_back(i); rrep(ans.size() - (ans.back() * ans.back() == x)) ans.push_back(x / ans[i]); return ans; }//約数が昇順に格納されたvectorを返す
+template<class T> unordered_map<T, ll> press(vector<T>& a){ auto b = a; sort(all(b)); b.erase(unique(all(b)), b.end()); unordered_map<T, ll> ans; rep(b.size()) ans[b[i]] = i; each(i, a) i = ans[i]; return ans; }//圧縮　aの各要素をa内の要素で見た時に昇順で何番目だったかの情報に置き換える，{要素，何番目}を表すunordered_mapを返す
+template<class T> map<T, ll> press_map(vector<T>& a){ auto b = a; sort(all(b)); b.erase(unique(all(b)), b.end()); map<T, ll> ans; rep(b.size()) ans[b[i]] = i; each(i, a) i = ans[i]; return ans; }//圧縮mapVer.
 int scan(){ return getchar(); }
 void scan(int& a){ scanf("%d", &a); }
 void scan(unsigned& a){ scanf("%u", &a); }
@@ -182,6 +182,28 @@ template <class T, class... Args>
 T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
+/*あまり（強制的に正の余りを出力）*/
+void mod(ll &n,ll p){
+  n%=p;
+  if(n<0)n+=p;
+}
+ll rtmod(ll n,ll p){
+  mod(n,p);
+  return n;
+}
+/*逆元　あまりの割り算をするときにこいつをかける(a/b→a*modinv(b))*/
+// mod. m での a の逆元 a^{-1} を計算する
+ll modinv(ll a,ll m){
+    long long b = m, u = 1, v = 0;
+    while (b) {
+        long long t = a / b;
+        a -= t * b; swap(a, b);
+        u -= t * v; swap(u, v);
+    }
+    u %= m;
+    if (u < 0) u += m;
+    return u;
+}
 /*階乗*/
 ll facctorialMethod(ll k){
     ll sum = 1;
@@ -189,6 +211,15 @@ ll facctorialMethod(ll k){
     {
         sum *= i;
         //sum%=MOD;//あまりを出力せよ問題の時はこれもやる
+    }
+    return sum;
+}
+ll fac2(ll k,ll a,ll p){
+    ll sum = 1;
+    for (ll i = k; i > k-a; --i)
+    {
+        sum *= i;
+        sum%=p;//あまりを出力せよ問題の時はこれもやる
     }
     return sum;
 }
@@ -206,18 +237,11 @@ ll comb(const ll N,const ll K){
   }
   return v[N][K];
 }
-/*逆元　あまりの割り算をするときにこいつをかける(a/b→a*modinv(b))*/
-// mod. m での a の逆元 a^{-1} を計算する
-ll modinv(ll a,ll m){
-    long long b = m, u = 1, v = 0;
-    while (b) {
-        long long t = a / b;
-        a -= t * b; swap(a, b);
-        u -= t * v; swap(u, v);
-    }
-    u %= m;
-    if (u < 0) u += m;
-    return u;
+ll modcomb(ll n,ll k,ll p){
+  ll c=fac2(n,k,p);
+  c*=modinv(fac2(k,k,p),p);
+  mod(c,p);
+  return c;
 }
 /*ダブリング*/
 /*
@@ -232,7 +256,7 @@ ll modinv(ll a,ll m){
 */
 //int N; // 全体の要素数
 //int Q;//試行回数
-ll doubling(const ll N,const ll Q,vector<ll> a){//cin>>N>>Q;//標準入力から要素数と試行回数を受け取る場合
+ll doubling(const ll N,const ll Q,vector<ll> &a){//cin>>N>>Q;//標準入力から要素数と試行回数を受け取る場合
 ll LOG_Q = floor(log2(Q))+1;
 
 // next[k][i]で、i番目の要素の「2^k個次の要素」を指す
@@ -309,37 +333,11 @@ bool IsPrime(ll num)
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
-//std::vector<std::vector<ll>> m(3100,std::vector<ll> (3100,0));
-//vector<vector<vector<ll>>> dp(3100,vector<vector<ll>> (3100,std::vector<ll> (4,0)));
-/*
-ll rec(ll x,ll y,ll c){
-  if(~dp[x][y][c])return dp[x][y][c];
-  if(!x||!y)return dp[x][y][c]=0;
-  if(c<1){c=0;return dp[x][y][0]=0;}
-  ll res=0;
-  rep((m[x][y]>0)+1)chmax(res,rec(x-1,y,c-i)+m[x][y]*i);
-  rep((m[x][y]>0)+1)chmax(res,rec(x,y-1,i)+m[x][y]*i);
-  return dp[x][y][c]=res;
-}*/
-ll m[3100][3100];
-ll dp[3100][3100][5];
 signed main(){
     /*以下コード*/
-    memset(m,0,sizeof(m));
-    memset(dp,0,sizeof(dp));
+    STR(n);
+    size_t sz=n.size();
     ll ans=0;
-    LL(r,c,k);
-    rep(k){
-      LL(ri,ci,vi);
-      m[ri][ci]=vi;
-    }
-    rep(i,1,r+1)rep(j,1,c+1)rep(t,0,4){
-      chmax(dp[i][j][0],dp[i-1][j][t]);
-      chmax(dp[i][j][1],dp[i-1][j][t]+m[i][j]);
-      if(t)chmax(dp[i][j][t],dp[i][j-1][t-1]+m[i][j]);
-      chmax(dp[i][j][t],dp[i][j-1][t]);
-    }
-    rep(4)chmax(ans,dp[r][c][i]);
-    out(ans);
-    //rep(i,1,r+1)rep(j,1,c+1)rep(c,4)out(dp[i][j][c]);
+    rep(sz)ans+=n[i]-'0';
+    Yes(!(ans%9));
 }
