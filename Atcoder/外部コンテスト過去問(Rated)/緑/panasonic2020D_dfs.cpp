@@ -338,6 +338,12 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+void solve(string s,char cmax,ll n){
+  if(s.length()==n)out(s);
+  else rep(c,'a',cmax+1)solve(s+(char)c,(c==cmax)?cmax+1:cmax,n);
+}
 signed main(){
     /*以下コード*/
+    LL(n);
+    solve("",'a',n);
 }
