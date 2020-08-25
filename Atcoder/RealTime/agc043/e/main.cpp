@@ -327,11 +327,6 @@ bool IsPrime(ll num)
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
 */
-/*
-0~n-1までの順列の出力
-rep(n)v.push_back(i);
-do{}while(next_permutation(all(v)));
-*/
 //ceil()//切り上げ　ll(ceil((ld)n/(ld)x))=(n+x-1)/x（整数除算）なのでそっちがいいかも
 //floor()//切り捨て
 //round()//四捨五入

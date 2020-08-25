@@ -327,11 +327,6 @@ bool IsPrime(ll num)
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
 */
-/*
-0~n-1までの順列の出力
-rep(n)v.push_back(i);
-do{}while(next_permutation(all(v)));
-*/
 //ceil()//切り上げ　ll(ceil((ld)n/(ld)x))=(n+x-1)/x（整数除算）なのでそっちがいいかも
 //floor()//切り捨て
 //round()//四捨五入
@@ -340,4 +335,20 @@ do{}while(next_permutation(all(v)));
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    LL(h,w);
+    vv(ll,dp,h,w,LINF);
+    VEC(string,s,h);
+    deque<pll> deq;
+    deq.push_back({0,0});
+    dp[0][0]=(s[0][0]=='#');
+    while(deq.size()){
+      auto[r,c]=deq.front();
+      deq.pop_front();
+      rep(2){
+        if(r+dx[i]>=h||c+dy[i]>=w||!(chmin(dp[r+dx[i]][c+dy[i]],dp[r][c]+(s[r][c]=='.'&&s[r+dx[i]][c+dy[i]]=='#'))))continue;
+        if(s[r][c]=='.'&&s[r+dx[i]][c+dy[i]]=='#')deq.push_back({r+dx[i],c+dy[i]});
+        else deq.push_front({r+dx[i],c+dy[i]});
+      }
+    }
+    out(dp[h-1][w-1]);
 }

@@ -340,4 +340,20 @@ do{}while(next_permutation(all(v)));
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    LL(n);
+    deque<string> que;
+    que.push_back("a");
+    ll i=1;
+    while(i<n){
+      string s=que.front();
+      que.pop_front();
+      char cmax='a';
+      each(c,s)chmax(cmax,c);
+      rep(j,i+1){
+        if(cmax+1<j+'a')continue;
+        que.push_back(s+char('a'+j));
+      }
+      i=distance(all(que.front()));
+    }
+    each(s,que)out(s);
 }
