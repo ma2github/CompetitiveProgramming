@@ -1,0 +1,6 @@
+cc1plus: warning: /Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/RealTime/abc177/e/main.cpp is shorter than expected
+Undefined symbols for architecture x86_64:
+  "_main", referenced from:
+     implicit entry/start for main executable
+ld: symbol(s) not found for architecture x86_64
+collect2: error: ld returned 1 exit status
