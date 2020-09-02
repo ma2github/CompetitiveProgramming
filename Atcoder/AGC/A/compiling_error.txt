@@ -1,13 +1,20 @@
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC47A.cpp: In function 'int main()':
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC47A.cpp:311:18: error: invalid operands of types 'ld' {aka 'long double'} and 'int' to binary 'operator%'
-  311 |       while(!(lla%2)&&pt<18){pt++;lla/=2;}
-      |               ~~~^~
-      |               |   |
-      |               |   int
-      |               ld {aka long double}
-/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC47A.cpp:312:18: error: invalid operands of types 'ld' {aka 'long double'} and 'int' to binary 'operator%'
-  312 |       while(!(lla%5)&&pf<18){pf++;lla/=5;}
-      |               ~~~^~
-      |               |   |
-      |               |   int
-      |               ld {aka long double}
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC046A.cpp: In instantiation of 'T vgcd(T, Args ...) [with T = long long int; Args = {}]':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC046A.cpp:188:22:   required from 'T vgcd(T, Args ...) [with T = long int; Args = {long long int}]'
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC046A.cpp:349:24:   required from here
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC046A.cpp:188:22: error: no matching function for call to 'vgcd()'
+  188 |   return vgcd(a, vgcd(args...));
+      |                  ~~~~^~~~~~~~~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC046A.cpp:182:3: note: candidate: 'template<class T> T vgcd(T, T)'
+  182 | T vgcd(T m, T n) {
+      |   ^~~~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC046A.cpp:182:3: note:   template argument deduction/substitution failed:
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC046A.cpp:188:22: note:   candidate expects 2 arguments, 0 provided
+  188 |   return vgcd(a, vgcd(args...));
+      |                  ~~~~^~~~~~~~~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC046A.cpp:187:3: note: candidate: 'template<class T, class ... Args> T vgcd(T, Args ...)'
+  187 | T vgcd(T a, Args... args) {
+      |   ^~~~
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC046A.cpp:187:3: note:   template argument deduction/substitution failed:
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/AGC/A/AGC046A.cpp:188:22: note:   candidate expects at least 1 argument, 0 provided
+  188 |   return vgcd(a, vgcd(args...));
+      |                  ~~~~^~~~~~~~~
