@@ -346,6 +346,5 @@ do{}while(next_permutation(all(v)));
 signed main(){
     /*以下コード*/
     LL(m1,d1,m2,d2);
-    if(m1==m2)out(0);
-    else out(1);
+    out(m1!=m2);
 }

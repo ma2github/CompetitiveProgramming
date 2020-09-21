@@ -1,0 +1,4 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/RealTime/s8pc-1/g/main.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/RealTime/s8pc-1/g/main.cpp:390:17: error: 'i' was not declared in this scope
+  390 |     rep(8)out(dp[i]);
+      |                 ^
