@@ -1,0 +1,4 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/RealTime/abc129/c/main.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/Atcoder/RealTime/abc129/c/main.cpp:348:9: error: 'i' was not declared in this scope
+  348 |     cnt[i]=(f[i]);
+      |         ^

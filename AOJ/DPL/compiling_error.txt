@@ -1,0 +1,4 @@
+/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/DPL/DPL_2_A.cpp: In function 'int main()':
+/Users/kakeshitamasamichi/Desktop/kyopro/AOJ/DPL/DPL_2_A.cpp:360:39: error: 'x' was not declared in this scope
+  360 |     rep(ver)chmin(ans,dp[1<<ver-1][i]+a[i][0]);
+      |                                       ^
