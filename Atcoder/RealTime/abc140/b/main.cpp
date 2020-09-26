@@ -343,58 +343,13 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
-#include <atcoder/segtree>
-using namespace atcoder;
-ll op(ll a,ll b){
-  return min(a,b);
-}
-ll e(){
-  return LINF;
-}
 signed main(){
     /*以下コード*/
-    //Using Segtree Ver.O(n+qlogn);
-    LL(n,q);
-    segtree<ll,op,e> tx(n+1);
-    segtree<ll,op,e> ty(n+1);
-    tx.set(n,n);
-    ty.set(n,n);
-    ll ans=(n-2)*(n-2);
-    rep(q){
-      LL(ti,qi);
-      if(ti==1){
-        ll r=tx.prod(qi,n+1);
-        ans-=r-2;
-        ty.set(r,op(ty.get(r),qi));
-      }
-      if(ti==2){
-        ll r=ty.prod(qi,n+1);
-        ans-=r-2;
-        tx.set(r,op(tx.get(r),qi));
-      }
-    }
+    LL(n);
+    VEC(ll,a,n);
+    VEC(ll,b,n);
+    VEC(ll,c,n-1);
+    ll ans=0;
+    rep(n)ans+=(i&&a[i]-a[i-1]==1)?b[a[i]-1]+c[a[i]-2]:b[a[i]-1];
     out(ans);
-    /*
-    //Not using Segtree ver.O(n+q)
-    LL(n,q);
-    ll r=n;
-    ll d=n;
-    std::vector<ll> tate(n+1,n-2);
-    std::vector<ll> yoko(n+1,n-2);
-    ll ans=(n-2)*(n-2);
-    rep(q){
-      LL(ti,qi);
-      if(ti==1){
-        rep(j,qi,r)tate[j]=d-2;
-        ans-=tate[qi];
-        chmin(r,qi);
-      }
-      if(ti==2){
-        rep(j,qi,d)yoko[j]=r-2;
-        ans-=yoko[qi];
-        chmin(d,qi);
-      }
-    }
-    out(ans);
-    */
 }
