@@ -338,6 +338,28 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+ll h,w;
+std::vector<ll> a,b;
+vec(ll,ans,2e5+10,-1);
+vec(ll,llimit,2e5+10,-1);
+void solve(){
+/*  ans[0]=0;
+  llimit[1]=1;
+  rep(i,1,h+1){
+    llimit[i+1]=(llimit[i]<=b[i]&&llimit[i]>=a[i])?((b[i]+1>w)?-1:b[i]+1):llimit[i];
+    if(llimit[i+1]==-1)break;
+    ans[i]=ans[i-1]+1+llimit[i+1]-llimit[i];
+  }*/
+}
 signed main(){
     /*以下コード*/
+    cin>>h>>w;
+    a.push_back(w+1),b.push_back(-1);
+    rep(h){
+      LL(ai,bi);
+      a.push_back(ai);
+      b.push_back(bi);
+    }
+    solve();
+    rep(h)out(ans[i+1]);
 }
