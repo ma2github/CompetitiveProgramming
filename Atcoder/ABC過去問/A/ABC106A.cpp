@@ -1,3 +1,8 @@
+/*
+template
+ref1:https://github.com/tatyam-prime/kyopro_library
+ref2:https://tatyam.hatenablog.com/entry/2019/12/15/003634
+*/
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
@@ -164,11 +169,11 @@ void Case(ll i){ printf("Case #%lld: ", i); }
 /*vector探索*/
 #define bSearch(v,k) binary_search(all(v),k)//ソートされた配列vの中の要素にkがあるか(boolean)
 #define lowB(v,k) lower_bound(all(v),k)//ソートされた配列vの中の要素のうちk以上かつ最小のイテレータ
-#define DLbetB(v,k) lowB(v,k)-v.begin()//先頭からの距離
-#define DLbetE(v,k) v.end()-lowB(v,k)//末尾からの距離
+#define DLbetB(v,k) distance(lowB(v,k),v.begin())//先頭からの距離
+#define DLbetE(v,k) distance(lowB(v,k),v.end())//末尾からの距離
 #define uppB(v,k) upper_bound(all(v),k)//ソートされた配列vの中の要素のうちkより大きいかつ最小のイテレータ
-#define DUbetB(v,k) uppB(v,k)-v.begin()//先頭からの距離
-#define DUbetE(v,k) v.end()-uppB(v,k)//末尾からの距離
+#define DUbetB(v,k) distance(uppB(v,k),v.begin())//先頭からの距離
+#define DUbetE(v,k) distance(uppB(v,k),v.end())//末尾からの距離
 #define Cnt(v,k) count(all(v),k)//配列vの中で要素kが何個あるかを返す(size_t)
 #define CntIf(v,l) count_if(all(v),l)//配列vの中で条件式(lambda式)を満たす個数を返す(ex.int num = count_if(v.begin(), v.end(), [](int i){return i % 3 == 0;});)
 #define Sort2D(myVec,i) sort(myVec.begin(),myVec.end(),[](const vector<ll> &alpha,const vector<ll> &beta){return alpha[i] < beta[i];});//i列めでソート
@@ -185,7 +190,7 @@ T vgcd(T a, Args... args) {
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
-  if(n<0)n+=p;
+  while(n<0)n+=p;
 }
 ll rtmod(ll n,ll p){
   mod(n,p);
@@ -340,6 +345,6 @@ do{}while(next_permutation(all(v)));
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
-    LL(a,b,c);
-    c-(a-b)>0?out(c-(a-b)):out(0);
+    LL(a,b);
+    out(a*b-a-b+1);
 }
