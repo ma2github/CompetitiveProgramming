@@ -341,25 +341,33 @@ do{}while(next_permutation(all(v)));
 ll h,w;
 std::vector<ll> a,b;
 vec(ll,ans,2e5+10,-1);
-vec(ll,llimit,2e5+10,-1);
+map<ll,ll>s;
+multiset<ll>vals;
 void solve(){
-/*  ans[0]=0;
-  llimit[1]=1;
-  rep(i,1,h+1){
-    llimit[i+1]=(llimit[i]<=b[i]&&llimit[i]>=a[i])?((b[i]+1>w)?-1:b[i]+1):llimit[i];
-    if(llimit[i+1]==-1)break;
-    ans[i]=ans[i-1]+1+llimit[i+1]-llimit[i];
-  }*/
+  rep(w)s[i]=i,vals.insert(0);
+  rep(h){
+    ll ai=a[i];
+    ll bi=b[i];
+    ai--;
+    auto it=s.lower_bound(ai);
+    ll right=-1;
+    while(it!=s.end()&&it->first<=bi){
+      chmax(right,it->second);
+      vals.erase(vals.find(it->first-it->second));
+      s.erase(it++);
+    }
+    if(~right&&bi<w)vals.insert(bi-right),s[bi]=right;
+    if(vals.size())ans[i]=*vals.begin()+i+1;
+  }
 }
 signed main(){
     /*以下コード*/
     cin>>h>>w;
-    a.push_back(w+1),b.push_back(-1);
     rep(h){
       LL(ai,bi);
       a.push_back(ai);
       b.push_back(bi);
     }
     solve();
-    rep(h)out(ans[i+1]);
+    rep(h)out(ans[i]);
 }
