@@ -345,4 +345,5 @@ do{}while(next_permutation(all(v)));
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    LL(a,b);out((a+b)/2,(a-b)/2);
 }
