@@ -187,8 +187,6 @@ template <class T, class... Args>
 T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
-
-#define vecgcd(a) reduce(all(a),0,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
@@ -347,4 +345,10 @@ do{}while(next_permutation(all(v)));
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    VEC(ll,a,4);
+    ll sm=sum(a);
+    if(sm%2)return No();
+    rep(4)if(a[i]*2==sm)return Yes();
+    rep(4)rep(j,i)if(a[i]+a[j]==sm/2)return Yes();
+    No();
 }

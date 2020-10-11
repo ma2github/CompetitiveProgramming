@@ -347,4 +347,7 @@ do{}while(next_permutation(all(v)));
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    LL(n);
+    VEC(ll,a,n);
+    out(vecgcd(a));
 }
