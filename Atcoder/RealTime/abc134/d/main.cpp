@@ -187,8 +187,6 @@ template <class T, class... Args>
 T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
-
-#define vecgcd(a) reduce(all(a),0,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
@@ -347,4 +345,18 @@ do{}while(next_permutation(all(v)));
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
+    LL(n);
+    vec(ll,a,n+1,0);
+    rep(n)cin>>a[i+1];
+    vec(ll,c,n+1,0);
+    rrep(i,1,n+1){
+      ll ci=0;
+      rep(j,2*i,n+1,i)ci^=c[j];
+      c[i]=ci^a[i];
+    }
+    ll m=0;
+    vector<ll> ans;
+    rep(i,1,n+1)if(c[i])m++,ans.push_back(i);
+    out(m);
+    out(ans);
 }
