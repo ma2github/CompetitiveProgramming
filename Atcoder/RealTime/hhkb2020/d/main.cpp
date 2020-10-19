@@ -399,12 +399,6 @@ signed main(){
     rep(t){
       LL(n,a,b);
       Modint ans;
-      Modint pa=n-max(a,b)+1,pb=n-min(a,b)+1;
-      pa*=pa,pb*=pb;
-      Modint pc=a+b-1;
-      pc*=pc;
-      ans=pa*pb;
-      ans-=pa*pc;
-      out(ans%MOD);
+      out(ans);
     }
 }

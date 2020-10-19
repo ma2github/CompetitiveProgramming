@@ -188,7 +188,7 @@ T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
 
-#define vecgcd(a) reduce(all(a),0,gcd<ll,ll>)
+#define vecgcd(a) reduce(all(a),0LL,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
