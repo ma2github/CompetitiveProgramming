@@ -187,10 +187,12 @@ template <class T, class... Args>
 T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
+
+#define vecgcd(a) reduce(all(a),0LL,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
-  if(n<0)n+=p;
+  while(n<0)n+=p;
 }
 ll rtmod(ll n,ll p){
   mod(n,p);
@@ -345,30 +347,6 @@ do{}while(next_permutation(all(v)));
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
-    LL(n,k);
-    STR(s);
-    char cold='a';
-    std::vector<ll> veccnt;
-    ll cnt=0;
-    each(x,s){
-      if(cold!=x and cold!='a'){
-        veccnt.push_back(cnt);
-        cnt=0;
-      }
-      cnt++;
-      cold=x;
-    }
-    veccnt.push_back(cnt);
-    ll sz=veccnt.size();
-    rep(k){
-      ll olds=sz;
-      sz=sz-2*min(k-i,sz/3);
-      i+=olds/3-1;
-      if(sz==2){
-        if(i<k-1)return out(n-1);
-        else return out(n-2);
-      }
-      elif(sz==1)return out(n-1);
-    }
-    out(n-sz);
+    LL(a,b);
+    out(max(max((a/10)*10+9-b,a-((b/10)*10)),max(max((900+a%100)-b,a-(100+b%100)),max((a/100)*100+90+a%10-b,a-((b/100)*100+b%10)))));
 }

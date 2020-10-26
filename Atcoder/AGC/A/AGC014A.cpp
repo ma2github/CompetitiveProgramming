@@ -187,10 +187,12 @@ template <class T, class... Args>
 T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
+
+#define vecgcd(a) reduce(all(a),0LL,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
-  if(n<0)n+=p;
+  while(n<0)n+=p;
 }
 ll rtmod(ll n,ll p){
   mod(n,p);
@@ -345,30 +347,22 @@ do{}while(next_permutation(all(v)));
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
 signed main(){
     /*以下コード*/
-    LL(n,k);
-    STR(s);
-    char cold='a';
-    std::vector<ll> veccnt;
-    ll cnt=0;
-    each(x,s){
-      if(cold!=x and cold!='a'){
-        veccnt.push_back(cnt);
-        cnt=0;
-      }
-      cnt++;
-      cold=x;
+    LL(a,b,c);
+    if(a&1 or b&1 or c&1)return out(0);
+    ll a1=(b+c)/2,b1=(a+c)/2,c1=(b+c)/2;
+    ll acnt=1,bcnt=1,ccnt=1;
+    while(a%2==0 and a1%2==0){
+      acnt++;
+      a/=2,a1/=2;
     }
-    veccnt.push_back(cnt);
-    ll sz=veccnt.size();
-    rep(k){
-      ll olds=sz;
-      sz=sz-2*min(k-i,sz/3);
-      i+=olds/3-1;
-      if(sz==2){
-        if(i<k-1)return out(n-1);
-        else return out(n-2);
-      }
-      elif(sz==1)return out(n-1);
+    while(b%2==0 and b1%2==0){
+      bcnt++;
+      b/=2,b1/=2;
     }
-    out(n-sz);
+    while(c%2==0 and c1%2==0){
+      ccnt++;
+      c/=2,c1/=2;
+    }
+    if((a&1 and a1&1)&&(b&1 and b1&1)&&(c&1 and c1&1))out(-1);
+    else out(min(acnt,min(bcnt,ccnt)));
 }
