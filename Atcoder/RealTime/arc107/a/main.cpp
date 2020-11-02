@@ -187,6 +187,8 @@ template <class T, class... Args>
 T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
+
+#define vecgcd(a) reduce(all(a),0LL,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
@@ -343,33 +345,63 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
-void solve(ll &h,ll &w,std::vector<string> &s){
-  vv(ll,dist,h,w,-1);
-  --h,--w;
-  deque<pll> que;
-  que.push_back({0,0});
-  dist[0][0]=0;
-  while(que.size()){
-    pll cur=que.front();
-    que.pop_front();
-    rep(4){
-      ll x=cur.first+dx[i],y=cur.second+dy[i];
-      if(x<0 or x>h or y<0 or y>w)continue;
-      if(s[x][y]=='#' or ~dist[x][y])continue;
-      dist[x][y]=dist[cur.first][cur.second]+1;
-      que.push_back({x,y});
+/*
+ref:https://github.com/tatyam-prime/kyopro_library/blob/master/Modint.cpp
+*/
+constexpr unsigned Mod = MODD;
+struct Modint{
+    unsigned num = 0;
+    constexpr Modint() noexcept {}
+    constexpr Modint(const Modint &x) noexcept : num(x.num){}
+    inline constexpr operator ll() const noexcept { return num; }
+    inline constexpr Modint& operator+=(Modint x) noexcept { num += x.num; if(num >= Mod) num -= Mod; return *this; }
+    inline constexpr Modint& operator++() noexcept { if(num == Mod - 1) num = 0; else num++; return *this; }
+    inline constexpr Modint operator++(int) noexcept { Modint ans(*this); operator++(); return ans; }
+    inline constexpr Modint operator-() const noexcept { return Modint(0) -= *this; }
+    inline constexpr Modint operator-(Modint x) const noexcept { return Modint(*this) -= x; }
+    inline constexpr Modint& operator-=(Modint x) noexcept { if(num < x.num) num += Mod; num -= x.num; return *this; }
+    inline constexpr Modint& operator--() noexcept { if(num == 0) num = Mod - 1; else num--; return *this; }
+    inline constexpr Modint operator--(int) noexcept { Modint ans(*this); operator--(); return ans; }
+    inline constexpr Modint& operator*=(Modint x) noexcept { num = ull(num) * x.num % Mod; return *this; }
+    inline constexpr Modint& operator/=(Modint x) noexcept { return operator*=(x.inv()); }
+    template<class T> constexpr Modint(T x) noexcept {
+        using U = typename conditional<sizeof(T) >= 4, T, int>::type;
+        U y = x; y %= U(Mod); if(y < 0) y += Mod; num = unsigned(y);
     }
-  }//bfsで最短経路探索，なければ-1を報告して終了
-  if(~dist[h][w]){
-    ll cnt=0;
-    rep(i,h+1)rep(j,w+1)cnt+=s[i][j]=='#';
-    out((h+1)*(w+1)-(dist[h][w]+1+cnt));
-  }
-  else out(-1);//答えはh*w-(最短距離+1+黒マスの個数)
+    template<class T> inline constexpr Modint operator+(T x) const noexcept { return Modint(*this) += x; }
+    template<class T> inline constexpr Modint& operator+=(T x) noexcept { return operator+=(Modint(x)); }
+    template<class T> inline constexpr Modint operator-(T x) const noexcept { return Modint(*this) -= x; }
+    template<class T> inline constexpr Modint& operator-=(T x) noexcept { return operator-=(Modint(x)); }
+    template<class T> inline constexpr Modint operator*(T x) const noexcept { return Modint(*this) *= x; }
+    template<class T> inline constexpr Modint& operator*=(T x) noexcept { return operator*=(Modint(x)); }
+    template<class T> inline constexpr Modint operator/(T x) const noexcept { return Modint(*this) /= x; }
+    template<class T> inline constexpr Modint& operator/=(T x) noexcept { return operator/=(Modint(x)); }
+    inline constexpr Modint inv() const noexcept { ll x = 0, y = 0; extgcd(num, Mod, x, y); return x; }
+    static inline constexpr ll extgcd(ll a, ll b, ll &x, ll &y) noexcept { ll g = a; x = 1; y = 0; if(b){ g = extgcd(b, a % b, y, x); y -= a / b * x; } return g; }
+    inline constexpr Modint pow(ull x) const noexcept { Modint ans = 1, cnt = *this; while(x){ if(x & 1) ans *= cnt; cnt *= cnt; x /= 2; } return ans; }
+};
+std::istream& operator>>(std::istream& is, Modint& x) noexcept { ll a; cin >> a; x = a; return is; }
+inline constexpr Modint operator""_M(ull x) noexcept { return Modint(x); }
+std::vector<Modint> fac(1, 1), inv(1, 1);
+inline void reserve(ll a){
+    if(fac.size() >= a) return;
+    if(a < fac.size() * 2) a = fac.size() * 2;
+    if(a >= Mod) a = Mod;
+    while(fac.size() < a) fac.push_back(fac.back() * Modint(fac.size()));
+    inv.resize(fac.size());
+    inv.back() = fac.back().inv();
+    for(ll i = inv.size() - 1; !inv[i - 1]; i--) inv[i - 1] = inv[i] * i;
+}
+inline Modint fact(ll n){ if(n < 0) return 0; reserve(n + 1); return fac[n]; }
+inline Modint perm(ll n, ll r){
+    if(r < 0 || n < r) return 0;
+    if(n >> 24){ Modint ans = 1; for(ll i = 0; i < r; i++) ans *= n--; return ans; }
+    reserve(n + 1); return fac[n] * inv[n - r];
 }
 signed main(){
     /*以下コード*/
-    LL(h,w);
-    VEC(string,s,h);
-    solve(h,w,s);
+    Modint a,b,c,ans;
+    cin>>a>>b>>c;
+    ans=((a+1)*a/2)*((b+1)*b/2)*(c*(c+1)/2);
+    out(ans);
 }

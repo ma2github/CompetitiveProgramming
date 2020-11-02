@@ -187,6 +187,8 @@ template <class T, class... Args>
 T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
+
+#define vecgcd(a) reduce(all(a),0,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
@@ -343,33 +345,112 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
-void solve(ll &h,ll &w,std::vector<string> &s){
-  vv(ll,dist,h,w,-1);
-  --h,--w;
-  deque<pll> que;
-  que.push_back({0,0});
-  dist[0][0]=0;
-  while(que.size()){
-    pll cur=que.front();
-    que.pop_front();
-    rep(4){
-      ll x=cur.first+dx[i],y=cur.second+dy[i];
-      if(x<0 or x>h or y<0 or y>w)continue;
-      if(s[x][y]=='#' or ~dist[x][y])continue;
-      dist[x][y]=dist[cur.first][cur.second]+1;
-      que.push_back({x,y});
+/*
+ref:https://github.com/tatyam-prime/kyopro_library/blob/master/Modint.cpp
+*/
+constexpr unsigned Mod = MODD;
+struct Modint{
+    unsigned num = 0;
+    constexpr Modint() noexcept {}
+    constexpr Modint(const Modint &x) noexcept : num(x.num){}
+    inline constexpr operator ll() const noexcept { return num; }
+    inline constexpr Modint& operator+=(Modint x) noexcept { num += x.num; if(num >= Mod) num -= Mod; return *this; }
+    inline constexpr Modint& operator++() noexcept { if(num == Mod - 1) num = 0; else num++; return *this; }
+    inline constexpr Modint operator++(int) noexcept { Modint ans(*this); operator++(); return ans; }
+    inline constexpr Modint operator-() const noexcept { return Modint(0) -= *this; }
+    inline constexpr Modint operator-(Modint x) const noexcept { return Modint(*this) -= x; }
+    inline constexpr Modint& operator-=(Modint x) noexcept { if(num < x.num) num += Mod; num -= x.num; return *this; }
+    inline constexpr Modint& operator--() noexcept { if(num == 0) num = Mod - 1; else num--; return *this; }
+    inline constexpr Modint operator--(int) noexcept { Modint ans(*this); operator--(); return ans; }
+    inline constexpr Modint& operator*=(Modint x) noexcept { num = ull(num) * x.num % Mod; return *this; }
+    inline constexpr Modint& operator/=(Modint x) noexcept { return operator*=(x.inv()); }
+    template<class T> constexpr Modint(T x) noexcept {
+        using U = typename conditional<sizeof(T) >= 4, T, int>::type;
+        U y = x; y %= U(Mod); if(y < 0) y += Mod; num = unsigned(y);
     }
-  }//bfsで最短経路探索，なければ-1を報告して終了
-  if(~dist[h][w]){
-    ll cnt=0;
-    rep(i,h+1)rep(j,w+1)cnt+=s[i][j]=='#';
-    out((h+1)*(w+1)-(dist[h][w]+1+cnt));
+    template<class T> inline constexpr Modint operator+(T x) const noexcept { return Modint(*this) += x; }
+    template<class T> inline constexpr Modint& operator+=(T x) noexcept { return operator+=(Modint(x)); }
+    template<class T> inline constexpr Modint operator-(T x) const noexcept { return Modint(*this) -= x; }
+    template<class T> inline constexpr Modint& operator-=(T x) noexcept { return operator-=(Modint(x)); }
+    template<class T> inline constexpr Modint operator*(T x) const noexcept { return Modint(*this) *= x; }
+    template<class T> inline constexpr Modint& operator*=(T x) noexcept { return operator*=(Modint(x)); }
+    template<class T> inline constexpr Modint operator/(T x) const noexcept { return Modint(*this) /= x; }
+    template<class T> inline constexpr Modint& operator/=(T x) noexcept { return operator/=(Modint(x)); }
+    inline constexpr Modint inv() const noexcept { ll x = 0, y = 0; extgcd(num, Mod, x, y); return x; }
+    static inline constexpr ll extgcd(ll a, ll b, ll &x, ll &y) noexcept { ll g = a; x = 1; y = 0; if(b){ g = extgcd(b, a % b, y, x); y -= a / b * x; } return g; }
+    inline constexpr Modint pow(ull x) const noexcept { Modint ans = 1, cnt = *this; while(x){ if(x & 1) ans *= cnt; cnt *= cnt; x /= 2; } return ans; }
+};
+std::istream& operator>>(std::istream& is, Modint& x) noexcept { ll a; cin >> a; x = a; return is; }
+inline constexpr Modint operator""_M(ull x) noexcept { return Modint(x); }
+std::vector<Modint> fac(1, 1), inv(1, 1);
+inline void reserve(ll a){
+    if(fac.size() >= a) return;
+    if(a < fac.size() * 2) a = fac.size() * 2;
+    if(a >= Mod) a = Mod;
+    while(fac.size() < a) fac.push_back(fac.back() * Modint(fac.size()));
+    inv.resize(fac.size());
+    inv.back() = fac.back().inv();
+    for(ll i = inv.size() - 1; !inv[i - 1]; i--) inv[i - 1] = inv[i] * i;
+}
+inline Modint fact(ll n){ if(n < 0) return 0; reserve(n + 1); return fac[n]; }
+inline Modint perm(ll n, ll r){
+    if(r < 0 || n < r) return 0;
+    if(n >> 24){ Modint ans = 1; for(ll i = 0; i < r; i++) ans *= n--; return ans; }
+    reserve(n + 1); return fac[n] * inv[n - r];
+}
+ll par[NLGLMT];
+ll height[NLGLMT];
+
+void UnionInit(ll n){
+  rep(n){
+    par[i]=i;//初めは全ての頂点が根である
+    height[i]=0;
   }
-  else out(-1);//答えはh*w-(最短距離+1+黒マスの個数)
+}
+
+ll root(ll x){//木の根を求める
+  if(par[x]==x)return x;//根
+  else return par[x]=root(par[x]);//根でない場合経路圧縮（根に直接繋ぎ直す）
+}
+
+bool same(ll x,ll y){//x,yが同じ木に属するか判定
+  return root(x)==root(y);
+}
+
+void unite(ll x,ll y){//x,yの属する集合を併合
+  x=root(x);
+  y=root(y);
+  if(x==y)return;//同じ集合なら何もしない
+  if(height[x]<height[y])par[x]=y;//高い方の親に繋ぐ
+  else{
+    par[y]=x;//高い方の親に繋ぐ
+    if(height[x]==height[y])height[x]++;//新しい親+元の木で高さ+1
+  }
 }
 signed main(){
     /*以下コード*/
-    LL(h,w);
-    VEC(string,s,h);
-    solve(h,w,s);
+    LL(n,k);
+    VV(ll,a,n,n);
+    UnionInit(n);
+    rep(i,n)rep(r,i+1,n){
+      rep(j,n){
+        if(a[i][j]+a[r][j]>k)break;
+        if(j==n-1)unite(i,r);
+      }
+    }
+    Modint ans=1;
+    map<ll,ll>memo;
+    rep(n)memo[root(i)]++;
+    each(x,memo)ans*=fac2(x.second,x.second,MODD);
+    UnionInit(n);
+    rep(j,n)rep(c,j+1,n){
+      rep(i,n){
+        if(a[i][j]+a[i][c]>k)break;
+        if(i==n-1)unite(j,c);
+      }
+    }
+    map<ll,ll>memo1;
+    rep(n)memo1[root(i)]++;
+    each(x,memo1)ans*=fac2(x.second,x.second,MODD);
+    out(ans);
 }
