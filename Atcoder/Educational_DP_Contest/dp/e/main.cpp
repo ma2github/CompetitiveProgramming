@@ -187,6 +187,8 @@ template <class T, class... Args>
 T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
+
+#define vecgcd(a) reduce(all(a),0,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
@@ -343,33 +345,32 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
-void solve(ll &h,ll &w,std::vector<string> &s){
-  vv(ll,dist,h,w,-1);
-  --h,--w;
-  deque<pll> que;
-  que.push_back({0,0});
-  dist[0][0]=0;
-  while(que.size()){
-    pll cur=que.front();
-    que.pop_front();
-    rep(4){
-      ll x=cur.first+dx[i],y=cur.second+dy[i];
-      if(x<0 or x>h or y<0 or y>w)continue;
-      if(s[x][y]=='#' or ~dist[x][y])continue;
-      dist[x][y]=dist[cur.first][cur.second]+1;
-      que.push_back({x,y});
-    }
-  }//bfsで最短経路探索，なければ-1を報告して終了
-  if(~dist[h][w]){
-    ll cnt=0;
-    rep(i,h+1)rep(j,w+1)cnt+=s[i][j]=='#';
-    out((h+1)*(w+1)-(dist[h][w]+1+cnt));
-  }
-  else out(-1);//答えはh*w-(最短距離+1+黒マスの個数)
+/*
+i個目の品物を含めて大丈夫か？を調べ続ける
+i-1個目まででその価値を実現できるかを保持する
+価値の総和は高々10^5
+dp[las][v]:las番目までで価値vを実現できたときの重量
+dp[las][0]=0;
+ll res=rec(las-1,v,wv);
+if(w>=rec(las-1,v-wv[i][1],wv)+wv[i][0])res=rec(las-1,v-wv[i][1],wv)+wv[i][0];
+*/
+ll n,w;
+vv(ll,dp,110,100010,-1);
+ll rec(ll las,ll v,std::vector<std::vector<ll>> &wv){
+  if(!v)return 0;
+  if(las<0 or v<0)return LINF;
+  if(~dp[las][v])return dp[las][v];
+  ll res=rec(las-1,v,wv);
+  if(rec(las-1,v-wv[las][1],wv)+wv[las][0]<=w)chmin(res,rec(las-1,v-wv[las][1],wv)+wv[las][0]);
+  return dp[las][v]=res;
 }
 signed main(){
     /*以下コード*/
-    LL(h,w);
-    VEC(string,s,h);
-    solve(h,w,s);
+    cin>>n>>w;
+    VV(ll,wv,n,2);
+    ll sm=0;
+    rep(n)sm+=wv[i][1];
+    rrep(sm+1){
+      if(rec(n-1,i,wv)<LINF)return out(i);
+    }
 }

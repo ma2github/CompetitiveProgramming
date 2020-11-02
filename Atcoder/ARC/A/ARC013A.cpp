@@ -187,6 +187,8 @@ template <class T, class... Args>
 T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
+
+#define vecgcd(a) reduce(all(a),0LL,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
@@ -343,33 +345,15 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
-void solve(ll &h,ll &w,std::vector<string> &s){
-  vv(ll,dist,h,w,-1);
-  --h,--w;
-  deque<pll> que;
-  que.push_back({0,0});
-  dist[0][0]=0;
-  while(que.size()){
-    pll cur=que.front();
-    que.pop_front();
-    rep(4){
-      ll x=cur.first+dx[i],y=cur.second+dy[i];
-      if(x<0 or x>h or y<0 or y>w)continue;
-      if(s[x][y]=='#' or ~dist[x][y])continue;
-      dist[x][y]=dist[cur.first][cur.second]+1;
-      que.push_back({x,y});
-    }
-  }//bfsで最短経路探索，なければ-1を報告して終了
-  if(~dist[h][w]){
-    ll cnt=0;
-    rep(i,h+1)rep(j,w+1)cnt+=s[i][j]=='#';
-    out((h+1)*(w+1)-(dist[h][w]+1+cnt));
-  }
-  else out(-1);//答えはh*w-(最短距離+1+黒マスの個数)
-}
 signed main(){
     /*以下コード*/
-    LL(h,w);
-    VEC(string,s,h);
-    solve(h,w,s);
+    LL(n,m,l);
+    VEC(ll,pqr,3);
+    ll ans=0;
+    std::vector<ll> v;
+    rep(3)v.push_back(i);
+    do{
+      chmax(ans,(n/pqr[v[0]])*(m/pqr[v[1]])*(l/pqr[v[2]]));
+    }while(next_permutation(all(v)));
+    out(ans);
 }
