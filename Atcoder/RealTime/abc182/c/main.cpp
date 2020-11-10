@@ -188,7 +188,7 @@ T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
 
-#define vecgcd(a) reduce(all(a),0LL,gcd<ll,ll>)
+#define vecgcd(a) reduce(all(a),0,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
@@ -345,23 +345,16 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
-
-/*以下コーディング*/
-signed solve();
-void slv();
 signed main(){
-    ll testcase=1;
-    //cin>>testcase;//テストケース数を渡す
-    while(testcase--)slv();
-}
-void slv(){//入力と解法を分離させるだけなので，基本的に入力以外何も書かない
-  //Input(面倒なときに分離させる)
-  solve();//実装本体はこっちに書く（必要に応じて引数を渡す）
-}
-signed solve(){//main
-  /*
-  idea:
-  */
-  
-  return 0;//checklist.txtを確認
+    /*以下コード*/
+    STR(n);
+    vec(ll,cnt,3,0);
+    each(c,n)cnt[(c-'0')%3]++;
+    if(!cnt[0] and (!cnt[1] or !cnt[2])){
+      if(n.size()>2)return out(n.size()%3);
+      return out(-1);
+    }
+    ll ans=abs(cnt[1]-cnt[2])%3;
+    chmin(ans,cnt[1]%3+cnt[2]%3);
+    out(ans);
 }

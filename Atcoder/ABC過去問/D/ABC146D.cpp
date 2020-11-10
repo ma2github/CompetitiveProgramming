@@ -188,7 +188,7 @@ T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
 
-#define vecgcd(a) reduce(all(a),0LL,gcd<ll,ll>)
+#define vecgcd(a) reduce(all(a),0,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
@@ -345,23 +345,32 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
-
-/*以下コーディング*/
-signed solve();
-void slv();
 signed main(){
-    ll testcase=1;
-    //cin>>testcase;//テストケース数を渡す
-    while(testcase--)slv();
-}
-void slv(){//入力と解法を分離させるだけなので，基本的に入力以外何も書かない
-  //Input(面倒なときに分離させる)
-  solve();//実装本体はこっちに書く（必要に応じて引数を渡す）
-}
-signed solve(){//main
-  /*
-  idea:
-  */
-  
-  return 0;//checklist.txtを確認
+    /*以下コード*/
+    LL(n);
+    VEC(pll,ab,n-1);
+    vv(ll,g,n+1);
+    ll k=0;
+    map<pll,ll>edge;
+    ll index=0;
+    each(p,ab){
+      g[p.first].push_back(p.second);
+      g[p.second].push_back(p.first);
+      edge[p]=index++;
+    }
+    each(v,g)chmax(k,v.size());
+    map<pll,bool>ok;
+    vec(ll,vans,n-1);
+    vec(ll,mn,n+1,1);
+    each(p,edge){
+      ll ai=p.first.first,bi=p.first.second;
+      ll ans=max(mn[ai],mn[bi]);
+      while(ok[{ai,ans}] or ok[{bi,ans}])ans++;
+      vans[edge[p.first]]=ans;
+      ok[{ai,ans}]=true,ok[{bi,ans}]=true;
+      if(mn[ai]==ans)mn[ai]++;
+      if(mn[bi]==ans)mn[bi]++;
+    }
+    out(k);
+    each(x,vans)out(x);
 }
