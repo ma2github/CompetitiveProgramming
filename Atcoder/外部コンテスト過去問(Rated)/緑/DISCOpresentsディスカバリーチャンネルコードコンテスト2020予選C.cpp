@@ -345,23 +345,54 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
-
-/*以下コーディング*/
-signed solve();
-void slv();
-signed main(){
-    ll testcase=1;
-    //cin>>testcase;//テストケース数を渡す
-    while(testcase--)slv();
-}
-void slv(){//入力と解法を分離させるだけなので，基本的に入力以外何も書かない
-  //Input(面倒なときに分離させる)
-  solve();//実装本体はこっちに書く（必要に応じて引数を渡す）
-}
-signed solve(){//main
+void solve(ll h,ll w,ll k,std::vector<string> &s){
   /*
-  idea:
+  次のいちごがあるまでひたすら自分の領域
+  ただし，行が変わるとき，その領域は次のいちごの領域になる
+  始めのいちごをどうするかが難しい
+  もしかして列形式で取ってやればいい？
+  その列にいちごがない場合は次の列に持ち越し，それに合わせる
   */
-  
-  return 0;//checklist.txtを確認
+  vv(ll,ans,h,w,0);
+  vv(ll,kari,h,w,0);
+  ll cnt=1;
+  bool exist=false;
+  ll st=-1,ls=-1;
+  rep(j,w){
+    exist=false;
+    rep(i,h){
+      if(s[i][j]=='#'){
+        cnt+=exist;
+        exist=true,ls=j;
+      }
+      kari[i][j]=cnt;
+      if(i==h-1 and s[h-1][j]=='.' and h>1)cnt=kari[h-2][j],kari[h-1][j]=cnt;
+    }
+    if(exist){
+      if(st==-1)st=j;
+      rep(j1,st,j+1)rep(i1,h){
+        ans[i1][j1]=kari[i1][j];
+      }
+      st=-1;
+      cnt++;
+    }else{
+      if(st==-1)st=j;
+    }
+  }
+  if(~st){
+    rep(j2,st,w)rep(i2,h){
+      ans[i2][j2]=ans[i2][ls];
+    }
+  }
+  //可能性をうめる
+  //もしその列にいちごがあり，かつあるstから埋められていなければ，全部その列に合わせる
+  //もしその１列にいちごが無ければ反映せず，次の列に持ち越し
+  //もし右端の方が埋まっていなければ，最後にいちごが出現した列に合わせる
+  each(x,ans)out(x);
+}
+signed main(){
+    /*以下コード*/
+    LL(h,w,k);
+    VEC(string,s,h);
+    solve(h,w,k,s);
 }

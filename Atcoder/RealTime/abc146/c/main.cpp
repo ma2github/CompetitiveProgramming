@@ -345,23 +345,15 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
-
-/*以下コーディング*/
-signed solve();
-void slv();
 signed main(){
-    ll testcase=1;
-    //cin>>testcase;//テストケース数を渡す
-    while(testcase--)slv();
-}
-void slv(){//入力と解法を分離させるだけなので，基本的に入力以外何も書かない
-  //Input(面倒なときに分離させる)
-  solve();//実装本体はこっちに書く（必要に応じて引数を渡す）
-}
-signed solve(){//main
-  /*
-  idea:
-  */
-  
-  return 0;//checklist.txtを確認
+    /*以下コード*/
+    LL(a,b,x);
+    if(x>=a*intpow(10,9)+b*10LL)return out(intpow(10,9));
+    ll ok=0,ng=intpow(10,9);//半開区間にする
+    while(abs(ok-ng)>1){
+      ll mid=(ok+ng)/2;
+      if(a*mid+b*to_string(mid).size()<=x)ok=mid;/*最大を求める場合は（mid<=なんかの基準）最小なら向きを反転させれば良い（等号は含む）*/
+      else ng=mid;
+    }
+    out(ok);
 }

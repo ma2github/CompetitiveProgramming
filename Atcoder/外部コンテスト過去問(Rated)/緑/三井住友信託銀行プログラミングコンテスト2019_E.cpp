@@ -345,23 +345,77 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
-
-/*以下コーディング*/
-signed solve();
-void slv();
-signed main(){
-    ll testcase=1;
-    //cin>>testcase;//テストケース数を渡す
-    while(testcase--)slv();
+/*
+ref:https://github.com/tatyam-prime/kyopro_library/blob/master/Modint.cpp
+*/
+constexpr unsigned Mod = MOD;
+struct Modint{
+    unsigned num = 0;
+    constexpr Modint() noexcept {}
+    constexpr Modint(const Modint &x) noexcept : num(x.num){}
+    inline constexpr operator ll() const noexcept { return num; }
+    inline constexpr Modint& operator+=(Modint x) noexcept { num += x.num; if(num >= Mod) num -= Mod; return *this; }
+    inline constexpr Modint& operator++() noexcept { if(num == Mod - 1) num = 0; else num++; return *this; }
+    inline constexpr Modint operator++(int) noexcept { Modint ans(*this); operator++(); return ans; }
+    inline constexpr Modint operator-() const noexcept { return Modint(0) -= *this; }
+    inline constexpr Modint operator-(Modint x) const noexcept { return Modint(*this) -= x; }
+    inline constexpr Modint& operator-=(Modint x) noexcept { if(num < x.num) num += Mod; num -= x.num; return *this; }
+    inline constexpr Modint& operator--() noexcept { if(num == 0) num = Mod - 1; else num--; return *this; }
+    inline constexpr Modint operator--(int) noexcept { Modint ans(*this); operator--(); return ans; }
+    inline constexpr Modint& operator*=(Modint x) noexcept { num = ull(num) * x.num % Mod; return *this; }
+    inline constexpr Modint& operator/=(Modint x) noexcept { return operator*=(x.inv()); }
+    template<class T> constexpr Modint(T x) noexcept {
+        using U = typename conditional<sizeof(T) >= 4, T, int>::type;
+        U y = x; y %= U(Mod); if(y < 0) y += Mod; num = unsigned(y);
+    }
+    template<class T> inline constexpr Modint operator+(T x) const noexcept { return Modint(*this) += x; }
+    template<class T> inline constexpr Modint& operator+=(T x) noexcept { return operator+=(Modint(x)); }
+    template<class T> inline constexpr Modint operator-(T x) const noexcept { return Modint(*this) -= x; }
+    template<class T> inline constexpr Modint& operator-=(T x) noexcept { return operator-=(Modint(x)); }
+    template<class T> inline constexpr Modint operator*(T x) const noexcept { return Modint(*this) *= x; }
+    template<class T> inline constexpr Modint& operator*=(T x) noexcept { return operator*=(Modint(x)); }
+    template<class T> inline constexpr Modint operator/(T x) const noexcept { return Modint(*this) /= x; }
+    template<class T> inline constexpr Modint& operator/=(T x) noexcept { return operator/=(Modint(x)); }
+    inline constexpr Modint inv() const noexcept { ll x = 0, y = 0; extgcd(num, Mod, x, y); return x; }
+    static inline constexpr ll extgcd(ll a, ll b, ll &x, ll &y) noexcept { ll g = a; x = 1; y = 0; if(b){ g = extgcd(b, a % b, y, x); y -= a / b * x; } return g; }
+    inline constexpr Modint pow(ull x) const noexcept { Modint ans = 1, cnt = *this; while(x){ if(x & 1) ans *= cnt; cnt *= cnt; x /= 2; } return ans; }
+};
+std::istream& operator>>(std::istream& is, Modint& x) noexcept { ll a; cin >> a; x = a; return is; }
+inline constexpr Modint operator""_M(ull x) noexcept { return Modint(x); }
+std::vector<Modint> fac(1, 1), inv(1, 1);
+inline void reserve(ll a){
+    if(fac.size() >= a) return;
+    if(a < fac.size() * 2) a = fac.size() * 2;
+    if(a >= Mod) a = Mod;
+    while(fac.size() < a) fac.push_back(fac.back() * Modint(fac.size()));
+    inv.resize(fac.size());
+    inv.back() = fac.back().inv();
+    for(ll i = inv.size() - 1; !inv[i - 1]; i--) inv[i - 1] = inv[i] * i;
 }
-void slv(){//入力と解法を分離させるだけなので，基本的に入力以外何も書かない
-  //Input(面倒なときに分離させる)
-  solve();//実装本体はこっちに書く（必要に応じて引数を渡す）
+inline Modint fact(ll n){ if(n < 0) return 0; reserve(n + 1); return fac[n]; }
+inline Modint perm(ll n, ll r){
+    if(r < 0 || n < r) return 0;
+    if(n >> 24){ Modint ans = 1; for(ll i = 0; i < r; i++) ans *= n--; return ans; }
+    reserve(n + 1); return fac[n] * inv[n - r];
 }
-signed solve(){//main
+void solve(ll n,std::vector<ll> &a){
   /*
-  idea:
+  ans*=cnt[ｘ-1]-cnt[x]+1;
+  i番目で新しい数xが出たときにどのx-1から由来する可能性があるかみたいなイメージ
   */
-  
-  return 0;//checklist.txtを確認
+  Modint ans=1;
+  vec(ll,cnt,100010,0);
+  each(x,a){
+    cnt[x]++;
+    if(x)ans*=cnt[x-1]-cnt[x]+1;
+  }
+  ans*=modcomb(3,cnt[0],MOD);
+  ans*=fac2(cnt[0],cnt[0],MOD);
+  out(ans);
+}
+signed main(){
+    /*以下コード*/
+    LL(n);
+    VEC(ll,a,n);
+    solve(n,a);
 }
