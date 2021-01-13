@@ -17,10 +17,10 @@ using tuplis = array<ll, 3>;
 template<class T> using pq = priority_queue<T, vector<T>, greater<T>>;
 const ll LINF=0x1fffffffffffffff;
 const ll MINF=0x7fffffffffff;
-const ll LPLMT=10000000;//O(n)のloop上限
+const ll LPLMT=10000010;//O(n)のloop上限
 const ll NLGLMT=200010;//O(NlogN)のloop上限（これで指定されたfor文の中にO(logN)の処理を書く）
-const ll N2LMT=3000;//O(n^2)のloop上限
-const ll N3LMT=100;//O(n^3)のloop上限
+const ll N2LMT=3010;//O(n^2)のloop上限
+const ll N3LMT=110;//O(n^3)のloop上限
 const ll N4LMT=50;//O(n^4)のloop上限
 const ll TNLMT=20;//O(2^n)のloop上限（実際この計算量になるのは全探索くらいなので，この値自体を使うことはなさそう）（オーダの参考程度に）
 const int INF=0x3fffffff;
@@ -72,9 +72,10 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define LD(...) ld __VA_ARGS__;in(__VA_ARGS__)
 /*vector操作*/
 #define Sort(a) sort(all(a))//昇順ソート
-#define RSort(vec) sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
+#define RSort(vec) sort(all(a));reverse(all(a))//sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
 #define Rev(a) reverse(all(a))//逆順
 #define Uniq(a) sort(all(a));a.erase(unique(all(a)),end(a))
+#define Cnct(a,b) a.insert(a.end(),all(b))//vector:aの末尾にvector:bをつなぐ
 #define vec(type,name,...) vector<type> name(__VA_ARGS__)//type型vectorの定義
 #define VEC(type,name,size) vector<type> name(size);in(name)//type型vector(size指定)標準入力受付
 #define vv(type,name,h,...) vector<vector<type>>name(h,vector<type>(__VA_ARGS__))
@@ -390,26 +391,21 @@ void unite(ll x,ll y){//x,yの属する集合を併合
 signed solve(){//main
   /*
   idea:
-  UnionFindで集合を管理→クエリ2でroot(x)に属する人を探せば良さそう
-  ただ，毎回ｎ人探すとn*qで死ぬ
-  一度くっついたグループは解散しない
-  クエリ１の度にクラスに属する人を加算すればいいのでは？
-  どう加算すればいいか
   */
   LL(n,q);
   VEC(ll,c,n);
   UnionInit(n);
   std::vector<std::vector<int>> v(n);
   rep(n)v[i].push_back(i);
-  rep(q){
+  while(q--){
     LL(t,a,b);
     if(t==1){
       --a,--b;
       if(root(a)!=root(b)){
-        if(height[root(a)]<height[root(b)])v[root(b)].insert(v[root(b)].end(),all(v[root(a)]));
-        else v[root(a)].insert(v[root(a)].end(),all(v[root(b)]));
+        if(height[root(a)]<height[root(b)])Cnct(v[root(b)],v[root(a)]);
+        else Cnct(v[root(a)],v[root(b)]);
+        unite(a,b);
       }
-      unite(a,b);
     }else{
       --a;
       ll ans=0;

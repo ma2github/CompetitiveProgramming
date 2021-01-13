@@ -1,10 +1,7 @@
-/*
-template
-ref1:https://github.com/tatyam-prime/kyopro_library
-ref2:https://tatyam.hatenablog.com/entry/2019/12/15/003634
-*/
 #include <bits/stdc++.h>
 using namespace std;
+#include <atcoder/dsu>
+using namespace atcoder;
 using ll = long long;
 using ld = long double;
 using ull = unsigned long long;
@@ -17,10 +14,10 @@ using tuplis = array<ll, 3>;
 template<class T> using pq = priority_queue<T, vector<T>, greater<T>>;
 const ll LINF=0x1fffffffffffffff;
 const ll MINF=0x7fffffffffff;
-const ll LPLMT=10000000;//O(n)のloop上限
-const ll NLGLMT=200000;//O(NlogN)のloop上限（これで指定されたfor文の中にO(logN)の処理を書く）
-const ll N2LMT=3000;//O(n^2)のloop上限
-const ll N3LMT=100;//O(n^3)のloop上限
+const ll LPLMT=10000010;//O(n)のloop上限
+const ll NLGLMT=200010;//O(NlogN)のloop上限（これで指定されたfor文の中にO(logN)の処理を書く）
+const ll N2LMT=3010;//O(n^2)のloop上限
+const ll N3LMT=110;//O(n^3)のloop上限
 const ll N4LMT=50;//O(n^4)のloop上限
 const ll TNLMT=20;//O(2^n)のloop上限（実際この計算量になるのは全探索くらいなので，この値自体を使うことはなさそう）（オーダの参考程度に）
 const int INF=0x3fffffff;
@@ -72,9 +69,10 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define LD(...) ld __VA_ARGS__;in(__VA_ARGS__)
 /*vector操作*/
 #define Sort(a) sort(all(a))//昇順ソート
-#define RSort(vec) sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
+#define RSort(vec) sort(all(a));reverse(all(a))//sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
 #define Rev(a) reverse(all(a))//逆順
 #define Uniq(a) sort(all(a));a.erase(unique(all(a)),end(a))
+#define Cnct(a,b) a.insert(a.end(),all(b))//vector:aの末尾にvector:bをつなぐ
 #define vec(type,name,...) vector<type> name(__VA_ARGS__)//type型vectorの定義
 #define VEC(type,name,size) vector<type> name(size);in(name)//type型vector(size指定)標準入力受付
 #define vv(type,name,h,...) vector<vector<type>>name(h,vector<type>(__VA_ARGS__))
@@ -169,11 +167,11 @@ void Case(ll i){ printf("Case #%lld: ", i); }
 /*vector探索*/
 #define bSearch(v,k) binary_search(all(v),k)//ソートされた配列vの中の要素にkがあるか(boolean)
 #define lowB(v,k) lower_bound(all(v),k)//ソートされた配列vの中の要素のうちk以上かつ最小のイテレータ
-#define DLbetB(v,k) lowB(v,k)-v.begin()//先頭からの距離
-#define DLbetE(v,k) v.end()-lowB(v,k)//末尾からの距離
+#define DLbetB(v,k) distance(lowB(v,k),v.begin())//先頭からの距離
+#define DLbetE(v,k) distance(lowB(v,k),v.end())//末尾からの距離
 #define uppB(v,k) upper_bound(all(v),k)//ソートされた配列vの中の要素のうちkより大きいかつ最小のイテレータ
-#define DUbetB(v,k) uppB(v,k)-v.begin()//先頭からの距離
-#define DUbetE(v,k) v.end()-uppB(v,k)//末尾からの距離
+#define DUbetB(v,k) distance(uppB(v,k),v.begin())//先頭からの距離
+#define DUbetE(v,k) distance(uppB(v,k),v.end())//末尾からの距離
 #define Cnt(v,k) count(all(v),k)//配列vの中で要素kが何個あるかを返す(size_t)
 #define CntIf(v,l) count_if(all(v),l)//配列vの中で条件式(lambda式)を満たす個数を返す(ex.int num = count_if(v.begin(), v.end(), [](int i){return i % 3 == 0;});)
 #define Sort2D(myVec,i) sort(myVec.begin(),myVec.end(),[](const vector<ll> &alpha,const vector<ll> &beta){return alpha[i] < beta[i];});//i列めでソート
@@ -187,10 +185,12 @@ template <class T, class... Args>
 T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
+
+#define vecgcd(a) reduce(all(a),0LL,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
-  if(n<0)n+=p;
+  while(n<0)n+=p;
 }
 ll rtmod(ll n,ll p){
   mod(n,p);
@@ -248,121 +248,38 @@ ll modcomb(ll n,ll k,ll p){
   mod(c,p);
   return c;
 }
-/*ダブリング*/
-/*
-参考：http://satanic0258.hatenablog.com/entry/2017/02/23/222647
 
-使える場所：1回遷移した先が明確にわかる時
-
-目的：
-・ある数XのQ乗を求める
-・根付き木において、ある頂点vのQ個上の親を知る
-・ある地点からQ回進んだ先を求める
-*/
-//int N; // 全体の要素数
-//int Q;//試行回数
-ll doubling(const ll N,const ll Q,vector<ll> &a){//cin>>N>>Q;//標準入力から要素数と試行回数を受け取る場合
-ll LOG_Q = floor(log2(Q))+1;
-
-// next[k][i]で、i番目の要素の「2^k個次の要素」を指す
-// (なお、i番目の要素に対して「2^k個次の要素」が存在しないとき、
-//  next[k][i]が指し示す要素番号を-1とします)
-std::vector<std::vector<ll>> next(LOG_Q + 1, std::vector<ll>(N));
-//ll a[N];//各要素の次の行き先
-
-// next[0]を計算
-for (int i = 0; i < N; ++i){
-    next[0][i] = a[i];
-}
-
-// nextを計算
-for (ll k = 0; k < LOG_Q; ++k){
-    for (int i = 0; i < N; ++i){
-        if (next[k][i] == -1) {
-            // 2^k個次に要素が無い時、当然2^(k+1)個次にも要素はありません
-            next[k + 1][i] = -1;
-        }
-        else {
-            // 「2^k個次の要素」の2^k個次の要素は、2^(k+1)個次の要素です
-            next[k + 1][i] = next[k][next[k][i]];
-        }
-    }
-}
-
-// ----ここまで準備----
-
-// p番目の要素の「Q個次の要素」を求めることを考えます
-ll p=0;
-for (ll k = LOG_Q - 1; k >= 0; --k){
-    if (p == -1) {
-        // pがすでに存在しない要素を指していたら、
-        // それ以降で存在する要素を指すことはないためループを抜けます
-        break;
-    }
-    if ((Q >> k) & 1) {//ex(Q=5)5=101(2)であり，2^2+2^0回進むことを表す
-        // Qを二進展開した際、k番目のビットが立っていたら、
-        // pの位置を2^kだけ次にずらします
-        p = next[k][p];
-    }
-}
-return p;//ここでのpが最終的な答えになる
-}
-/*素数判定*/
-bool IsPrime(ll num)
-{
-    if (num < 2) return false;
-    else if (num == 2) return true;
-    else if (num % 2 == 0) return false; // 偶数はあらかじめ除く
-
-    double sqrtNum = sqrt(num);
-    for (int i = 3; i <= sqrtNum; i += 2)
-    {
-        if (num % i == 0)
-        {
-            // 素数ではない
-            return false;
-        }
-    }
-
-    // 素数である
-    return true;
-}
-
-
-/*ページのソースを表示->command+F->問題文　で問題文コピペする
-
-*/
-/*
-0~n-1までの順列の出力
-rep(n)v.push_back(i);
-do{}while(next_permutation(all(v)));
-*/
-//ceil()//切り上げ　ll(ceil((ld)n/(ld)x))=(n+x-1)/x（整数除算）なのでそっちがいいかも
-//floor()//切り捨て
-//round()//四捨五入
-//deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
-//using std::map;
-//map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
-vv(ll,dp,1<<15,15,-1);
-vv(ll,dist,15,15,LINF);
-
-ll rec(ll bit,ll t){
-  if(~dp[bit][t])return dp[bit][t];
-  if(bit==(1<<t)&!t)return dp[bit][t]=0;
-  ll res=LINF;
-  ll pbit=bit&~(1<<t);
-  rep(15){if(!((pbit>>i)&1))continue;chmin(res,rec(pbit,i)+dist[i][t]);}
-  return dp[bit][t]=res;
-}
+/*以下コーディング*/
+signed solve();
+void slv();
 signed main(){
-    /*以下コード*/
-    LL(v,e);
-    rep(e){
-      LL(si,ti,di);
-      dist[si][ti]=di;
+    ll testcase=1;
+    //cin>>testcase;//テストケース数を渡す
+    while(testcase--)slv();
+}
+void slv(){//入力と解法を分離させるだけなので，基本的に入力以外何も書かない
+  //Input(面倒なときに分離させる)
+  solve();//実装本体はこっちに書く（必要に応じて引数を渡す）
+}
+signed solve(){//main
+  /*
+  idea:
+  */
+  INT(n,m);
+  dsu d(n);
+  bool connect=false;
+  rep(n){
+    INT(xi);
+    if(xi<=m){
+      connect=false;
+    }else{
+      if(connect)d.merge(i-1,i);
+      connect=true;
     }
-    ll ans=LINF;
-    rep(v)if(dist[i][0]<LINF)chmin(ans,rec((1<<v)-1,i)+dist[i][0]);
-    if(ans==LINF)return out(-1);
-    out(ans);
+  }
+  int ans=0;
+  auto g=d.groups();
+  each(v,g)ans+=v.size()-1;
+  out(ans);
+  return 0;//checklist.txtを確認
 }
