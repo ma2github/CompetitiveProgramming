@@ -17,10 +17,10 @@ using tuplis = array<ll, 3>;
 template<class T> using pq = priority_queue<T, vector<T>, greater<T>>;
 const ll LINF=0x1fffffffffffffff;
 const ll MINF=0x7fffffffffff;
-const ll LPLMT=10000000;//O(n)のloop上限
-const ll NLGLMT=200000;//O(NlogN)のloop上限（これで指定されたfor文の中にO(logN)の処理を書く）
-const ll N2LMT=3000;//O(n^2)のloop上限
-const ll N3LMT=100;//O(n^3)のloop上限
+const ll LPLMT=10000010;//O(n)のloop上限
+const ll NLGLMT=200010;//O(NlogN)のloop上限（これで指定されたfor文の中にO(logN)の処理を書く）
+const ll N2LMT=3010;//O(n^2)のloop上限
+const ll N3LMT=110;//O(n^3)のloop上限
 const ll N4LMT=50;//O(n^4)のloop上限
 const ll TNLMT=20;//O(2^n)のloop上限（実際この計算量になるのは全探索くらいなので，この値自体を使うことはなさそう）（オーダの参考程度に）
 const int INF=0x3fffffff;
@@ -72,9 +72,10 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define LD(...) ld __VA_ARGS__;in(__VA_ARGS__)
 /*vector操作*/
 #define Sort(a) sort(all(a))//昇順ソート
-#define RSort(vec) sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
+#define RSort(vec) sort(all(a));reverse(all(a))//sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
 #define Rev(a) reverse(all(a))//逆順
 #define Uniq(a) sort(all(a));a.erase(unique(all(a)),end(a))
+#define Cnct(a,b) a.insert(a.end(),all(b))//vector:aの末尾にvector:bをつなぐ
 #define vec(type,name,...) vector<type> name(__VA_ARGS__)//type型vectorの定義
 #define VEC(type,name,size) vector<type> name(size);in(name)//type型vector(size指定)標準入力受付
 #define vv(type,name,h,...) vector<vector<type>>name(h,vector<type>(__VA_ARGS__))
@@ -187,6 +188,8 @@ template <class T, class... Args>
 T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
+
+#define vecgcd(a) reduce(all(a),0LL,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
@@ -343,6 +346,81 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+
+/*以下コーディング*/
+signed solve();
+void slv();
 signed main(){
-    /*以下コード*/
+    ll testcase=1;
+    //cin>>testcase;//テストケース数を渡す
+    while(testcase--)slv();
+}
+void slv(){//入力と解法を分離させるだけなので，基本的に入力以外何も書かない
+  //Input(面倒なときに分離させる)
+  solve();//実装本体はこっちに書く（必要に応じて引数を渡す）
+}
+ll n,m;
+std::vector<int> v;
+vec(ll,w,10,0);
+vec(pll,lv,100010,{LINF,LINF});
+vv(ll,dp,10,10,-1);
+vec(ll,sm,10,0);
+//vv(ll,dis,10,10,-1);
+map<ll,ll>memo,dis;
+ll dist(ll x){
+  return dis[x];
+}
+ll rec(ll l,ll r){
+  //if(l==r)return dist(1<<v[r]);
+  if(~dp[l][r])return dp[l][r];
+  ll x=0;
+  rep(i,l,r+1){
+    x+=1<<v[i];
+  }
+  ll res=dist(x);
+  rep(i,l+1,r)chmax(res,rec(l,i)+rec(i,r));
+  return dp[l][r]=res;
+}
+signed solve(){//main
+  /*
+  idea:距離の離し方
+ある距離l以上で常にw_i+w_i+1<=vとなるような最小のｌ
+→長さでソートして，最低荷重を記録しておけば良さそう
+二分探索で離すべき距離はわかりそう
+  */
+  cin>>n>>m;
+  w.resize(n);
+  v.resize(n);
+  lv.resize(m);
+  rep(n)cin>>w[i];
+  ll vmin=LINF;
+  rep(m){
+    cin>>lv[i].first>>lv[i].second;
+    chmin(vmin,lv[i].second);
+    rep(j,1<<n){
+      ll smw=0;
+      rep(k,n){
+        if((j>>k)&1)smw+=w[k];
+      }
+      if(smw>lv[i].second)chmax(dis[j],lv[i].first);
+    }
+  }
+  //memo[0]=vmin;
+  if(vmin<max(w))return out(-1);
+  if(sum(w)<=vmin)return out(0);
+  ll ans=LINF;
+  //each(x,memo)out(x);
+  rep(n)v[i]=i;
+  do{
+    //嘘貪欲にハマったらDPを考える
+    //どこが最適なら最終的な解も最適が保証される？
+    //区間内の重さギリギリ耐える長さを各区間で持ってれば最適
+    //dp[l][r]=max(dp[l][x]+dp[x][r])
+    rep(i,n)rep(j,n)dp[i][j]=-1;
+    rep(n)sm[i]=0;
+    rep(n)sm[i+1]=sm[i]+w[v[i]];
+    chmin(ans,rec(0,n-1));
+  }while(next_permutation(all(v)));
+  out(ans==LINF?-1:ans);
+  return 0;//checklist.txtを確認
 }

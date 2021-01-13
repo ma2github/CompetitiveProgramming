@@ -1,0 +1,2 @@
+cd /usr/local/Cellar/gcc/10.1.0/include/c++/10.1.0/x86_64-apple-darwin19/bits
+/usr/local/bin/g++-10 stdc++.h -std=c++20 -fsanitize=undefined -fvisibility=hidden -fvisibility-inlines-hidden -I /Users/kakeshitamasamichi/ac-library

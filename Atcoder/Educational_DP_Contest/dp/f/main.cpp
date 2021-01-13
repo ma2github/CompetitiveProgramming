@@ -17,10 +17,10 @@ using tuplis = array<ll, 3>;
 template<class T> using pq = priority_queue<T, vector<T>, greater<T>>;
 const ll LINF=0x1fffffffffffffff;
 const ll MINF=0x7fffffffffff;
-const ll LPLMT=10000000;//O(n)のloop上限
-const ll NLGLMT=200000;//O(NlogN)のloop上限（これで指定されたfor文の中にO(logN)の処理を書く）
-const ll N2LMT=3000;//O(n^2)のloop上限
-const ll N3LMT=100;//O(n^3)のloop上限
+const ll LPLMT=10000010;//O(n)のloop上限
+const ll NLGLMT=200010;//O(NlogN)のloop上限（これで指定されたfor文の中にO(logN)の処理を書く）
+const ll N2LMT=3010;//O(n^2)のloop上限
+const ll N3LMT=110;//O(n^3)のloop上限
 const ll N4LMT=50;//O(n^4)のloop上限
 const ll TNLMT=20;//O(2^n)のloop上限（実際この計算量になるのは全探索くらいなので，この値自体を使うことはなさそう）（オーダの参考程度に）
 const int INF=0x3fffffff;
@@ -72,9 +72,10 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define LD(...) ld __VA_ARGS__;in(__VA_ARGS__)
 /*vector操作*/
 #define Sort(a) sort(all(a))//昇順ソート
-#define RSort(vec) sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
+#define RSort(vec) sort(all(a));reverse(all(a))//sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
 #define Rev(a) reverse(all(a))//逆順
 #define Uniq(a) sort(all(a));a.erase(unique(all(a)),end(a))
+#define Cnct(a,b) a.insert(a.end(),all(b))//vector:aの末尾にvector:bをつなぐ
 #define vec(type,name,...) vector<type> name(__VA_ARGS__)//type型vectorの定義
 #define VEC(type,name,size) vector<type> name(size);in(name)//type型vector(size指定)標準入力受付
 #define vv(type,name,h,...) vector<vector<type>>name(h,vector<type>(__VA_ARGS__))
@@ -188,7 +189,7 @@ T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
 
-#define vecgcd(a) reduce(all(a),0,gcd<ll,ll>)
+#define vecgcd(a) reduce(all(a),0LL,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
@@ -345,6 +346,49 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+
+/*以下コーディング*/
+signed solve();
+void slv();
 signed main(){
-    /*以下コード*/
+    ll testcase=1;
+    //cin>>testcase;//テストケース数を渡す
+    while(testcase--)slv();
+}
+void slv(){//入力と解法を分離させるだけなので，基本的に入力以外何も書かない
+  //Input(面倒なときに分離させる)
+  solve();//実装本体はこっちに書く（必要に応じて引数を渡す）
+}
+string s,t;
+vv(int,dpint,3010,3010,-1);
+int recint(int i,int j){
+  if(i<1 or j<1)return 0;
+  if(~dpint[i][j])return dpint[i][j];
+  int res=0;
+  chmax(res,max(recint(i-1,j),recint(i,j-1)));
+  chmax(res,recint(i-1,j-1)+(s[i-1]==t[j-1]));
+  return dpint[i][j]=res;
+}
+signed solve(){//main
+  /*
+  idea:
+  */
+  cin>>s>>t;
+  string ans="";
+  int len=recint(s.size(),t.size());
+  int i=s.size(),j=t.size();
+  while(len){
+    if(s[i-1]==t[j-1]){
+      --i,--j;
+      ans+=s[i];
+      len--;
+    }elif(recint(i,j)==recint(i-1,j)){
+      --i;
+    }else{
+      --j;
+    }
+  }
+  Rev(ans);
+  out(ans);
+  return 0;//checklist.txtを確認
 }
