@@ -361,43 +361,32 @@ void slv(){//入力と解法を分離させるだけなので，基本的に入�
   //Input(面倒なときに分離させる)
   solve();//実装本体はこっちに書く（必要に応じて引数を渡す）
 }
+ll n,m;
 vec(ll,a,200010);
 vv(ll,g,200010);
-vec(pll,dp,200010,{-1,-1});
-pll rec(int i){
-  if(g[i].size()==0)return {-LINF,a[i]};
-  if(~dp[i].first or ~dp[i].second)return dp[i];
-  pll res={-LINF,a[i]};
-  each(x,g[i]){
-    ll tar=res.first-res.second;
-    if(a[x]-a[i]>tar){
-      res={a[x],a[i]};
-    }
-    tar=res.first-res.second;
-    if(rec(x).first-min(rec(x).second,a[i])>tar){
-      res={rec(x).first,min(rec(x).second,a[i])};
-    }
+vec(ll,dp,200010,-1);
+ll rec(ll t){//tにたどり着くまでの最安値
+  if(g[t].size()==0)return LINF;
+  if(~dp[t])return dp[t];
+  ll res=LINF;
+  each(x,g[t]){
+    chmin(res,rec(x));
+    chmin(res,a[x]);
   }
-  return dp[i]=res;
+  return dp[t]=res;
 }
 signed solve(){//main
   /*
   idea:
   */
-  LL(n,m);
+  cin>>n>>m;
   rep(n)cin>>a[i];
   rep(m){
-    LL(x,y);
-    --x,--y;
-    g[x].push_back(y);
+    ll s,t;cin>>s>>t;
+    g[--t].push_back(--s);
   }
   ll ans=-LINF;
-  rep(n){
-    out(rec(i).first,rec(i).second);
-    if(g[i].size())chmax(ans,rec(i).first-rec(i).second);
-    //else chmax(ans,-a[i]);
-  }
-  assert(ans>-LINF);
+  rep(n)chmax(ans,a[i]-rec(i));
   out(ans);
   return 0;//checklist.txtを確認
 }

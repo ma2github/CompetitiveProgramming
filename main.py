@@ -15,25 +15,21 @@ def modinv(a,m):
     if u<0:
         u+=m
     return u
-class FlightPlan():
-    def fly(self,a,b):
-        ans=0
-        def f(x):
-            if x==0:
-                return 0
-            fa=0
-            shift=0
-            while (1<<shift)<=x:
-                if shift==0:
-                    if x%4==1 or x%4==2:
-                        fa^=1
-                elif (x%(1<<shift))&1==0 and (x>>shift)&1:
-                    fa^=1<<shift
-                shift+=1
-            return fa
-        return f(a-1)^f(b)
-main=FlightPlan()
-tt=1
-for _ in range(tt):
-    print(main.fly(*map(int,input().split())))
-    #print(' '.join(main.solve(n,k,r)))
+a=int(input())
+b=int(input())
+c=int(input())
+d=int(input())
+e=int(input())
+fr=a<0
+ans=0
+while a<b:
+    if a<0:
+        a+=1
+        ans+=c
+    elif a==0 and fr:
+        ans+=d
+        fr=False
+    else:
+        ans+=e
+        a+=1
+print(ans)

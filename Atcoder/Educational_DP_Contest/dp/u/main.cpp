@@ -345,6 +345,20 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+int n;
+vv(ll,a,20,20);
+vec(ll,dp,1<<18,-1);
+ll rec(ll cur){
+  if(~dp[cur])return dp[cur];
+  if(!cur)return dp[cur]=0;
+  ll res=0;
+  rep(i,n)rep(j,i,n)if((cur>>i)&1 and (cur>>j)&1)res+=a[i][j];
+  for(int j=cur;--j&=cur;)chmax(res,rec(cur^j)+rec(j));
+  return dp[cur]=res;
+}
 signed main(){
     /*以下コード*/
+    cin>>n;
+    rep(i,n)rep(j,n)cin>>a[i][j];
+    out(rec((1<<n)-1));
 }

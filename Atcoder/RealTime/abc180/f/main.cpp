@@ -4,6 +4,8 @@ ref1:https://github.com/tatyam-prime/kyopro_library
 ref2:https://tatyam.hatenablog.com/entry/2019/12/15/003634
 */
 #include <bits/stdc++.h>
+#include <atcoder/all>
+using namespace atcoder;
 using namespace std;
 using ll = long long;
 using ld = long double;
@@ -17,10 +19,10 @@ using tuplis = array<ll, 3>;
 template<class T> using pq = priority_queue<T, vector<T>, greater<T>>;
 const ll LINF=0x1fffffffffffffff;
 const ll MINF=0x7fffffffffff;
-const ll LPLMT=10000000;//O(n)のloop上限
-const ll NLGLMT=200000;//O(NlogN)のloop上限（これで指定されたfor文の中にO(logN)の処理を書く）
-const ll N2LMT=3000;//O(n^2)のloop上限
-const ll N3LMT=100;//O(n^3)のloop上限
+const ll LPLMT=10000010;//O(n)のloop上限
+const ll NLGLMT=200010;//O(NlogN)のloop上限（これで指定されたfor文の中にO(logN)の処理を書く）
+const ll N2LMT=3010;//O(n^2)のloop上限
+const ll N3LMT=110;//O(n^3)のloop上限
 const ll N4LMT=50;//O(n^4)のloop上限
 const ll TNLMT=20;//O(2^n)のloop上限（実際この計算量になるのは全探索くらいなので，この値自体を使うことはなさそう）（オーダの参考程度に）
 const int INF=0x3fffffff;
@@ -56,7 +58,7 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define rall2(i,k) (i).rbegin(),(i).rbegin()+k
 #define rall3(i,a,b) (i).rbegin()+a,(i).rbegin()+b
 #define rall(...) overload3(__VA_ARGS__,rall3,rall2,rall1)(__VA_ARGS__)//逆イテレータの取得(rbegin：末尾,rend：頭）
-#define sum(...) accumulate(all(__VA_ARGS__),0LL)//vectorの合計(int形で受け付けてしまうので，小数で扱いたい場合はdsumを使う)
+#define vsum(...) accumulate(all(__VA_ARGS__),0LL)//vectorの合計(int形で受け付けてしまうので，小数で扱いたい場合はdsumを使う)
 #define dsum(...) accumulate(all(__VA_ARGS__),0.0L)//小数で扱う(long long doubleなど)
 #define elif else if
 #define unless(a) if(!(a))
@@ -71,10 +73,11 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define DBL(...) double __VA_ARGS__;in(__VA_ARGS__)
 #define LD(...) ld __VA_ARGS__;in(__VA_ARGS__)
 /*vector操作*/
-#define Sort(a) sort(all(a))//昇順ソート
-#define RSort(vec) sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
-#define Rev(a) reverse(all(a))//逆順
-#define Uniq(a) sort(all(a));a.erase(unique(all(a)),end(a))
+#define SORT(a) sort(all(a))//昇順ソート
+#define RS(a) sort(all(a)),reverse(all(a))//sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
+#define REV(a) reverse(all(a))//逆順
+#define UNIQ(a) sort(all(a)),a.erase(unique(all(a)),end(a))
+#define CNCT(a,b) a.insert(a.end(),all(b))//vector:aの末尾にvector:bをつなぐ
 #define vec(type,name,...) vector<type> name(__VA_ARGS__)//type型vectorの定義
 #define VEC(type,name,size) vector<type> name(size);in(name)//type型vector(size指定)標準入力受付
 #define vv(type,name,h,...) vector<vector<type>>name(h,vector<type>(__VA_ARGS__))
@@ -169,10 +172,10 @@ void Case(ll i){ printf("Case #%lld: ", i); }
 /*vector探索*/
 #define bSearch(v,k) binary_search(all(v),k)//ソートされた配列vの中の要素にkがあるか(boolean)
 #define lowB(v,k) lower_bound(all(v),k)//ソートされた配列vの中の要素のうちk以上かつ最小のイテレータ
-#define DLbetB(v,k) distance(lowB(v,k),v.begin())//先頭からの距離
+#define DLbetB(v,k) distance(v.begin(),lowB(v,k))//先頭からの距離
 #define DLbetE(v,k) distance(lowB(v,k),v.end())//末尾からの距離
 #define uppB(v,k) upper_bound(all(v),k)//ソートされた配列vの中の要素のうちkより大きいかつ最小のイテレータ
-#define DUbetB(v,k) distance(uppB(v,k),v.begin())//先頭からの距離
+#define DUbetB(v,k) distance(v.begin(),uppB(v,k))//先頭からの距離
 #define DUbetE(v,k) distance(uppB(v,k),v.end())//末尾からの距離
 #define Cnt(v,k) count(all(v),k)//配列vの中で要素kが何個あるかを返す(size_t)
 #define CntIf(v,l) count_if(all(v),l)//配列vの中で条件式(lambda式)を満たす個数を返す(ex.int num = count_if(v.begin(), v.end(), [](int i){return i % 3 == 0;});)
@@ -188,7 +191,7 @@ T vgcd(T a, Args... args) {
   return vgcd(a, vgcd(args...));
 }
 
-#define vecgcd(a) reduce(all(a),0,gcd<ll,ll>)
+#define vecgcd(a) reduce(all(a),0LL,gcd<ll,ll>)
 /*あまり（強制的に正の余りを出力）*/
 void mod(ll &n,ll p){
   n%=p;
@@ -345,6 +348,104 @@ do{}while(next_permutation(all(v)));
 //deque<ll> deq;//両端キュー使う，先頭と末尾へのアクセスが早い
 //using std::map;
 //map<string,ll>memo;//<キー，その要素＞，キーの検索が早い，キーは昇順にソートされる
+
+/*以下コーディング*/
+signed solve();
+void slv();
 signed main(){
-    /*以下コード*/
+    ll testcase=1;
+    //cin>>testcase;//テストケース数を渡す
+    while(testcase--)slv();
+}
+void slv(){//入力と解法を分離させるだけなので，基本的に入力以外何も書かない
+  //Input(面倒なときに分離させる)
+  solve();//実装本体はこっちに書く（必要に応じて引数を渡す）
+}
+/*
+ref:https://github.com/tatyam-prime/kyopro_library/blob/master/Modint.cpp
+*/
+constexpr unsigned Mod = MOD;
+struct Modint{
+    unsigned num = 0;
+    constexpr Modint() noexcept {}
+    constexpr Modint(const Modint &x) noexcept : num(x.num){}
+    inline constexpr operator ll() const noexcept { return num; }
+    inline constexpr Modint& operator+=(Modint x) noexcept { num += x.num; if(num >= Mod) num -= Mod; return *this; }
+    inline constexpr Modint& operator++() noexcept { if(num == Mod - 1) num = 0; else num++; return *this; }
+    inline constexpr Modint operator++(int) noexcept { Modint ans(*this); operator++(); return ans; }
+    inline constexpr Modint operator-() const noexcept { return Modint(0) -= *this; }
+    inline constexpr Modint operator-(Modint x) const noexcept { return Modint(*this) -= x; }
+    inline constexpr Modint& operator-=(Modint x) noexcept { if(num < x.num) num += Mod; num -= x.num; return *this; }
+    inline constexpr Modint& operator--() noexcept { if(num == 0) num = Mod - 1; else num--; return *this; }
+    inline constexpr Modint operator--(int) noexcept { Modint ans(*this); operator--(); return ans; }
+    inline constexpr Modint& operator*=(Modint x) noexcept { num = ull(num) * x.num % Mod; return *this; }
+    inline constexpr Modint& operator/=(Modint x) noexcept { return operator*=(x.inv()); }
+    template<class T> constexpr Modint(T x) noexcept {
+        using U = typename conditional<sizeof(T) >= 4, T, int>::type;
+        U y = x; y %= U(Mod); if(y < 0) y += Mod; num = unsigned(y);
+    }
+    template<class T> inline constexpr Modint operator+(T x) const noexcept { return Modint(*this) += x; }
+    template<class T> inline constexpr Modint& operator+=(T x) noexcept { return operator+=(Modint(x)); }
+    template<class T> inline constexpr Modint operator-(T x) const noexcept { return Modint(*this) -= x; }
+    template<class T> inline constexpr Modint& operator-=(T x) noexcept { return operator-=(Modint(x)); }
+    template<class T> inline constexpr Modint operator*(T x) const noexcept { return Modint(*this) *= x; }
+    template<class T> inline constexpr Modint& operator*=(T x) noexcept { return operator*=(Modint(x)); }
+    template<class T> inline constexpr Modint operator/(T x) const noexcept { return Modint(*this) /= x; }
+    template<class T> inline constexpr Modint& operator/=(T x) noexcept { return operator/=(Modint(x)); }
+    inline constexpr Modint inv() const noexcept { ll x = 0, y = 0; extgcd(num, Mod, x, y); return x; }
+    static inline constexpr ll extgcd(ll a, ll b, ll &x, ll &y) noexcept { ll g = a; x = 1; y = 0; if(b){ g = extgcd(b, a % b, y, x); y -= a / b * x; } return g; }
+    inline constexpr Modint pow(ull x) const noexcept { Modint ans = 1, cnt = *this; while(x){ if(x & 1) ans *= cnt; cnt *= cnt; x /= 2; } return ans; }
+};
+std::istream& operator>>(std::istream& is, Modint& x) noexcept { ll a; cin >> a; x = a; return is; }
+inline constexpr Modint operator""_M(ull x) noexcept { return Modint(x); }
+std::vector<Modint> fac(1, 1), inv(1, 1);
+inline void reserve(ll a){
+    if(fac.size() >= a) return;
+    if(a < fac.size() * 2) a = fac.size() * 2;
+    if(a >= Mod) a = Mod;
+    while(fac.size() < a) fac.push_back(fac.back() * Modint(fac.size()));
+    inv.resize(fac.size());
+    inv.back() = fac.back().inv();
+    for(ll i = inv.size() - 1; !inv[i - 1]; i--) inv[i - 1] = inv[i] * i;
+}
+inline Modint fact(ll n){ if(n < 0) return 0; reserve(n + 1); return fac[n]; }
+inline Modint perm(ll n, ll r){
+    if(r < 0 || n < r) return 0;
+    if(n >> 24){ Modint ans = 1; for(ll i = 0; i < r; i++) ans *= n--; return ans; }
+    reserve(n + 1); return fac[n] * inv[n - r];
+}
+ll n,m,l;
+vv(Modint,cb,310,310,1);
+vec(Modint,fa,310,1);
+vvv(Modint,dp,310,310,2,0);
+Modint rec(ll v,ll e,ll t){
+  if(v<e or v<0 or e<0 or l-t<1 or (e and l-t<2))return 0;
+  if(dp[v][e][t])return dp[v][e][t];
+  /*if(v==e){
+    if(v<=l-t and v!=1){out(v,e,1);return dp[v][e][t]=1;}
+    else {out(v,e,0);return 0;}
+  }//*/
+  if(!e){return dp[v][e][t]=1;}
+  Modint res=0;
+  res+=rec(v-1,e,t);//alone
+  rep(k,2,min(v,l-t)+1)res+=cb[n-(v-k)-1][k-1]*rec(v-k,e-k+1,t)*fa[k]/2;//path
+  rep(k,2,min(v,l-t)+1){
+    if(k==2)res+=cb[n-(v-k)-1][k-1]*rec(v-k,e-k,t);//cycle
+    else res+=cb[n-(v-k)-1][k-1]*rec(v-k,e-k,t)*fa[k-1]/2;//cycle
+  }
+  return dp[v][e][t]=res;
+}
+signed solve(){//main
+  /*
+  idea:
+  */
+  cin>>n>>m>>l;
+  rep(i,1,310)rep(j,1,310){
+    if(i>=j)cb[i][j]=(cb[i][j-1]*(i-j+1))/j;
+    else cb[i][j]=0;
+  }
+  rep(i,1,310)cb[0][i]=0;
+  rep(i,2,310)fa[i]=fa[i-1]*i;
+  out(rec(n,m,0)-rec(n,m,1));
+  return 0;//checklist.txtを確認
 }

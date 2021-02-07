@@ -362,10 +362,21 @@ void slv(){//入力と解法を分離させるだけなので，基本的に入�
   solve();//実装本体はこっちに書く（必要に応じて引数を渡す）
 }
 ll x,y;
+unordered_map<ll,ll>dp;
+ll rec(ll t){
+  if(t<=x)return x-t;
+  if(t==2*x or t==x+1 or t==x-1)return 1;
+  if(dp[t])return dp[t];
+  ll res=abs(t-x);
+  chmin(res,1+rec(t/2)+t%2);
+  chmin(res,1+rec((t+1)/2)+t%2);
+  return dp[t]=res;
+}
 signed solve(){//main
   /*
   idea:
   */
   cin>>x>>y;
+  out(rec(y));
   return 0;//checklist.txtを確認
 }

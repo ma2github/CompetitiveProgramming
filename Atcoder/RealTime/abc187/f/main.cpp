@@ -4,6 +4,8 @@ ref1:https://github.com/tatyam-prime/kyopro_library
 ref2:https://tatyam.hatenablog.com/entry/2019/12/15/003634
 */
 #include <bits/stdc++.h>
+#include <atcoder/all>
+using namespace atcoder;
 using namespace std;
 using ll = long long;
 using ld = long double;
@@ -56,7 +58,7 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define rall2(i,k) (i).rbegin(),(i).rbegin()+k
 #define rall3(i,a,b) (i).rbegin()+a,(i).rbegin()+b
 #define rall(...) overload3(__VA_ARGS__,rall3,rall2,rall1)(__VA_ARGS__)//逆イテレータの取得(rbegin：末尾,rend：頭）
-#define sum(...) accumulate(all(__VA_ARGS__),0LL)//vectorの合計(int形で受け付けてしまうので，小数で扱いたい場合はdsumを使う)
+#define vsum(...) accumulate(all(__VA_ARGS__),0LL)//vectorの合計(int形で受け付けてしまうので，小数で扱いたい場合はdsumを使う)
 #define dsum(...) accumulate(all(__VA_ARGS__),0.0L)//小数で扱う(long long doubleなど)
 #define elif else if
 #define unless(a) if(!(a))
@@ -71,11 +73,11 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define DBL(...) double __VA_ARGS__;in(__VA_ARGS__)
 #define LD(...) ld __VA_ARGS__;in(__VA_ARGS__)
 /*vector操作*/
-#define Sort(a) sort(all(a))//昇順ソート
-#define RSort(vec) sort(all(a));reverse(all(a))//sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
-#define Rev(a) reverse(all(a))//逆順
-#define Uniq(a) sort(all(a));a.erase(unique(all(a)),end(a))
-#define Cnct(a,b) a.insert(a.end(),all(b))//vector:aの末尾にvector:bをつなぐ
+#define SORT(a) sort(all(a))//昇順ソート
+#define RS(a) sort(all(a)),reverse(all(a))//sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
+#define REV(a) reverse(all(a))//逆順
+#define UNIQ(a) sort(all(a)),a.erase(unique(all(a)),end(a))
+#define CNCT(a,b) a.insert(a.end(),all(b))//vector:aの末尾にvector:bをつなぐ
 #define vec(type,name,...) vector<type> name(__VA_ARGS__)//type型vectorの定義
 #define VEC(type,name,size) vector<type> name(size);in(name)//type型vector(size指定)標準入力受付
 #define vv(type,name,h,...) vector<vector<type>>name(h,vector<type>(__VA_ARGS__))
@@ -170,10 +172,10 @@ void Case(ll i){ printf("Case #%lld: ", i); }
 /*vector探索*/
 #define bSearch(v,k) binary_search(all(v),k)//ソートされた配列vの中の要素にkがあるか(boolean)
 #define lowB(v,k) lower_bound(all(v),k)//ソートされた配列vの中の要素のうちk以上かつ最小のイテレータ
-#define DLbetB(v,k) distance(lowB(v,k),v.begin())//先頭からの距離
+#define DLbetB(v,k) distance(v.begin(),lowB(v,k))//先頭からの距離
 #define DLbetE(v,k) distance(lowB(v,k),v.end())//末尾からの距離
 #define uppB(v,k) upper_bound(all(v),k)//ソートされた配列vの中の要素のうちkより大きいかつ最小のイテレータ
-#define DUbetB(v,k) distance(uppB(v,k),v.begin())//先頭からの距離
+#define DUbetB(v,k) distance(v.begin(),uppB(v,k))//先頭からの距離
 #define DUbetE(v,k) distance(uppB(v,k),v.end())//末尾からの距離
 #define Cnt(v,k) count(all(v),k)//配列vの中で要素kが何個あるかを返す(size_t)
 #define CntIf(v,l) count_if(all(v),l)//配列vの中で条件式(lambda式)を満たす個数を返す(ex.int num = count_if(v.begin(), v.end(), [](int i){return i % 3 == 0;});)
@@ -359,10 +361,33 @@ void slv(){//入力と解法を分離させるだけなので，基本的に入�
   //Input(面倒なときに分離させる)
   solve();//実装本体はこっちに書く（必要に応じて引数を渡す）
 }
+ll n,m;
+vec(int,g,20,0);
+vec(ll,dp,(1<<18)+5,-1);
+ll rec(int cur){
+  if(~dp[cur])return dp[cur];
+  if(!cur)return dp[cur]=1;
+  ll res=LINF;
+  rep(n){
+    if((cur>>i)&1){
+      int ol=cur^(1<<i);
+      if((g[i]&ol)==ol){return dp[cur]=rec(ol);}
+    }
+  }
+  for(int j=cur;--j&=cur;)chmin(res,rec(cur^j)+rec(j));
+  return dp[cur]=res;
+}
 signed solve(){//main
   /*
   idea:
   */
-
+  cin>>n>>m;
+  rep(m){
+    LL(a,b);
+    --a,--b;
+    g[a]|=1<<b;
+    g[b]|=1<<a;
+  }
+  out(rec((1<<n)-1));
   return 0;//checklist.txtを確認
 }
