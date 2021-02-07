@@ -172,10 +172,10 @@ void Case(ll i){ printf("Case #%lld: ", i); }
 /*vector探索*/
 #define bSearch(v,k) binary_search(all(v),k)//ソートされた配列vの中の要素にkがあるか(boolean)
 #define lowB(v,k) lower_bound(all(v),k)//ソートされた配列vの中の要素のうちk以上かつ最小のイテレータ
-#define DLbetB(v,k) distance(lowB(v,k),v.begin())//先頭からの距離
+#define DLbetB(v,k) distance(v.begin(),lowB(v,k))//先頭からの距離
 #define DLbetE(v,k) distance(lowB(v,k),v.end())//末尾からの距離
 #define uppB(v,k) upper_bound(all(v),k)//ソートされた配列vの中の要素のうちkより大きいかつ最小のイテレータ
-#define DUbetB(v,k) distance(uppB(v,k),v.begin())//先頭からの距離
+#define DUbetB(v,k) distance(v.begin(),uppB(v,k))//先頭からの距離
 #define DUbetE(v,k) distance(uppB(v,k),v.end())//末尾からの距離
 #define Cnt(v,k) count(all(v),k)//配列vの中で要素kが何個あるかを返す(size_t)
 #define CntIf(v,l) count_if(all(v),l)//配列vの中で条件式(lambda式)を満たす個数を返す(ex.int num = count_if(v.begin(), v.end(), [](int i){return i % 3 == 0;});)
@@ -353,7 +353,7 @@ do{}while(next_permutation(all(v)));
 signed solve();
 void slv();
 signed main(){
-    ll testcase=1;
+    int testcase=1;
     //cin>>testcase;//テストケース数を渡す
     while(testcase--)slv();
 }

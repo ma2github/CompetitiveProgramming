@@ -140,11 +140,11 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define DBL(...) double __VA_ARGS__;in(__VA_ARGS__)
 #define LD(...) ld __VA_ARGS__;in(__VA_ARGS__)
 /*vector操作*/
-#define Sort(a) sort(all(a))//昇順ソート
-#define RSort(vec) sort(all(a));reverse(all(a))//sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
-#define Rev(a) reverse(all(a))//逆順
-#define Uniq(a) sort(all(a));a.erase(unique(all(a)),end(a))
-#define Cnct(a,b) a.insert(a.end(),all(b))//vector:aの末尾にvector:bをつなぐ
+#define SORT(a) sort(all(a))//昇順ソート
+#define RS(vec) sort(all(a));reverse(all(a))//sort(vec.begin(), vec.end(), greater<ll>())//降順ソート
+#define REV(a) reverse(all(a))//逆順
+#define UNIQ(a) sort(all(a));a.erase(unique(all(a)),end(a))
+#define CNCT(a,b) a.insert(a.end(),all(b))//vector:aの末尾にvector:bをつなぐ
 #define vec(type,name,...) vector<type> name(__VA_ARGS__)//type型vectorの定義
 #define VEC(type,name,size) vector<type> name(size);in(name)//type型vector(size指定)標準入力受付
 #define vv(type,name,h,...) vector<vector<type>>name(h,vector<type>(__VA_ARGS__))
@@ -326,7 +326,8 @@ signed solve();
 void slv();
 signed main(){
     ll testcase=1;
-    //cin>>testcase;//テストケース数を渡す
+    //
+    cin>>testcase;//テストケース数を渡す
     while(testcase--)slv();
 }
 void slv(){//入力と解法を分離させるだけなので，基本的に入力以外何も書かない
@@ -337,21 +338,5 @@ signed solve(){//main
   /*
   idea:
   */
-  INT(n,m);
-  dsu d(n);
-  bool connect=false;
-  rep(n){
-    INT(xi);
-    if(xi<=m){
-      connect=false;
-    }else{
-      if(connect)d.merge(i-1,i);
-      connect=true;
-    }
-  }
-  int ans=0;
-  auto g=d.groups();
-  each(v,g)ans+=v.size()-1;
-  out(ans);
   return 0;//checklist.txtを確認
 }
