@@ -4,8 +4,10 @@ ref1:https://github.com/tatyam-prime/kyopro_library
 ref2:https://tatyam.hatenablog.com/entry/2019/12/15/003634
 */
 #include <bits/stdc++.h>
+#if __has_include(<atcoder/all>)
 #include <atcoder/all>
 using namespace atcoder;
+#endif
 using namespace std;
 using ll = long long;
 using ld = long double;
@@ -33,6 +35,7 @@ const ld EPS=1e-9;
 const ld PI=3.1415926535897932;
 const ll dx[] = {0, 1, 0, -1, 1, -1, 1, -1};
 const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
+#define overload6(_1,_2,_3,_4,_5,_6,name,...) name
 #define overload4(_1,_2,_3,_4,name,...) name
 #define overload3(_1,_2,_3,name,...) name
 /*繰り返し*/
@@ -49,7 +52,9 @@ const ll dy[] = {1, 0, -1, 0, 1, 1, -1, -1};
 #define each1(i,a) for(auto&& i:a)
 #define each2(x,y,a) for(auto&& [x,y]:a)
 #define each3(x,y,z,a) for(auto&& [x,y,z]:a)
-#define each(...) overload4(__VA_ARGS__,each3,each2,each1)(__VA_ARGS__)//配列の各要素の読み出し
+#define each4(w,x,y,z,a) for(auto&& [w,x,y,z]:a)
+#define each5(v,w,x,y,z,a) for(auto&& [v,w,x,y,z]:a)
+#define each(...) overload6(__VA_ARGS__,each5,each4,each3,each2,each1)(__VA_ARGS__)//配列の各要素の読み出し
 #define all1(i) begin(i),end(i)
 #define all2(i,a) begin(i),begin(i)+a
 #define all3(i,a,b) begin(i)+a,begin(i)+b
@@ -333,6 +338,65 @@ bool IsPrime(ll num)
     return true;
 }
 
+template <int N> struct nreparray {
+    std::array<int, N> v;
+    nreparray(std::array<int, N> v_) : v(v_) {}
+    struct nrepitr {
+        const std::array<int, N> &v;
+        std::array<int, N> tmp;
+        bool is_end;
+        nrepitr(const std::array<int, N> &v_) : v(v_), tmp(), is_end(false) {}
+        bool operator!=(const nrepitr &) const { return !is_end; }
+        void operator++() {
+            int pos = N - 1;
+            while(pos != -1) {
+                tmp[pos] += 1;
+                if(tmp[pos] == v[pos]) {
+                    tmp[pos] = 0;
+                    pos -= 1;
+                } else {
+                    break;
+                }
+            }
+            if(pos == -1) { is_end = true; }
+        }
+        const std::array<int, N> &operator*() const { return tmp; }
+    };
+    nrepitr begin() const { return nrepitr(v); }
+    nrepitr end() const { return nrepitr(v); }
+};
+
+struct nrepvector {
+    std::vector<int> v;
+    nrepvector(std::vector<int> v_) : v(v_) {}
+    struct nrepitr {
+        const std::vector<int> &v;
+        std::vector<int> tmp;
+        bool is_end;
+        nrepitr(const std::vector<int> &v_) : v(v_), tmp(v.size(), 0), is_end(false) {}
+        bool operator!=(const nrepitr &) const { return !is_end; }
+        void operator++() {
+            int pos = v.size() - 1;
+            while(pos != -1) {
+                tmp[pos] += 1;
+                if(tmp[pos] == v[pos]) {
+                    tmp[pos] = 0;
+                    pos -= 1;
+                } else {
+                    break;
+                }
+            }
+            if(pos == -1) { is_end = true; }
+        }
+        const std::vector<int> &operator*() const { return tmp; }
+    };
+    nrepitr begin() const { return nrepitr(v); }
+    nrepitr end() const { return nrepitr(v); }
+};
+
+auto nrep(std::vector<int> v) { return nrepvector(v); }
+template <class... Ts> auto nrep(Ts... v) { return nreparray<std::tuple_size<std::tuple<Ts...>>::value>({v...}); }
+
 
 /*ページのソースを表示->command+F->問題文　で問題文コピペする
 
@@ -354,7 +418,7 @@ signed solve();
 void slv();
 signed main(){
     int testcase=1;
-    //cin>>testcase;//テストケース数を渡す
+    //scanf("%d",&testcase);//テストケース数を渡す
     while(testcase--)slv();
 }
 void slv(){//入力と解法を分離させるだけなので，基本的に入力以外何も書かない
@@ -365,6 +429,5 @@ signed solve(){//main
   /*
   idea:
   */
-
   return 0;//checklist.txtを確認
 }
