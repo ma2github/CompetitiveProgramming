@@ -362,7 +362,36 @@ void slv(){//入力と解法を分離させるだけなので，基本的に入�
 signed solve(){//main
   /*
   idea:
+  適当にdfsする
+  繋がってる親がその２頂点を結ぶ辺のラベルと等しい→違うやつを書き込む
+  else　同じやつを書く
   */
-
+  LL(n,m);
+  vec(ll,ans,n,-1);
+  std::vector<std::vector<pll>> g(n);
+  while(m--){
+    LL(u,v,c);
+    --u,--v;
+    g[u].push_back({v,c});
+    g[v].push_back({u,c});
+  }
+  queue<ll>que;
+  ans[0]=1;
+  que.push(0);
+  while(que.size()){
+    ll x=que.front();
+    que.pop();
+    for(auto [t,c]:g[x]){
+      if(~ans[t])continue;
+      if(ans[x]==c){
+        if(c==1)ans[t]=c+1;
+        else ans[t]=c-1;
+      }else{
+        ans[t]=c;
+      }
+      que.push(t);
+    }
+  }
+  each(x,ans)out(x);
   return 0;//checklist.txtを確認
 }

@@ -365,6 +365,19 @@ signed solve(){//main
   /*
   idea:
   */
-
+  LL(n);
+  VEC(ll,a,n);
+  map<ll,ll>memo;
+  ll ub=min(a);
+  each(x,a){
+    std::vector<ll> v=divisor(x);
+    each(d,v){
+      if(d>ub)continue;
+      memo[d]=gcd(memo[d],x);
+    }
+  }
+  ll ans=0;
+  each(x,memo)ans+=x.first==x.second;
+  out(ans);
   return 0;//checklist.txtを確認
 }
